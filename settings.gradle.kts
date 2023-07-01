@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "KakaoBankHomework"
 include(":app")
+include(":data")
