@@ -12,4 +12,24 @@ class MainViewModel @Inject constructor(
     val bookmarkUseCase: BookmarkUseCase,
     val searchUseCase: SearchUseCase
 ) : ViewModel() {
+
+    fun searchImage(query: String, page: Int) {
+        searchUseCase.searchImage(query = query, page = page)
+    }
+
+    fun searchVideo(query: String, page: Int) {
+        searchUseCase.searchImage(query = query, page = page)
+    }
+
+    fun addBookmark(id: String) {
+        bookmarkUseCase.addBookmark()
+    }
+
+    fun removeBookmark(id: String) {
+        bookmarkUseCase.removeBookmark()
+    }
+
+    fun clearBookmark() {
+        bookmarkUseCase.clearBookmark()
+    }
 }
