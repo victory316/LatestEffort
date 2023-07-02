@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.network"
+    namespace = "com.example.domain"
     compileSdk = 33
 
     defaultConfig {
@@ -38,12 +38,6 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation(libs.hilt.android)
-    implementation(libs.retrofit.core)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.retrofit.kotlin.serialization)
-    implementation(libs.okhttp.logging)
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

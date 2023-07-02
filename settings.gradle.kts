@@ -17,3 +17,4 @@ rootProject.name = "KakaoBankHomework"
 include(":app")
 include(":data")
 include(":network")
+include(":domain")
