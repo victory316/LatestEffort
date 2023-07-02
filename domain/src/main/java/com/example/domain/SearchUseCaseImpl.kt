@@ -15,9 +15,9 @@ class SearchUseCaseImpl @Inject constructor(
     private val searchRepository: SearchRepository
 ) : SearchUseCase {
 
-    override fun searchImage(query: String, count: Int): Flow<ImageResult> =
+    override suspend fun searchImage(query: String, count: Int): Flow<ImageResult> =
         searchRepository.searchImage(query = query, size = count)
 
-    override fun searchVideo(query: String, count: Int): Flow<VideoResult> =
+    override suspend fun searchVideo(query: String, count: Int): Flow<VideoResult> =
         searchRepository.searchVideo(query = query, size = count)
 }

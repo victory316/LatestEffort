@@ -1,6 +1,5 @@
 package com.example.network.retrofit
 
-import androidx.annotation.Size
 import com.example.network.NetworkDataSource
 import com.example.network.model.ImageResult
 import com.example.network.model.VideoResult
@@ -46,9 +45,9 @@ class Network @Inject constructor(
         .build()
         .create(NetworkApi::class.java)
 
-    override suspend fun getImages(query: String, pages: Int) =
+    override suspend fun getImages(query: String, pages: Int?): ImageResult =
         networkApi.getImages(query = query, size = pages)
 
-    override suspend fun getVideos(query: String, pages: Int) =
+    override suspend fun getVideos(query: String, pages: Int?): VideoResult =
         networkApi.getVideos(query = query, size = pages)
 }
