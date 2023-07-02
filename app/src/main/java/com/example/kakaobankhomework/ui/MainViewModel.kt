@@ -14,11 +14,11 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun searchImage(query: String, page: Int) {
-        searchUseCase.searchImage(query = query, page = page)
+        searchUseCase.searchImage(query = query, count = page)
     }
 
     fun searchVideo(query: String, page: Int) {
-        searchUseCase.searchImage(query = query, page = page)
+        searchUseCase.searchImage(query = query, count = page)
     }
 
     fun addBookmark(id: String) {

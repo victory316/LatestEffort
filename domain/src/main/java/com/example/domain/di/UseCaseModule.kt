@@ -14,7 +14,7 @@ import dagger.hilt.components.SingletonComponent
 interface UseCaseModule {
 
     @Binds
-    fun bindsBookmarkUsecase(
+    fun bindsBookmarkUseCase(
         bookmarkUseCase: BookmarkUseCaseImpl
     ): BookmarkUseCase
 

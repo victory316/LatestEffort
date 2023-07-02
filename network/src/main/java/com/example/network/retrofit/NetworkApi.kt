@@ -29,7 +29,7 @@ private interface NetworkApi {
     ): VideoResult
 }
 
-private const val networkBaseUrl = BuildConfig.BACKEND_URL
+private const val networkBaseUrl = "https://dapi.kakao.com"
 
 @Singleton
 class Network @Inject constructor(
@@ -46,9 +46,9 @@ class Network @Inject constructor(
         .build()
         .create(NetworkApi::class.java)
 
-    override fun getImages(query: String, pages: Int) =
-        networkApi.getImages(query = query, pages = pages)
+    override suspend fun getImages(query: String, pages: Int) =
+        networkApi.getImages(query = query, size = pages)
 
-    override fun getVideos(query: String, pages: Int) =
-        networkApi.getVideos(query = query, pages = pages)
+    override suspend fun getVideos(query: String, pages: Int) =
+        networkApi.getVideos(query = query, size = pages)
 }
