@@ -9,10 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.kakaobankhomework.R
 import com.example.kakaobankhomework.databinding.FragmentBookmarkBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
+@AndroidEntryPoint
 class BookmarkFragment : Fragment() {
 
     private var _binding: FragmentBookmarkBinding? = null

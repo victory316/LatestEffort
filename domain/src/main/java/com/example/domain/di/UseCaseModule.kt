@@ -14,15 +14,10 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface UseCaseModule {
 
-//    @Binds
-//    fun bindsBookmarkUseCase(
-//        bookmarkUseCase: BookmarkUseCaseImpl
-//    ): BookmarkUseCase
-
-    @Provides
-    fun provideBookmarkUseCase(): BookmarkUseCase {
-        return BookmarkUseCaseImpl()
-    }
+    @Binds
+    fun provideBookmarkUseCase(
+        bookmarkUseCase: BookmarkUseCaseImpl
+    ): BookmarkUseCase
 
     @Binds
     fun bindsSearchUseCase(
