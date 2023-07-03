@@ -1,6 +1,8 @@
 package com.example.domain
 
-class BookmarkUseCaseImpl : BookmarkUseCase {
+import javax.inject.Inject
+
+class BookmarkUseCaseImpl @Inject constructor() : BookmarkUseCase {
 
     override fun loadBookmarks() {
     }

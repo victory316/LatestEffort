@@ -2,7 +2,7 @@ package com.example.network.retrofit
 
 import com.example.network.NetworkDataSource
 import com.example.network.model.ImageResultDto
-import com.example.network.model.VideoResult
+import com.example.network.model.VideoResultDto
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.Call
@@ -25,7 +25,7 @@ private interface NetworkApi {
     suspend fun getVideos(
         @Query("query") query: String,
         @Query("size") size: Int?
-    ): VideoResult
+    ): VideoResultDto
 }
 
 private const val networkBaseUrl = "https://dapi.kakao.com"
@@ -48,6 +48,6 @@ class Network @Inject constructor(
     override suspend fun getImages(query: String, pages: Int?): ImageResultDto =
         networkApi.getImages(query = query, size = pages)
 
-    override suspend fun getVideos(query: String, pages: Int?): VideoResult =
+    override suspend fun getVideos(query: String, pages: Int?): VideoResultDto =
         networkApi.getVideos(query = query, size = pages)
 }
