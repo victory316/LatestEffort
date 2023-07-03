@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.hilt.android)
     implementation(project(mapOf("path" to ":network")))
+    implementation(project(mapOf("path" to ":domain")))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

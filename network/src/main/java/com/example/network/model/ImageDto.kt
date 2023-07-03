@@ -2,7 +2,7 @@ package com.example.network.model
 
 import java.util.Date
 
-data class Image(
+data class ImageDto(
     val collection: String,
     val thumbnailUrl: String,
     val imageUrl: String,

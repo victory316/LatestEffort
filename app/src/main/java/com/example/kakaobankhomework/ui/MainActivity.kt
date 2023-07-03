@@ -2,12 +2,10 @@ package com.example.kakaobankhomework.ui
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.kakaobankhomework.R
 import com.example.kakaobankhomework.databinding.ActivityMainBinding
@@ -26,8 +24,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        setSupportActionBar(binding.toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         binding.bottomNavigation.setupWithNavController(navController)

@@ -1,9 +1,10 @@
 package com.example.data.repository
 
+import com.example.domain.repository.SearchRepository
 import com.example.network.Dispatcher
 import com.example.network.NetworkDataSource
 import com.example.network.Dispatchers
-import com.example.network.model.ImageResult
+import com.example.network.model.ImageResultDto
 import com.example.network.model.VideoResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +16,7 @@ class SearchRepositoryImpl @Inject constructor(
     private val networkDataSource: NetworkDataSource,
     @Dispatcher(Dispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
 ) : SearchRepository {
-    override suspend fun searchImage(query: String, size: Int?): Flow<ImageResult> = flow {
+    override suspend fun searchImage(query: String, size: Int?): Flow<ImageResultDto> = flow {
         emit(networkDataSource.getImages(query = query, pages = size))
     }.flowOn(ioDispatcher)
 

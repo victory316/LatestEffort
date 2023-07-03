@@ -1,4 +1,4 @@
-package com.example.core
+package com.example.domain.model.result
 
 sealed interface ServiceError {
     object NoNetwork : ServiceError

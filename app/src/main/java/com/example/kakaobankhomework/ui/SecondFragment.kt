@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.kakaobankhomework.R
 import com.example.kakaobankhomework.databinding.FragmentSecondBinding
@@ -19,6 +20,8 @@ class SecondFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

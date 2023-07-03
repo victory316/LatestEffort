@@ -1,7 +1,7 @@
 package com.example.network.retrofit
 
 import com.example.network.NetworkDataSource
-import com.example.network.model.ImageResult
+import com.example.network.model.ImageResultDto
 import com.example.network.model.VideoResult
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
@@ -19,7 +19,7 @@ private interface NetworkApi {
     suspend fun getImages(
         @Query("query") query: String,
         @Query("size") size: Int?
-    ): ImageResult
+    ): ImageResultDto
 
     @GET(value = "v2/search/vclip")
     suspend fun getVideos(
@@ -45,7 +45,7 @@ class Network @Inject constructor(
         .build()
         .create(NetworkApi::class.java)
 
-    override suspend fun getImages(query: String, pages: Int?): ImageResult =
+    override suspend fun getImages(query: String, pages: Int?): ImageResultDto =
         networkApi.getImages(query = query, size = pages)
 
     override suspend fun getVideos(query: String, pages: Int?): VideoResult =

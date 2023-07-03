@@ -2,7 +2,7 @@ package com.example.network.model
 
 import java.util.Date
 
-data class Video(
+data class VideoDto(
     val title: String,
     val url: String,
     val dateTime: Date,

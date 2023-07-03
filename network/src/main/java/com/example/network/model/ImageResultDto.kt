@@ -1,6 +1,6 @@
 package com.example.network.model
 
-data class VideoResult(
+data class ImageResultDto(
     val meta: MetaDto,
-    val videos: List<VideoDto>
+    val images: List<ImageDto>
 )

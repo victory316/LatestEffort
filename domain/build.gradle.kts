@@ -39,8 +39,7 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.hilt.android)
-    implementation(project(mapOf("path" to ":data")))
-    implementation(project(mapOf("path" to ":network")))
+    implementation(project(mapOf("path" to ":core")))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
