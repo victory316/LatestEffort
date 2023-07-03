@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.kakaobankhomework.ui.MainViewModel" />
+            type="com.example.kakaobankhomework.ui.bookmark.BookmarkViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

@@ -28,7 +28,9 @@ class BookmarkFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentBookmarkBinding.inflate(inflater, container, false)
+        _binding = FragmentBookmarkBinding.inflate(inflater, container, false).apply {
+            viewModel = bookmarkViewModel
+        }
         return binding.root
 
     }

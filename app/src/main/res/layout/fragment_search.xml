@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.example.kakaobankhomework.ui.MainViewModel" />
+            type="com.example.kakaobankhomework.ui.search.SearchViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

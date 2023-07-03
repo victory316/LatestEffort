@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val bookmarkUseCase: BookmarkUseCase,
     private val searchUseCase: SearchUseCase
 ) : ViewModel() {
 
@@ -25,17 +24,5 @@ class SearchViewModel @Inject constructor(
 
     fun searchVideo(query: String, page: Int) = viewModelScope.launch {
         searchUseCase.searchImage(query = query, count = page)
-    }
-
-    fun addBookmark(id: String) {
-        bookmarkUseCase.addBookmark()
-    }
-
-    fun removeBookmark(id: String) {
-        bookmarkUseCase.removeBookmark()
-    }
-
-    fun clearBookmark() {
-        bookmarkUseCase.clearBookmark()
     }
 }

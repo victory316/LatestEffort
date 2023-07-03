@@ -12,20 +12,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
-    private val bookmarkUseCase: BookmarkUseCase,
-    private val searchUseCase: SearchUseCase
+    private val bookmarkUseCase: BookmarkUseCase
 ) : ViewModel() {
-
-    private val searchImageState = MutableStateFlow<UiResult>(UiResult.Loading)
-    private val searchVideoState = MutableStateFlow<UiResult>(UiResult.Loading)
-
-    fun searchImage(query: String, page: Int) = viewModelScope.launch {
-        searchUseCase.searchImage(query = query, count = page)
-    }
-
-    fun searchVideo(query: String, page: Int) = viewModelScope.launch {
-        searchUseCase.searchImage(query = query, count = page)
-    }
 
     fun addBookmark(id: String) {
         bookmarkUseCase.addBookmark()
