@@ -15,7 +15,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface NetworkModule {
+object NetworkModule {
 
     @Provides
     @Singleton
@@ -33,9 +33,4 @@ interface NetworkModule {
                 },
         )
         .build()
-
-    @Binds
-    fun provideNetworkApi(
-        network: Network
-    ): NetworkDataSource
 }
