@@ -2,7 +2,7 @@ package com.example.domain
 
 import javax.inject.Inject
 
-class BookmarkUseCaseImpl : BookmarkUseCase {
+class BookmarkUseCaseImpl @Inject constructor() : BookmarkUseCase {
 
     override fun loadBookmarks() {
     }

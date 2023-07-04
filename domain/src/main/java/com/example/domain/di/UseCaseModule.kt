@@ -8,19 +8,20 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 interface UseCaseModule {
 
     @Binds
-    fun provideBookmarkUseCase(
-        bookmarkUseCase: BookmarkUseCaseImpl
+    fun bindsBookmarkUseCase(
+        bookmarkUseCaseImpl: BookmarkUseCaseImpl
     ): BookmarkUseCase
 
     @Binds
     fun bindsSearchUseCase(
-        bookmarkUseCase: SearchUseCaseImpl
+        searchUseCaseImpl: SearchUseCaseImpl
     ): SearchUseCase
 }

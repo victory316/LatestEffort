@@ -9,7 +9,6 @@ import javax.inject.Singleton
 import javax.inject.Inject
 
 
-@Singleton
 class SearchUseCaseImpl @Inject constructor(
     private val searchRepository: SearchRepository
 ) : SearchUseCase {
