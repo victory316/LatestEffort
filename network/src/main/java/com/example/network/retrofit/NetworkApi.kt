@@ -12,18 +12,22 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.Query
 import javax.inject.Inject
 import javax.inject.Singleton
 
 private interface NetworkApi {
 
+    @Headers("Authorization: KakaoAK $networkHeader")
     @GET(value = "v2/search/image")
     suspend fun getImages(
         @Query("query") query: String,
         @Query("size") size: Int?
     ): Response<ImageResultDto>
 
+    @Headers("Authorization: KakaoAK $networkHeader")
     @GET(value = "v2/search/vclip")
     suspend fun getVideos(
         @Query("query") query: String,
@@ -31,6 +35,7 @@ private interface NetworkApi {
     ): Response<VideoResultDto>
 }
 
+private const val networkHeader = "8883f58d6338fb1f3ed1c038a12c1ca3"
 private const val networkBaseUrl = "https://dapi.kakao.com"
 
 @Singleton

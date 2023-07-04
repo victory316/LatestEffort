@@ -18,12 +18,12 @@ class SearchRepositoryImpl @Inject constructor(
 ) : SearchRepository {
     override suspend fun searchImage(query: String, size: Int?): Flow<List<Image>> = flow {
         emit(
-            networkDataSource.getImages(query = query, pages = size).body()?.images!!.map {
+            networkDataSource.getImages(query = query, pages = size).body()?.images?.map {
                 Image(
                     thumbnailUrl = it.thumbnailUrl,
                     bookmarked = false
                 )
-            }
+            } ?: emptyList()
         )
     }.flowOn(ioDispatcher)
 

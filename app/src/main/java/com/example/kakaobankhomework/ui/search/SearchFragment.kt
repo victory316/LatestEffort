@@ -31,6 +31,7 @@ class SearchFragment : Fragment() {
     ): View {
 
         _binding = FragmentSearchBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = this@SearchFragment
             viewModel = searchViewModel
         }
         return binding.root
@@ -43,8 +44,8 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupUi() {
-        binding.buttonFirst.setOnClickListener {
-            searchViewModel.searchImage("dd", 10)
+        binding.searchInput.setEndIconOnClickListener {
+            searchViewModel.searchImage()
         }
     }
 
