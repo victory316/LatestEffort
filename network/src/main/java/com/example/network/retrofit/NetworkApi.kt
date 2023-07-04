@@ -10,6 +10,7 @@ import okhttp3.Call
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 import javax.inject.Inject
@@ -41,10 +42,7 @@ class Network @Inject constructor(
     private val networkApi = Retrofit.Builder()
         .baseUrl(networkBaseUrl)
         .callFactory(okhttpCallFactory)
-        .addConverterFactory(
-
-            networkJson.asConverterFactory("application/json".toMediaType()),
-        )
+        .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(NetworkApi::class.java)
 
