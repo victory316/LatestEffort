@@ -3,10 +3,12 @@ package com.example.network.retrofit
 import com.example.network.NetworkDataSource
 import com.example.network.model.ImageResultDto
 import com.example.network.model.VideoResultDto
+import com.google.gson.internal.GsonBuildConfig
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.Call
 import okhttp3.MediaType.Companion.toMediaType
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -19,13 +21,13 @@ private interface NetworkApi {
     suspend fun getImages(
         @Query("query") query: String,
         @Query("size") size: Int?
-    ): ImageResultDto
+    ): Response<ImageResultDto>
 
     @GET(value = "v2/search/vclip")
     suspend fun getVideos(
         @Query("query") query: String,
         @Query("size") size: Int?
-    ): VideoResultDto
+    ): Response<VideoResultDto>
 }
 
 private const val networkBaseUrl = "https://dapi.kakao.com"
@@ -40,14 +42,15 @@ class Network @Inject constructor(
         .baseUrl(networkBaseUrl)
         .callFactory(okhttpCallFactory)
         .addConverterFactory(
+
             networkJson.asConverterFactory("application/json".toMediaType()),
         )
         .build()
         .create(NetworkApi::class.java)
 
-    override suspend fun getImages(query: String, pages: Int?): ImageResultDto =
+    override suspend fun getImages(query: String, pages: Int?): Response<ImageResultDto> =
         networkApi.getImages(query = query, size = pages)
 
-    override suspend fun getVideos(query: String, pages: Int?): VideoResultDto =
+    override suspend fun getVideos(query: String, pages: Int?): Response<VideoResultDto> =
         networkApi.getVideos(query = query, size = pages)
 }

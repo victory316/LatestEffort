@@ -40,6 +40,8 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.hilt.android)
+    implementation(libs.retrofit.core)
+
     implementation(project(mapOf("path" to ":network")))
     implementation(project(mapOf("path" to ":domain")))
     kapt(libs.hilt.compiler)

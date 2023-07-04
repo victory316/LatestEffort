@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class SearchRepositoryImpl @Inject constructor(
     private val networkDataSource: NetworkDataSource,
@@ -19,7 +18,7 @@ class SearchRepositoryImpl @Inject constructor(
 ) : SearchRepository {
     override suspend fun searchImage(query: String, size: Int?): Flow<List<Image>> = flow {
         emit(
-            networkDataSource.getImages(query = query, pages = size).images.map {
+            networkDataSource.getImages(query = query, pages = size).body()?.images!!.map {
                 Image(
                     thumbnailUrl = it.thumbnailUrl,
                     bookmarked = false
@@ -30,7 +29,7 @@ class SearchRepositoryImpl @Inject constructor(
 
     override suspend fun searchVideo(query: String, size: Int?): Flow<List<Video>> = flow {
         emit(
-            networkDataSource.getVideos(query = query, pages = size).videos.map {
+            networkDataSource.getVideos(query = query, pages = size).body()?.videos!!.map {
                 Video(
                     thumbnailUrl = it.url,
                     bookmarked = false

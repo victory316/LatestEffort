@@ -44,7 +44,7 @@ class SearchFragment : Fragment() {
 
     private fun setupUi() {
         binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            searchViewModel.searchImage("dd", 10)
         }
     }
 
