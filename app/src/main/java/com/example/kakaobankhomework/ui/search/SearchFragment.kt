@@ -46,6 +46,7 @@ class SearchFragment : Fragment() {
     private fun setupUi() {
         binding.searchInput.setEndIconOnClickListener {
             searchViewModel.searchImage()
+            searchViewModel.searchVideo()
         }
     }
 

@@ -28,11 +28,16 @@ class SearchViewModel @Inject constructor(
             searchUseCase.searchImage(query = query, count = page).collect {
                 Log.d("LOGGING", "$it: ")
                 queryText.value = ""
+                searchImageState.value = UiResult.Success
             }
         }
     }
 
-    fun searchVideo(query: String, page: Int) = viewModelScope.launch {
-        searchUseCase.searchImage(query = query, count = page)
+    fun searchVideo(page: Int = 10) = viewModelScope.launch {
+        searchQuery?.let { query ->
+            searchUseCase.searchVideo(query = query, count = page).collect {
+                searchVideoState.value = UiResult.Success
+            }
+        }
     }
 }
