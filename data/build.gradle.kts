@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
+    kotlin("kapt")
 }
 
 android {
@@ -41,6 +42,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(project(mapOf("path" to ":network")))
     implementation(project(mapOf("path" to ":domain")))
+    kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
