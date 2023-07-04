@@ -1,14 +1,13 @@
-package com.example.kakaobankhomework.ui.model
+package com.example.kakaobankhomework.model
 
-sealed interface SearchResult {
+data class SearchResult(
+    val id: Int,
+    val thumbnailUrl: String,
+    val type: Type
+) {
 
-    data class ImageResult(
-        val id: Int,
-        val thumbnailUrl: String
-    ) : SearchResult
-
-    data class VideoResult(
-        val id: Int,
-        val thumbnailUrl: String
-    ) : SearchResult
+    enum class Type {
+        IMAGE,
+        VIDEO
+    }
 }
