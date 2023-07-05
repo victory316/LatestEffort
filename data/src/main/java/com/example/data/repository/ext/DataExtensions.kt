@@ -6,9 +6,13 @@ import retrofit2.Response
 
 fun <T, R> Response<T>.mapResult(transform: (value: T) -> R): Result<R> {
     return if (this.isSuccessful) {
-        this.body()?.let { body ->
-            Result.Success(transform(body))
-        } ?: Result.Failure(error = ServiceError.ResultNotFound)
+        try {
+            this.body()?.let { body ->
+                Result.Success(transform(body))
+            } ?: Result.Failure(error = ServiceError.ResultNotFound)
+        } catch (e: Exception) {
+            Result.Failure(error = ServiceError.MappingFail(e))
+        }
     } else {
         Result.Failure(error = ServiceError.ResultNotFound)
     }

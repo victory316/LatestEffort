@@ -22,16 +22,16 @@ class SearchRepositoryImpl @Inject constructor(
 ) : SearchRepository {
     override suspend fun searchImage(query: String, size: Int?): Flow<Result<SearchResultImage>> =
         flow {
-            val result = networkDataSource.getImages(query = query, pages = size).mapResult {
+            val result = networkDataSource.getImages(query = query, pages = size).mapResult { dto ->
                 SearchResultImage(
-                    result = it.documents?.map {
+                    result = dto.documents?.map {
                         Image(
-                            thumbnailUrl = it.imageUrl ?: "",
+                            thumbnailUrl = it.thumbnailUrl,
                             bookmarked = false
                         )
                     } ?: emptyList(),
-                    currentPage = it.meta.pageableCount,
-                    isPageable = !it.meta.isEnd
+                    currentPage = dto.meta.pageableCount,
+                    isPageable = !dto.meta.isEnd
                 )
             }
 
@@ -40,16 +40,16 @@ class SearchRepositoryImpl @Inject constructor(
 
     override suspend fun searchVideo(query: String, size: Int?): Flow<Result<SearchResultVideo>> =
         flow {
-            val result = networkDataSource.getVideos(query = query, pages = size).mapResult {
+            val result = networkDataSource.getVideos(query = query, pages = size).mapResult { dto ->
                 SearchResultVideo(
-                    result = it.documents?.map {
+                    result = dto.documents?.map {
                         Video(
-                            thumbnailUrl = it.url,
+                            thumbnailUrl = it.thumbnail,
                             bookmarked = false
                         )
                     } ?: emptyList(),
-                    currentPage = it.meta.pageableCount,
-                    isPageable = !it.meta.isEnd
+                    currentPage = dto.meta.pageableCount,
+                    isPageable = !dto.meta.isEnd
                 )
             }
 

@@ -10,5 +10,6 @@ data class VideoDto(
     val url: String,
     val dateTime: Date,
     val playTime: String,
+    val thumbnail: String,
     val author: String
 )
