@@ -24,9 +24,9 @@ class SearchRepositoryImpl @Inject constructor(
         flow {
             val result = networkDataSource.getImages(query = query, pages = size).mapResult {
                 SearchResultImage(
-                    result = it.images?.map {
+                    result = it.documents?.map {
                         Image(
-                            thumbnailUrl = it.thumbnailUrl,
+                            thumbnailUrl = it.imageUrl ?: "",
                             bookmarked = false
                         )
                     } ?: emptyList(),
@@ -42,7 +42,7 @@ class SearchRepositoryImpl @Inject constructor(
         flow {
             val result = networkDataSource.getVideos(query = query, pages = size).mapResult {
                 SearchResultVideo(
-                    result = it.videos?.map {
+                    result = it.documents?.map {
                         Video(
                             thumbnailUrl = it.url,
                             bookmarked = false
