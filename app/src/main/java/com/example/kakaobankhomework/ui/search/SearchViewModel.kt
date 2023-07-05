@@ -8,6 +8,10 @@ import com.example.domain.SearchUseCase
 import com.example.kakaobankhomework.ui.model.UiResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,8 +23,17 @@ class SearchViewModel @Inject constructor(
     private val searchImageState = MutableStateFlow<UiResult>(UiResult.Loading)
     private val searchVideoState = MutableStateFlow<UiResult>(UiResult.Loading)
 
+    val searchResultFlow: StateFlow<UiResult> =
+        combine(searchImageState, searchVideoState) { images, videos ->
+            UiResult.Success
+        }.stateIn(
+            scope = viewModelScope,
+            initialValue = UiResult.Loading,
+            started = SharingStarted.WhileSubscribed(5_000)
+        )
+
     val queryText = MutableLiveData<String?>(null)
-    val searchQuery
+    private val searchQuery
         get() = queryText.value
 
     fun searchImage(page: Int = 10) = viewModelScope.launch {

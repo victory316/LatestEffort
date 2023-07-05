@@ -6,25 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.example.kakaobankhomework.R
+import androidx.lifecycle.lifecycleScope
 import com.example.kakaobankhomework.action.Action
-import com.example.kakaobankhomework.binding.DataBindingPresenter
 import com.example.kakaobankhomework.binding.SimpleDataBindingPresenter
 import com.example.kakaobankhomework.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private var searchAdapter: SearchAdapter? = null
 
     private val searchViewModel: SearchViewModel by viewModels()
 
@@ -44,6 +38,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupUi()
+        initObserves()
     }
 
     private fun setupUi() {
@@ -57,9 +52,23 @@ class SearchFragment : Fragment() {
             }
         }
 
+        searchAdapter = SearchAdapter(presenter)
+
+        binding.searchRecyclerView.apply {
+            adapter = searchAdapter
+        }
+
         binding.searchInput.setEndIconOnClickListener {
             searchViewModel.searchImage()
             searchViewModel.searchVideo()
+        }
+    }
+
+    private fun initObserves() {
+        lifecycleScope.launch {
+            searchViewModel.searchResultFlow.collect {
+                searchAdapter?.submitList(emptyList())
+            }
         }
     }
 
