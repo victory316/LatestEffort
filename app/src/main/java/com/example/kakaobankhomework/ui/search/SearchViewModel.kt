@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.domain.model.result.Result
-import com.example.kakaobankhomework.model.SearchResult
+import com.example.kakaobankhomework.model.SearchItem
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
@@ -31,17 +31,17 @@ class SearchViewModel @Inject constructor(
         combine(searchImageState, searchVideoState) { images, videos ->
             if (images is Result.Success && videos is Result.Success) {
                 val imageResult = images.data.result.map {
-                    SearchResult(
+                    SearchItem.SearchResult(
                         id = 0,
                         thumbnailUrl = it.thumbnailUrl,
-                        type = SearchResult.Type.IMAGE
+                        type = SearchItem.SearchResult.Type.IMAGE
                     )
                 }
                 val videoResult = videos.data.result.map {
-                    SearchResult(
+                    SearchItem.SearchResult(
                         id = 0,
                         thumbnailUrl = it.thumbnailUrl,
-                        type = SearchResult.Type.VIDEO
+                        type = SearchItem.SearchResult.Type.VIDEO
                     )
                 }
                 SearchUiState(

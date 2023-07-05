@@ -18,7 +18,7 @@ class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-    private var searchAdapter: SearchAdapter? = null
+    private var searchAdapter: NewSearchAdapter? = null
 
     private val searchViewModel: SearchViewModel by viewModels()
 
@@ -52,7 +52,7 @@ class SearchFragment : Fragment() {
             }
         }
 
-        searchAdapter = SearchAdapter(presenter)
+        searchAdapter = NewSearchAdapter(searchViewModel)
 
         binding.searchRecyclerView.apply {
             adapter = searchAdapter
