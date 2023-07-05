@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class VideoResultDto(
     val meta: MetaDto,
-    val videos: List<VideoDto>
+    val videos: List<VideoDto>?
 )

@@ -23,12 +23,18 @@ class SearchViewModel @Inject constructor(
     private val searchImageState = MutableStateFlow<UiResult>(UiResult.Loading)
     private val searchVideoState = MutableStateFlow<UiResult>(UiResult.Loading)
 
-    val searchResultFlow: StateFlow<UiResult> =
+    val searchResultFlow: StateFlow<SearchUiState> =
         combine(searchImageState, searchVideoState) { images, videos ->
-            UiResult.Success
+            SearchUiState(
+                imageCurrentPage = 0,
+                videoCurrentPage = 0,
+                searchResults = emptyList(),
+                imagePageable = false,
+                videoPageable = false
+            )
         }.stateIn(
             scope = viewModelScope,
-            initialValue = UiResult.Loading,
+            initialValue = SearchUiState(),
             started = SharingStarted.WhileSubscribed(5_000)
         )
 
@@ -38,10 +44,9 @@ class SearchViewModel @Inject constructor(
 
     fun searchImage(page: Int = 10) = viewModelScope.launch {
         searchQuery?.let { query ->
-            searchUseCase.searchImage(query = query, count = page).collect {
-                Log.d("LOGGING", "$it: ")
+            searchUseCase.searchImage(query = query, count = page).collect { result ->
+                Log.d("LOGGING", "$result: ")
                 queryText.value = ""
-                searchImageState.value = UiResult.Success
             }
         }
     }
