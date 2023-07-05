@@ -42,16 +42,6 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupUi() {
-        val presenter = object : SimpleDataBindingPresenter() {
-            override fun onClick(view: View, item: Action) {
-                when (item) {
-                    is Action.ItemSaveChanged -> {
-
-                    }
-                }
-            }
-        }
-
         searchAdapter = NewSearchAdapter(searchViewModel)
 
         binding.searchRecyclerView.apply {

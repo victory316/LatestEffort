@@ -31,19 +31,14 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_input"
-            tools:context=".ui.search.SearchFragment">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/search_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:itemCount="200" />
-        </androidx.core.widget.NestedScrollView>
+            tools:itemCount="200" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
