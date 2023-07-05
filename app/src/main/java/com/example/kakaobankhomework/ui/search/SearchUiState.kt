@@ -7,5 +7,6 @@ data class SearchUiState(
     val videoCurrentPage: Int = 0,
     val searchResults: List<SearchResult> = emptyList(),
     val imagePageable: Boolean = false,
-    val videoPageable: Boolean = false
+    val videoPageable: Boolean = false,
+    val isLoading: Boolean = false
 )
