@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.kakaobankhomework.R
+import com.example.kakaobankhomework.action.Action
+import com.example.kakaobankhomework.binding.DataBindingPresenter
+import com.example.kakaobankhomework.binding.SimpleDataBindingPresenter
 import com.example.kakaobankhomework.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,6 +47,16 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupUi() {
+        val presenter = object : SimpleDataBindingPresenter() {
+            override fun onClick(view: View, item: Action) {
+                when (item) {
+                    is Action.ItemSaveChanged -> {
+
+                    }
+                }
+            }
+        }
+
         binding.searchInput.setEndIconOnClickListener {
             searchViewModel.searchImage()
             searchViewModel.searchVideo()
