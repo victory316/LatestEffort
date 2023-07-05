@@ -1,7 +1,7 @@
-package com.example.kakaobankhomework.ui.model
+package com.example.kakaobankhomework.model
 
-sealed interface UiResult {
-    object Loading : UiResult
-    object Success : UiResult
-    object Failure : UiResult
+sealed class UiResult<out R> {
+    object Loading : UiResult<Nothing>()
+    data class Success<out T>(val data: T) : UiResult<T>()
+    object Failure : UiResult<Nothing>()
 }
