@@ -7,6 +7,10 @@
         <variable
             name="item"
             type="com.example.kakaobankhomework.model.SearchResult" />
+
+        <variable
+            name="presenter"
+            type="com.example.kakaobankhomework.binding.DataBindingPresenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
