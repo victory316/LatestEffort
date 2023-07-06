@@ -9,6 +9,12 @@ class BookmarkRepositoryImpl @Inject constructor(
 ) : BookmarkRepository {
     private val bookmarkIds = "bookmark_ids"
 
+    override fun loadBookmarks(): List<Int> {
+        val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
+
+        return currentIds?.map { it.toInt() } ?: emptyList()
+    }
+
     override fun addBookmark(id: Int) {
         val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
 

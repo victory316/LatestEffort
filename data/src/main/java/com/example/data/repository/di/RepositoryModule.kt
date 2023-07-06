@@ -1,6 +1,8 @@
 package com.example.data.repository.di
 
+import com.example.data.repository.BookmarkRepositoryImpl
 import com.example.data.repository.SearchRepositoryImpl
+import com.example.domain.repository.BookmarkRepository
 import com.example.domain.repository.SearchRepository
 import dagger.Binds
 import dagger.Module
@@ -17,4 +19,9 @@ abstract class RepositoryModule {
     abstract fun bindsSearchRepository(
         searchRepositoryImpl: SearchRepositoryImpl
     ): SearchRepository
+
+    @Binds
+    abstract fun bindsBookmarkRepository(
+        bookmarkRepositoryImpl: BookmarkRepositoryImpl
+    ): BookmarkRepository
 }
