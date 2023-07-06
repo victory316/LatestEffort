@@ -7,12 +7,12 @@ class BookmarkUseCaseImpl @Inject constructor() : BookmarkUseCase {
     override fun loadBookmarks() {
     }
 
-    override fun addBookmark() {
+    override fun addBookmark(id: Int) {
     }
 
     override fun clearBookmark() {
     }
 
-    override fun removeBookmark() {
+    override fun removeBookmark(id: Int) {
     }
 }

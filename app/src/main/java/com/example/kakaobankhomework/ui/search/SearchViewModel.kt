@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.BookmarkUseCase
 import com.example.domain.SearchUseCase
 import com.example.domain.model.SearchResultImage
 import com.example.domain.model.SearchResultVideo
@@ -21,6 +22,7 @@ import com.example.kakaobankhomework.model.SearchItem
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
+    private val bookmarkUseCase: BookmarkUseCase,
     private val searchUseCase: SearchUseCase
 ) : ViewModel() {
 
@@ -78,6 +80,14 @@ class SearchViewModel @Inject constructor(
             searchUseCase.searchVideo(query = query, count = page).collect { result ->
                 searchVideoState.value = result
             }
+        }
+    }
+
+    fun onBookmarkClick(item: SearchItem.SearchResult) {
+        if (item.isBookmarked) {
+            bookmarkUseCase.removeBookmark(item.thumbnailUrl.hashCode())
+        } else {
+            bookmarkUseCase.addBookmark(item.thumbnailUrl.hashCode())
         }
     }
 }

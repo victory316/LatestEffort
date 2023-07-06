@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.kakaobankhomework.action.Action
-import com.example.kakaobankhomework.binding.SimpleDataBindingPresenter
 import com.example.kakaobankhomework.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -18,7 +16,7 @@ class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-    private var searchAdapter: NewSearchAdapter? = null
+    private var searchAdapter: SearchAdapter? = null
 
     private val searchViewModel: SearchViewModel by viewModels()
 
@@ -42,7 +40,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupUi() {
-        searchAdapter = NewSearchAdapter(searchViewModel)
+        searchAdapter = SearchAdapter(searchViewModel)
 
         binding.searchRecyclerView.apply {
             adapter = searchAdapter

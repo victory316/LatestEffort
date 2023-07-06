@@ -9,8 +9,8 @@
             type="com.example.kakaobankhomework.model.SearchItem.SearchResult" />
 
         <variable
-            name="presenter"
-            type="com.example.kakaobankhomework.binding.DataBindingPresenter" />
+            name="viewModel"
+            type="com.example.kakaobankhomework.ui.search.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:button="@drawable/bookmark_switch"
             android:checked="@{item.bookmarked}"
+            android:onClick="@{() -> viewModel.onBookmarkClick(item)}"
             android:scaleX="0.5"
             android:scaleY="0.5"
             android:thumb="@null"

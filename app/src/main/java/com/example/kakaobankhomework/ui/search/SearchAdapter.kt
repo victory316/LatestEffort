@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaobankhomework.databinding.ItemSearchResultBinding
 import com.example.kakaobankhomework.model.SearchItem
 
-class NewSearchAdapter(private val viewModel: SearchViewModel) :
-    ListAdapter<SearchItem, NewSearchAdapter.ViewHolder>(TaskDiffCallback()) {
+class SearchAdapter(private val viewModel: SearchViewModel) :
+    ListAdapter<SearchItem, SearchAdapter.ViewHolder>(TaskDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -29,6 +29,7 @@ class NewSearchAdapter(private val viewModel: SearchViewModel) :
             when (item) {
                 is SearchItem.SearchResult -> {
                     binding.item = item
+                    binding.viewModel = viewModel
                 }
             }
 

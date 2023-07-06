@@ -8,9 +8,9 @@ abstract class DataBindingViewHolder<T>(internal val binding: ViewDataBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: T, presenter: DataBindingPresenter? = null) {
-        presenter?.let {
-            binding.setVariable(BR.presenter, it)
-        }
+//        presenter?.let {
+//            binding.setVariable(BR.presenter, it)
+//        }
         bindItem(item)
         binding.executePendingBindings()
     }

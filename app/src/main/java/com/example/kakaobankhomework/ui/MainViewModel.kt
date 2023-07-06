@@ -27,14 +27,6 @@ class MainViewModel @Inject constructor(
         searchUseCase.searchImage(query = query, count = page)
     }
 
-    fun addBookmark(id: String) {
-        bookmarkUseCase.addBookmark()
-    }
-
-    fun removeBookmark(id: String) {
-        bookmarkUseCase.removeBookmark()
-    }
-
     fun clearBookmark() {
         bookmarkUseCase.clearBookmark()
     }

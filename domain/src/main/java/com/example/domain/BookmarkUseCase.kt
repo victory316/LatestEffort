@@ -4,9 +4,9 @@ interface BookmarkUseCase {
 
     fun loadBookmarks()
 
-    fun addBookmark()
+    fun addBookmark(id: Int)
 
-    fun removeBookmark()
+    fun removeBookmark(id: Int)
 
     fun clearBookmark()
 }
