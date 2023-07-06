@@ -11,6 +11,10 @@ class BookmarkViewModel @Inject constructor(
     private val bookmarkUseCase: BookmarkUseCase,
 ) : ViewModel() {
 
+    fun getBookmarks() {
+        bookmarkUseCase.loadBookmarks()
+    }
+
     fun onBookmarkClick(item: SearchItem.SearchResult) {
         if (item.isBookmarked) {
             bookmarkUseCase.removeBookmark(item.thumbnailUrl.hashCode())
