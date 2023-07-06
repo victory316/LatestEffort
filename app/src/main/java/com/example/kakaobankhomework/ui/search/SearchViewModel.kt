@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -89,5 +90,10 @@ class SearchViewModel @Inject constructor(
         } else {
             bookmarkUseCase.addBookmark(item.thumbnailUrl)
         }
+
+        updateItems(item, !item.isBookmarked)
+    }
+
+    fun updateItems(item: SearchItem.SearchResult, bookmarked: Boolean) {
     }
 }

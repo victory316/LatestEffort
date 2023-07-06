@@ -12,7 +12,7 @@ sealed class SearchItem(
         val id: Int,
         val thumbnailUrl: String,
         val type: Type,
-        val isBookmarked: Boolean = false
+        var isBookmarked: Boolean = false
     ) : SearchItem(R.layout.item_search_result) {
         enum class Type {
             IMAGE,

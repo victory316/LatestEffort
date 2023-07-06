@@ -36,9 +36,6 @@ class BookmarkViewModel @Inject constructor(
 
     fun onBookmarkClick(item: ItemBookmarked) {
         bookmarkUseCase.removeBookmark(item.thumbnailUrl)
-    }
-
-    fun clearBookmark() {
-        bookmarkUseCase.clearBookmark()
+        loadBookmarks()
     }
 }
