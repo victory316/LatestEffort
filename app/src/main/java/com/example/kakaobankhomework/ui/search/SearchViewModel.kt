@@ -35,6 +35,7 @@ class SearchViewModel @Inject constructor(
                         id = 0,
                         thumbnailUrl = it.thumbnailUrl,
                         type = SearchItem.SearchResult.Type.IMAGE,
+                        isBookmarked = it.bookmarked,
                     )
                 }
                 val videoResult = videos.data.result.map {
@@ -42,6 +43,7 @@ class SearchViewModel @Inject constructor(
                         id = 0,
                         thumbnailUrl = it.thumbnailUrl,
                         type = SearchItem.SearchResult.Type.VIDEO,
+                        isBookmarked = it.bookmarked,
                     )
                 }
                 SearchUiState(

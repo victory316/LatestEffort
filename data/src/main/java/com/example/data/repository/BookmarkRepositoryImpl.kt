@@ -21,7 +21,10 @@ class BookmarkRepositoryImpl @Inject constructor(
         currentIds?.toMutableSet()?.apply {
             add(id.toString())
         }.also {
-            sharedPreferences.edit().putStringSet(bookmarkIds, it)
+            sharedPreferences.edit().apply {
+                putStringSet(bookmarkIds, it)
+                apply()
+            }
         }
     }
 
@@ -31,7 +34,10 @@ class BookmarkRepositoryImpl @Inject constructor(
         currentIds?.toMutableSet()?.apply {
             remove(id.toString())
         }.also {
-            sharedPreferences.edit().putStringSet(bookmarkIds, it)
+            sharedPreferences.edit().apply {
+                putStringSet(bookmarkIds, it)
+                apply()
+            }
         }
     }
 
