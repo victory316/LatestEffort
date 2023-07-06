@@ -4,20 +4,21 @@ import androidx.annotation.LayoutRes
 import com.example.kakaobankhomework.R
 import com.example.kakaobankhomework.binding.SimpleItemDiffCallback
 
-sealed class SearchResultItem(@LayoutRes val layoutResId: Int) :
-    SimpleItemDiffCallback.DiffCallback {
+sealed class SearchItem(
+    @LayoutRes val layoutResId: Int
+) : SimpleItemDiffCallback.DiffCallback {
 
-    data class ResultItem(
+    data class SearchResult(
         val id: Int,
         val thumbnailUrl: String,
-        val type: Type
-    ) : SearchResultItem(R.layout.item_search_result) {
-
+        val type: Type,
+        val isBookmarked: Boolean = false
+    ) : SearchItem(R.layout.item_search_result) {
         enum class Type {
             IMAGE,
             VIDEO
         }
     }
-
-    data class PageHeader(val pageCount: Int) : SearchResultItem(R.layout.item_search_page_header)
 }
+
+

@@ -3,16 +3,13 @@ package com.example.network.retrofit
 import com.example.network.NetworkDataSource
 import com.example.network.model.ImageResultDto
 import com.example.network.model.VideoResultDto
-import com.google.gson.internal.GsonBuildConfig
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.serialization.json.Json
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.GsonBuilder
 import okhttp3.Call
-import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.Query
 import javax.inject.Inject
@@ -40,14 +37,19 @@ private const val networkBaseUrl = "https://dapi.kakao.com"
 
 @Singleton
 class Network @Inject constructor(
-    networkJson: Json,
     okhttpCallFactory: Call.Factory,
 ) : NetworkDataSource {
 
     private val networkApi = Retrofit.Builder()
         .baseUrl(networkBaseUrl)
         .callFactory(okhttpCallFactory)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(
+            GsonConverterFactory.create(
+                GsonBuilder().setFieldNamingPolicy(
+                    FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES
+                ).create()
+            )
+        )
         .build()
         .create(NetworkApi::class.java)
 

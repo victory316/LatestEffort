@@ -1,12 +1,15 @@
 package com.example.domain.repository
 
 import com.example.domain.model.Image
+import com.example.domain.model.SearchResultImage
+import com.example.domain.model.SearchResultVideo
 import com.example.domain.model.Video
+import com.example.domain.model.result.Result
 import kotlinx.coroutines.flow.Flow
 
 interface SearchRepository {
 
-    suspend fun searchImage(query: String, size: Int?): Flow<List<Image>>
+    suspend fun searchImage(query: String, size: Int?): Flow<Result<SearchResultImage>>
 
-    suspend fun searchVideo(query: String, size: Int?): Flow<List<Video>>
+    suspend fun searchVideo(query: String, size: Int?): Flow<Result<SearchResultVideo>>
 }
