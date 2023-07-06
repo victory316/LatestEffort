@@ -85,9 +85,9 @@ class SearchViewModel @Inject constructor(
 
     fun onBookmarkClick(item: SearchItem.SearchResult) {
         if (item.isBookmarked) {
-            bookmarkUseCase.removeBookmark(item.thumbnailUrl.hashCode())
+            bookmarkUseCase.removeBookmark(item.thumbnailUrl)
         } else {
-            bookmarkUseCase.addBookmark(item.thumbnailUrl.hashCode())
+            bookmarkUseCase.addBookmark(item.thumbnailUrl)
         }
     }
 }

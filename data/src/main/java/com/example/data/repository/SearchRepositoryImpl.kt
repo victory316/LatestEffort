@@ -31,7 +31,7 @@ class SearchRepositoryImpl @Inject constructor(
                 SearchResultImage(
                     result = dto.documents?.map {
                         val isBookmarked =
-                            currentIds?.contains(it.thumbnailUrl.hashCode().toString())
+                            currentIds?.contains(it.thumbnailUrl)
 
                         Image(
                             thumbnailUrl = it.thumbnailUrl,
@@ -54,7 +54,7 @@ class SearchRepositoryImpl @Inject constructor(
                 SearchResultVideo(
                     result = dto.documents?.map {
                         val isBookmarked =
-                            currentIds?.contains(it.thumbnail.hashCode().toString())
+                            currentIds?.contains(it.thumbnail)
 
                         Video(
                             thumbnailUrl = it.thumbnail,

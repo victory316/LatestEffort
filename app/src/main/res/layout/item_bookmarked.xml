@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.example.kakaobankhomework.model.SearchItem.SearchResult" />
+            type="com.example.kakaobankhomework.model.ItemBookmarked" />
 
         <variable
             name="viewModel"
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@drawable/bookmark_switch"
-            android:checked="@{item.bookmarked}"
+            android:checked="true"
             android:onClick="@{() -> viewModel.onBookmarkClick(item)}"
             android:scaleX="0.5"
             android:scaleY="0.5"

@@ -9,17 +9,17 @@ class BookmarkRepositoryImpl @Inject constructor(
     private val sharedPreferences: SharedPreferences,
 ) : BookmarkRepository {
 
-    override fun loadBookmarks(): List<Int> {
+    override fun loadBookmarks(): List<String> {
         val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
 
-        return currentIds?.map { it.toInt() } ?: emptyList()
+        return currentIds?.toList() ?: emptyList()
     }
 
-    override fun addBookmark(id: Int) {
+    override fun addBookmark(id: String) {
         val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
 
         currentIds?.toMutableSet()?.apply {
-            add(id.toString())
+            add(id)
         }.also {
             sharedPreferences.edit().apply {
                 putStringSet(bookmarkIds, it)
@@ -28,11 +28,11 @@ class BookmarkRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun removeBookmark(id: Int) {
+    override fun removeBookmark(id: String) {
         val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
 
         currentIds?.toMutableSet()?.apply {
-            remove(id.toString())
+            remove(id)
         }.also {
             sharedPreferences.edit().apply {
                 putStringSet(bookmarkIds, it)

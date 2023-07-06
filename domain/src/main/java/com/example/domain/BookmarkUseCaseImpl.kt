@@ -7,11 +7,11 @@ class BookmarkUseCaseImpl @Inject constructor(
     private val bookmarkRepository: BookmarkRepository
 ) : BookmarkUseCase {
 
-    override fun loadBookmarks(): List<Int> {
+    override fun loadBookmarks(): List<String> {
         return bookmarkRepository.loadBookmarks()
     }
 
-    override fun addBookmark(id: Int) {
+    override fun addBookmark(id: String) {
         bookmarkRepository.addBookmark(id)
     }
 
@@ -19,7 +19,7 @@ class BookmarkUseCaseImpl @Inject constructor(
         bookmarkRepository.clearAllBookmark()
     }
 
-    override fun removeBookmark(id: Int) {
+    override fun removeBookmark(id: String) {
         bookmarkRepository.removeBookmark(id)
     }
 }

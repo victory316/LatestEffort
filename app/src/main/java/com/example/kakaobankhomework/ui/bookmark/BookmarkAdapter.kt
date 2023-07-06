@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaobankhomework.databinding.ItemBookmarkedBinding
-import com.example.kakaobankhomework.databinding.ItemSearchResultBinding
+import com.example.kakaobankhomework.model.ItemBookmarked
 import com.example.kakaobankhomework.model.SearchItem
 
 class BookmarkAdapter(private val viewModel: BookmarkViewModel) :
-    ListAdapter<SearchItem, BookmarkAdapter.ViewHolder>(TaskDiffCallback()) {
+    ListAdapter<ItemBookmarked, BookmarkAdapter.ViewHolder>(TaskDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -25,10 +25,10 @@ class BookmarkAdapter(private val viewModel: BookmarkViewModel) :
     class ViewHolder private constructor(val binding: ItemBookmarkedBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: BookmarkViewModel, item: SearchItem) {
+        fun bind(viewModel: BookmarkViewModel, item: ItemBookmarked) {
 
             when (item) {
-                is SearchItem.SearchResult -> {
+                is ItemBookmarked -> {
                     binding.item = item
                     binding.viewModel = viewModel
                 }
@@ -48,12 +48,12 @@ class BookmarkAdapter(private val viewModel: BookmarkViewModel) :
     }
 }
 
-class TaskDiffCallback : DiffUtil.ItemCallback<SearchItem>() {
-    override fun areItemsTheSame(oldItem: SearchItem, newItem: SearchItem): Boolean {
+class TaskDiffCallback : DiffUtil.ItemCallback<ItemBookmarked>() {
+    override fun areItemsTheSame(oldItem: ItemBookmarked, newItem: ItemBookmarked): Boolean {
         return oldItem.hashCode() == newItem.hashCode()
     }
 
-    override fun areContentsTheSame(oldItem: SearchItem, newItem: SearchItem): Boolean {
+    override fun areContentsTheSame(oldItem: ItemBookmarked, newItem: ItemBookmarked): Boolean {
         return oldItem == newItem
     }
 }
