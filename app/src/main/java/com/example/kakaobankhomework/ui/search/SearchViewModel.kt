@@ -1,6 +1,5 @@
 package com.example.kakaobankhomework.ui.search
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +7,8 @@ import com.example.domain.BookmarkUseCase
 import com.example.domain.SearchUseCase
 import com.example.domain.model.SearchResultImage
 import com.example.domain.model.SearchResultVideo
-import com.example.kakaobankhomework.ui.model.UiResult
+import com.example.domain.model.result.Result
+import com.example.kakaobankhomework.model.SearchItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,13 +17,11 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.example.domain.model.result.Result
-import com.example.kakaobankhomework.model.SearchItem
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val bookmarkUseCase: BookmarkUseCase,
-    private val searchUseCase: SearchUseCase
+    private val searchUseCase: SearchUseCase,
 ) : ViewModel() {
 
     private val searchImageState = MutableStateFlow<Result<SearchResultImage>>(Result.Loading)
@@ -36,14 +34,14 @@ class SearchViewModel @Inject constructor(
                     SearchItem.SearchResult(
                         id = 0,
                         thumbnailUrl = it.thumbnailUrl,
-                        type = SearchItem.SearchResult.Type.IMAGE
+                        type = SearchItem.SearchResult.Type.IMAGE,
                     )
                 }
                 val videoResult = videos.data.result.map {
                     SearchItem.SearchResult(
                         id = 0,
                         thumbnailUrl = it.thumbnailUrl,
-                        type = SearchItem.SearchResult.Type.VIDEO
+                        type = SearchItem.SearchResult.Type.VIDEO,
                     )
                 }
                 SearchUiState(
@@ -51,7 +49,7 @@ class SearchViewModel @Inject constructor(
                     videoCurrentPage = videos.data.currentPage,
                     searchResults = imageResult + videoResult,
                     imagePageable = false,
-                    videoPageable = false
+                    videoPageable = false,
                 )
             } else {
                 SearchUiState(searchResults = emptyList())
@@ -59,7 +57,7 @@ class SearchViewModel @Inject constructor(
         }.stateIn(
             scope = viewModelScope,
             initialValue = SearchUiState(),
-            started = SharingStarted.WhileSubscribed(5_000)
+            started = SharingStarted.WhileSubscribed(5_000),
         )
 
     val queryText = MutableLiveData<String?>(null)

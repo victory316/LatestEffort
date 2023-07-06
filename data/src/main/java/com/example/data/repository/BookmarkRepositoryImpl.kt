@@ -1,13 +1,13 @@
 package com.example.data.repository
 
 import android.content.SharedPreferences
+import com.example.data.repository.di.bookmarkIds
 import com.example.domain.repository.BookmarkRepository
 import javax.inject.Inject
 
 class BookmarkRepositoryImpl @Inject constructor(
-    private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences,
 ) : BookmarkRepository {
-    private val bookmarkIds = "bookmark_ids"
 
     override fun loadBookmarks(): List<Int> {
         val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
@@ -18,7 +18,7 @@ class BookmarkRepositoryImpl @Inject constructor(
     override fun addBookmark(id: Int) {
         val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
 
-        currentIds?.apply {
+        currentIds?.toMutableSet()?.apply {
             add(id.toString())
         }.also {
             sharedPreferences.edit().putStringSet(bookmarkIds, it)
@@ -28,7 +28,7 @@ class BookmarkRepositoryImpl @Inject constructor(
     override fun removeBookmark(id: Int) {
         val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
 
-        currentIds?.apply {
+        currentIds?.toMutableSet()?.apply {
             remove(id.toString())
         }.also {
             sharedPreferences.edit().putStringSet(bookmarkIds, it)
