@@ -12,6 +12,7 @@ import com.example.domain.repository.SearchRepository
 import com.example.network.Dispatcher
 import com.example.network.Dispatchers
 import com.example.network.NetworkDataSource
+import com.example.network.retrofit.SortBy
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -27,7 +28,9 @@ class SearchRepositoryImpl @Inject constructor(
         flow {
             val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
 
-            val result = networkDataSource.getImages(query = query, pages = size).mapResult { dto ->
+            val result = networkDataSource.getImages(
+                query = query, sort = SortBy.RECENCY.stringKey, size = size
+            ).mapResult { dto ->
                 SearchResultImage(
                     result = dto.documents?.map {
                         val isBookmarked =
@@ -50,7 +53,11 @@ class SearchRepositoryImpl @Inject constructor(
         flow {
             val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
 
-            val result = networkDataSource.getVideos(query = query, pages = size).mapResult { dto ->
+            val result = networkDataSource.getVideos(
+                query = query,
+                sort = SortBy.RECENCY.stringKey,
+                size = size
+            ).mapResult { dto ->
                 SearchResultVideo(
                     result = dto.documents?.map {
                         val isBookmarked =

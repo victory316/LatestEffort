@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.BookmarkUseCase
 import com.example.kakaobankhomework.model.ItemBookmarked
-import com.example.kakaobankhomework.model.SearchItem
-import com.example.kakaobankhomework.ui.search.SearchUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

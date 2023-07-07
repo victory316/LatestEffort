@@ -6,7 +6,7 @@ import retrofit2.Response
 
 interface NetworkDataSource {
 
-    suspend fun getImages(query: String, pages: Int?): Response<ImageResultDto>
+    suspend fun getImages(query: String, sort: String?, page: Int?, size:Int?): Response<ImageResultDto>
 
-    suspend fun getVideos(query: String, pages: Int?): Response<VideoResultDto>
+    suspend fun getVideos(query: String, sort: String?, page: Int?, size:Int?): Response<VideoResultDto>
 }

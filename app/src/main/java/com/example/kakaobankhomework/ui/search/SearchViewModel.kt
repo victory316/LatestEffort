@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -51,8 +50,8 @@ class SearchViewModel @Inject constructor(
                     imageCurrentPage = images.data.currentPage,
                     videoCurrentPage = videos.data.currentPage,
                     searchResults = imageResult + videoResult,
-                    imagePageable = false,
-                    videoPageable = false,
+                    imagePageable = images.data.isPageable,
+                    videoPageable = videos.data.isPageable,
                 )
             } else {
                 SearchUiState(searchResults = emptyList())
@@ -67,18 +66,18 @@ class SearchViewModel @Inject constructor(
     private val searchQuery
         get() = queryText.value
 
-    fun searchImage(page: Int = 10) = viewModelScope.launch {
+    fun searchImage(page: Int = 10, size: Int = 10) = viewModelScope.launch {
         searchQuery?.let { query ->
-            searchUseCase.searchImage(query = query, count = page).collect { result ->
+            searchUseCase.searchImage(query = query, page = page, size = size).collect { result ->
                 queryText.value = ""
                 searchImageState.value = result
             }
         }
     }
 
-    fun searchVideo(page: Int = 10) = viewModelScope.launch {
+    fun searchVideo(page: Int = 10, size: Int = 10) = viewModelScope.launch {
         searchQuery?.let { query ->
-            searchUseCase.searchVideo(query = query, count = page).collect { result ->
+            searchUseCase.searchVideo(query = query, page = page, size = size).collect { result ->
                 searchVideoState.value = result
             }
         }
