@@ -24,12 +24,19 @@ class SearchRepositoryImpl @Inject constructor(
     private val sharedPreferences: SharedPreferences,
     @Dispatcher(Dispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
 ) : SearchRepository {
-    override suspend fun searchImage(query: String, size: Int?): Flow<Result<SearchResultImage>> =
+    override suspend fun searchImage(
+        query: String,
+        page: Int?,
+        size: Int?
+    ): Flow<Result<SearchResultImage>> =
         flow {
             val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
 
             val result = networkDataSource.getImages(
-                query = query, sort = SortBy.RECENCY.stringKey, size = size
+                query = query,
+                sort = SortBy.RECENCY.stringKey,
+                page = page,
+                size = size
             ).mapResult { dto ->
                 SearchResultImage(
                     result = dto.documents?.map {
@@ -49,13 +56,18 @@ class SearchRepositoryImpl @Inject constructor(
             emit(result)
         }.flowOn(ioDispatcher)
 
-    override suspend fun searchVideo(query: String, size: Int?): Flow<Result<SearchResultVideo>> =
+    override suspend fun searchVideo(
+        query: String,
+        page: Int?,
+        size: Int?
+    ): Flow<Result<SearchResultVideo>> =
         flow {
             val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
 
             val result = networkDataSource.getVideos(
                 query = query,
                 sort = SortBy.RECENCY.stringKey,
+                page = page,
                 size = size
             ).mapResult { dto ->
                 SearchResultVideo(

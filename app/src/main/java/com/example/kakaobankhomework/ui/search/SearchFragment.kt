@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaobankhomework.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -44,6 +45,16 @@ class SearchFragment : Fragment() {
 
         binding.searchRecyclerView.apply {
             adapter = searchAdapter
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    searchViewModel.searchImageMore()
+                    searchViewModel.searchVideoMore()
+                }
+            })
         }
 
         binding.searchInput.setEndIconOnClickListener {

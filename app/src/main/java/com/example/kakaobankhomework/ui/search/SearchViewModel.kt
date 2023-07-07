@@ -83,6 +83,29 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    fun searchImageMore(size: Int = 10) = viewModelScope.launch {
+        val pageToQuery = searchResultFlow.value.imageCurrentPage + 1
+
+        searchQuery?.let { query ->
+            searchUseCase.searchImage(query = query, page = pageToQuery, size = size)
+                .collect { result ->
+                    queryText.value = ""
+                    searchImageState
+                }
+        }
+    }
+
+    fun searchVideoMore(size: Int = 10) = viewModelScope.launch {
+        val pageToQuery = searchResultFlow.value.videoCurrentPage + 1
+
+        searchQuery?.let { query ->
+            searchUseCase.searchVideo(query = query, page = pageToQuery, size = size)
+                .collect { result ->
+                    searchVideoState
+                }
+        }
+    }
+
     fun onBookmarkClick(item: SearchItem.SearchResult) {
         if (item.isBookmarked) {
             bookmarkUseCase.removeBookmark(item.thumbnailUrl)
