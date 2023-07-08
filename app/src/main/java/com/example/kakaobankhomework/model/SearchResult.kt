@@ -21,6 +21,10 @@ sealed class SearchItem(
             VIDEO
         }
     }
+
+    data class SearchPage(
+        val searchPageIndex: Int
+    ) : SearchItem(R.layout.item_bookmarked)
 }
 
 

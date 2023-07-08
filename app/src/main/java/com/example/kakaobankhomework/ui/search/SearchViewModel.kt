@@ -30,6 +30,14 @@ class SearchViewModel @Inject constructor(
     val isPaging
         get() = _isPaging
 
+    private var _lastImagePage = 0
+    private val lastImagePage
+        get() = _lastImagePage
+
+    private var _lastVideoPage = 0
+    private val lastVideoPage
+        get() = _lastVideoPage
+
     private val searchImageState = MutableStateFlow<Result<SearchResultImage>>(Result.Loading)
     private val searchVideoState = MutableStateFlow<Result<SearchResultVideo>>(Result.Loading)
 
@@ -38,26 +46,36 @@ class SearchViewModel @Inject constructor(
             _isPaging = false
 
             if (images is Result.Success && videos is Result.Success) {
-                val imageResult = images.data.result.asSequence()
-                    .sortedBy { it.dateTime }.map {
-                        SearchItem.SearchResult(
-                            id = 0,
-                            thumbnailUrl = it.thumbnailUrl,
-                            type = SearchItem.SearchResult.Type.IMAGE,
-                            dateTime = it.dateTime,
-                            isBookmarked = it.bookmarked,
-                        )
-                    }.toList()
-                val videoResult = videos.data.result.asSequence()
-                    .sortedBy { it.dateTime }.map {
-                        SearchItem.SearchResult(
-                            id = 0,
-                            thumbnailUrl = it.thumbnailUrl,
-                            type = SearchItem.SearchResult.Type.VIDEO,
-                            dateTime = it.dateTime,
-                            isBookmarked = it.bookmarked,
-                        )
-                    }.toList()
+                val imageResult = images.data.result.sortedBy { it.dateTime }.map {
+                    if (lastImagePage != it.page) {
+                        SearchItem.SearchPage(it.page)
+                    }
+
+                    _lastImagePage = it.page
+
+                    SearchItem.SearchResult(
+                        id = 0,
+                        thumbnailUrl = it.thumbnailUrl,
+                        type = SearchItem.SearchResult.Type.IMAGE,
+                        dateTime = it.dateTime,
+                        isBookmarked = it.bookmarked,
+                    )
+                }
+                val videoResult = videos.data.result.sortedBy { it.dateTime }.map {
+                    if (lastVideoPage != it.page) {
+                        SearchItem.SearchPage(it.page)
+                    }
+
+                    _lastVideoPage = it.page
+
+                    SearchItem.SearchResult(
+                        id = 0,
+                        thumbnailUrl = it.thumbnailUrl,
+                        type = SearchItem.SearchResult.Type.VIDEO,
+                        dateTime = it.dateTime,
+                        isBookmarked = it.bookmarked,
+                    )
+                }
 
                 SearchUiState(
                     imageCurrentPage = images.data.currentPage,
@@ -107,7 +125,9 @@ class SearchViewModel @Inject constructor(
                             (currentState as? Result.Success)?.let { asSuccess ->
                                 val pagedItems =
                                     (result as? Result.Success)?.data?.result ?: emptyList()
-                                val mergedItems = asSuccess.data.result + pagedItems
+                                val mergedItems = (asSuccess.data.result + pagedItems).sortedBy {
+                                    it.dateTime
+                                }
                                 val updatedPage =
                                     (result as? Result.Success)?.data?.currentPage ?: 0
 
@@ -136,7 +156,9 @@ class SearchViewModel @Inject constructor(
                             (currentState as? Result.Success)?.let { asSuccess ->
                                 val pagedItems =
                                     (result as? Result.Success)?.data?.result ?: emptyList()
-                                val mergedItems = asSuccess.data.result + pagedItems
+                                val mergedItems = (asSuccess.data.result + pagedItems).sortedBy {
+                                    it.dateTime
+                                }
                                 val updatedPage =
                                     (result as? Result.Success)?.data?.currentPage ?: 0
 

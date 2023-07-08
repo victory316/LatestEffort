@@ -2,9 +2,13 @@ package com.example.kakaobankhomework.ui.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kakaobankhomework.databinding.ItemBookmarkedBinding
+import com.example.kakaobankhomework.databinding.ItemSearchPageHeaderBinding
 import com.example.kakaobankhomework.databinding.ItemSearchResultBinding
 import com.example.kakaobankhomework.model.SearchItem
 
@@ -18,28 +22,42 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
+        return ViewHolder.from(parent, viewType)
     }
 
-    class ViewHolder private constructor(val binding: ItemSearchResultBinding) :
+    override fun getItemViewType(position: Int) = getItem(position).layoutResId
+
+    class ViewHolder private constructor(val binding: ViewDataBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(viewModel: SearchViewModel, item: SearchItem) {
+            when (binding) {
+                is ItemSearchResultBinding -> {
+                    (item as? SearchItem.SearchResult)?.let {
+                        binding.item = item
+                        binding.viewModel = viewModel
+                    }
+                }
 
-            when (item) {
-                is SearchItem.SearchResult -> {
-                    binding.item = item
-                    binding.viewModel = viewModel
+                is ItemSearchPageHeaderBinding -> {
+                    (item as? SearchItem.SearchPage)?.let {
+                        binding.item = item
+                    }
                 }
             }
-
             binding.executePendingBindings()
         }
 
         companion object {
-            fun from(parent: ViewGroup): ViewHolder {
+            fun from(parent: ViewGroup, viewType: Int): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ItemSearchResultBinding.inflate(layoutInflater, parent, false)
+                val binding =
+                    DataBindingUtil.inflate<ViewDataBinding>(
+                        layoutInflater,
+                        viewType,
+                        parent,
+                        false
+                    )
 
                 return ViewHolder(binding)
             }
@@ -47,12 +65,6 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
     }
 }
 
-/**
- * Callback for calculating the diff between two non-null items in a list.
- *
- * Used by ListAdapter to calculate the minimum number of changes between and old list and a new
- * list that's been passed to `submitList`.
- */
 class TaskDiffCallback : DiffUtil.ItemCallback<SearchItem>() {
     override fun areItemsTheSame(oldItem: SearchItem, newItem: SearchItem): Boolean {
         return oldItem.hashCode() == newItem.hashCode()
