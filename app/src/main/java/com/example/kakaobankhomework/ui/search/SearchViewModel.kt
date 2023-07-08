@@ -96,11 +96,6 @@ class SearchViewModel @Inject constructor(
             _isPaging = true
             val pageToQuery = searchResultFlow.value.imageCurrentPage + 1
 
-            Log.d(
-                "TAG",
-                "searchImageMore: $position | ${searchResultFlow.value.searchResults.size - 3}"
-            )
-
             searchQuery?.let { query ->
                 searchUseCase.searchImage(query = query, page = pageToQuery, size = size)
                     .collect { result ->
@@ -129,8 +124,6 @@ class SearchViewModel @Inject constructor(
         if (position >= searchResultFlow.value.searchResults.size - 3) {
             _isPaging = true
             val pageToQuery = searchResultFlow.value.videoCurrentPage + 1
-
-            Log.d("TAG", "searchVideoMore: $pageToQuery")
 
             searchQuery?.let { query ->
                 searchUseCase.searchVideo(query = query, page = pageToQuery, size = size)

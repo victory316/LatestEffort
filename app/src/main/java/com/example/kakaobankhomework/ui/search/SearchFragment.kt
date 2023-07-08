@@ -74,8 +74,6 @@ class SearchFragment : Fragment() {
     private fun initObserves() {
         lifecycleScope.launch {
             searchViewModel.searchResultFlow.collect { state ->
-                Log.d("TAG", "initObserves: $state")
-
                 searchAdapter?.submitList(state.searchResults)
             }
         }
