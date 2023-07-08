@@ -56,8 +56,10 @@ class SearchFragment : Fragment() {
                     (layoutManager as? LinearLayoutManager)?.let {
                         val lastPosition = it.findLastVisibleItemPosition()
 
-                        searchViewModel.searchImageMore(lastPosition)
-                        searchViewModel.searchVideoMore(lastPosition)
+                        if (!searchViewModel.isPaging) {
+                            searchViewModel.searchImageMore(lastPosition)
+                            searchViewModel.searchVideoMore(lastPosition)
+                        }
                     }
                 }
             })
@@ -72,6 +74,8 @@ class SearchFragment : Fragment() {
     private fun initObserves() {
         lifecycleScope.launch {
             searchViewModel.searchResultFlow.collect { state ->
+                Log.d("TAG", "initObserves: $state")
+
                 searchAdapter?.submitList(state.searchResults)
             }
         }
