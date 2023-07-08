@@ -1,12 +1,14 @@
 package com.example.kakaobankhomework.ui.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaobankhomework.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,8 +53,12 @@ class SearchFragment : Fragment() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
 
-                    searchViewModel.searchImageMore()
-                    searchViewModel.searchVideoMore()
+                    (layoutManager as? LinearLayoutManager)?.let {
+                        val lastPosition = it.findLastVisibleItemPosition()
+
+                        searchViewModel.searchImageMore(lastPosition)
+                        searchViewModel.searchVideoMore(lastPosition)
+                    }
                 }
             })
         }

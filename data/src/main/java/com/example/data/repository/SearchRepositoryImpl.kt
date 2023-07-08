@@ -48,7 +48,7 @@ class SearchRepositoryImpl @Inject constructor(
                             bookmarked = isBookmarked ?: false,
                         )
                     } ?: emptyList(),
-                    currentPage = dto.meta.pageableCount,
+                    currentPage = page ?: 0 + 1,
                     isPageable = !dto.meta.isEnd,
                 )
             }
@@ -80,7 +80,7 @@ class SearchRepositoryImpl @Inject constructor(
                             bookmarked = isBookmarked ?: false,
                         )
                     } ?: emptyList(),
-                    currentPage = dto.meta.pageableCount,
+                    currentPage = page ?: 0 + 1,
                     isPageable = !dto.meta.isEnd,
                 )
             }

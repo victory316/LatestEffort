@@ -1,5 +1,6 @@
 package com.example.kakaobankhomework.ui.search
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,12 +10,14 @@ import com.example.domain.model.SearchResultImage
 import com.example.domain.model.SearchResultVideo
 import com.example.domain.model.result.Result
 import com.example.kakaobankhomework.model.SearchItem
+import com.example.kakaobankhomework.ui.model.UiResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,11 +27,15 @@ class SearchViewModel @Inject constructor(
     private val searchUseCase: SearchUseCase,
 ) : ViewModel() {
 
+    private var isPaging = false
+
     private val searchImageState = MutableStateFlow<Result<SearchResultImage>>(Result.Loading)
     private val searchVideoState = MutableStateFlow<Result<SearchResultVideo>>(Result.Loading)
 
     val searchResultFlow: StateFlow<SearchUiState> =
         combine(searchImageState, searchVideoState) { images, videos ->
+            isPaging = false
+
             if (images is Result.Success && videos is Result.Success) {
                 val imageResult = images.data.result.map {
                     SearchItem.SearchResult(
@@ -69,7 +76,6 @@ class SearchViewModel @Inject constructor(
     fun searchImage(page: Int = 10, size: Int = 10) = viewModelScope.launch {
         searchQuery?.let { query ->
             searchUseCase.searchImage(query = query, page = page, size = size).collect { result ->
-                queryText.value = ""
                 searchImageState.value = result
             }
         }
@@ -83,27 +89,51 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun searchImageMore(size: Int = 10) = viewModelScope.launch {
-        val pageToQuery = searchResultFlow.value.imageCurrentPage + 1
+    fun searchImageMore(position: Int, size: Int = 10) = viewModelScope.launch {
+        if (position >= searchResultFlow.value.searchResults.size - 3) {
+            val pageToQuery = searchResultFlow.value.imageCurrentPage + 1
 
-        searchQuery?.let { query ->
-            searchUseCase.searchImage(query = query, page = pageToQuery, size = size)
-                .collect { result ->
-                    queryText.value = ""
-                    searchImageState
-                }
+            searchQuery?.let { query ->
+                searchUseCase.searchImage(query = query, page = pageToQuery, size = size)
+                    .collect { result ->
+                        searchImageState.update { currentState ->
+                            (currentState as? Result.Success)?.let { asSuccess ->
+                                val pagedItems =
+                                    (result as? Result.Success)?.data?.result ?: emptyList()
+                                val mergedItems = asSuccess.data.result + pagedItems
+
+                                Result.Success(asSuccess.data.copy(result = mergedItems))
+                            } ?: currentState
+                        }
+                    }
+            }
+
+            isPaging = true
         }
     }
 
-    fun searchVideoMore(size: Int = 10) = viewModelScope.launch {
-        val pageToQuery = searchResultFlow.value.videoCurrentPage + 1
+    fun searchVideoMore(position: Int, size: Int = 10) = viewModelScope.launch {
+        if (position >= searchResultFlow.value.searchResults.size - 3) {
+            val pageToQuery = searchResultFlow.value.videoCurrentPage + 1
 
-        searchQuery?.let { query ->
-            searchUseCase.searchVideo(query = query, page = pageToQuery, size = size)
-                .collect { result ->
-                    searchVideoState
-                }
+            Log.d("TAG", "searchVideoMore: $pageToQuery")
+
+            searchQuery?.let { query ->
+                searchUseCase.searchVideo(query = query, page = pageToQuery, size = size)
+                    .collect { result ->
+                        searchVideoState.update { currentState ->
+                            (currentState as? Result.Success)?.let { asSuccess ->
+                                val pagedItems =
+                                    (result as? Result.Success)?.data?.result ?: emptyList()
+                                val mergedItems = asSuccess.data.result + pagedItems
+
+                                Result.Success(asSuccess.data.copy(result = mergedItems))
+                            } ?: currentState
+                        }
+                    }
+            }
         }
+        isPaging = true
     }
 
     fun onBookmarkClick(item: SearchItem.SearchResult) {
