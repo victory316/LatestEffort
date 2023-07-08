@@ -46,6 +46,7 @@ class SearchRepositoryImpl @Inject constructor(
                         Image(
                             thumbnailUrl = it.thumbnailUrl,
                             bookmarked = isBookmarked ?: false,
+                            dateTime = it.datetime
                         )
                     } ?: emptyList(),
                     currentPage = page ?: 0 + 1,
@@ -78,6 +79,7 @@ class SearchRepositoryImpl @Inject constructor(
                         Video(
                             thumbnailUrl = it.thumbnail,
                             bookmarked = isBookmarked ?: false,
+                            dateTime = it.datetime
                         )
                     } ?: emptyList(),
                     currentPage = page ?: 0 + 1,

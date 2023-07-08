@@ -38,22 +38,26 @@ class SearchViewModel @Inject constructor(
             _isPaging = false
 
             if (images is Result.Success && videos is Result.Success) {
-                val imageResult = images.data.result.map {
-                    SearchItem.SearchResult(
-                        id = 0,
-                        thumbnailUrl = it.thumbnailUrl,
-                        type = SearchItem.SearchResult.Type.IMAGE,
-                        isBookmarked = it.bookmarked,
-                    )
-                }
-                val videoResult = videos.data.result.map {
-                    SearchItem.SearchResult(
-                        id = 0,
-                        thumbnailUrl = it.thumbnailUrl,
-                        type = SearchItem.SearchResult.Type.VIDEO,
-                        isBookmarked = it.bookmarked,
-                    )
-                }
+                val imageResult = images.data.result.asSequence()
+                    .sortedBy { it.dateTime }.map {
+                        SearchItem.SearchResult(
+                            id = 0,
+                            thumbnailUrl = it.thumbnailUrl,
+                            type = SearchItem.SearchResult.Type.IMAGE,
+                            dateTime = it.dateTime,
+                            isBookmarked = it.bookmarked,
+                        )
+                    }.toList()
+                val videoResult = videos.data.result.asSequence()
+                    .sortedBy { it.dateTime }.map {
+                        SearchItem.SearchResult(
+                            id = 0,
+                            thumbnailUrl = it.thumbnailUrl,
+                            type = SearchItem.SearchResult.Type.VIDEO,
+                            dateTime = it.dateTime,
+                            isBookmarked = it.bookmarked,
+                        )
+                    }.toList()
 
                 SearchUiState(
                     imageCurrentPage = images.data.currentPage,
@@ -136,7 +140,6 @@ class SearchViewModel @Inject constructor(
                                 val updatedPage =
                                     (result as? Result.Success)?.data?.currentPage ?: 0
 
-
                                 Result.Success(
                                     asSuccess.data.copy(
                                         result = mergedItems,
@@ -156,10 +159,5 @@ class SearchViewModel @Inject constructor(
         } else {
             bookmarkUseCase.addBookmark(item.thumbnailUrl)
         }
-
-        updateItems(item, !item.isBookmarked)
-    }
-
-    fun updateItems(item: SearchItem.SearchResult, bookmarked: Boolean) {
     }
 }

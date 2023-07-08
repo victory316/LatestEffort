@@ -8,7 +8,7 @@ import java.util.Date
 data class VideoDto(
     val title: String,
     val url: String,
-    val dateTime: Date,
+    val datetime: Date,
     val playTime: String,
     val thumbnail: String,
     val author: String
