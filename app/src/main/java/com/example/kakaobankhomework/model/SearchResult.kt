@@ -2,12 +2,11 @@ package com.example.kakaobankhomework.model
 
 import androidx.annotation.LayoutRes
 import com.example.kakaobankhomework.R
-import com.example.kakaobankhomework.binding.SimpleItemDiffCallback
 import java.util.Date
 
 sealed class SearchItem(
     @LayoutRes val layoutResId: Int
-) : SimpleItemDiffCallback.DiffCallback {
+) {
 
     data class SearchResult(
         val id: Int,
