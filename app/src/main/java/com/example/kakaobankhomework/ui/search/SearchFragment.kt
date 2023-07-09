@@ -72,7 +72,6 @@ class SearchFragment : Fragment() {
 
     private fun initSubscribes() {
         eventBus = RxBus.onBookmarkRemoved
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { url ->
                 searchViewModel.updateImageBookmark(url = url, bookmarked = false)
@@ -91,6 +90,10 @@ class SearchFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
 
         eventBus?.dispose()
     }
