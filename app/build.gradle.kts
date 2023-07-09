@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.volley)
     implementation(libs.lifecycleKtx)
+    implementation(libs.androidx.junit.ktx)
     kapt(libs.hilt.compiler)
     implementation(project(mapOf("path" to ":domain")))
     implementation(project(mapOf("path" to ":data")))
@@ -62,6 +63,14 @@ dependencies {
     implementation(libs.rxJava)
 
     testImplementation(libs.junit)
+    testImplementation(libs.livedata.testing)
+    testImplementation(libs.androidx.test.rules)
+    testImplementation(libs.androidx.arch.core.testing)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
 }
