@@ -10,12 +10,14 @@ import com.example.domain.SearchUseCase
 import com.example.domain.model.SearchResultImage
 import com.example.domain.model.SearchResultVideo
 import com.example.domain.model.result.Result
+import com.example.domain.model.result.ServiceError
 import com.example.kakaobankhomework.model.ItemSearch
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.map
@@ -43,6 +45,10 @@ class SearchViewModel @Inject constructor(
 
     private val searchImageState = MutableStateFlow<Result<SearchResultImage>>(Result.Loading)
     private val searchVideoState = MutableStateFlow<Result<SearchResultVideo>>(Result.Loading)
+
+    private val _errorOccured = MutableLiveData<Result.Failure>()
+    val errorOccured
+        get() = _errorOccured
 
     val searchResultFlow: StateFlow<SearchUiState> =
         combine(searchImageState, searchVideoState) { images, videos ->
@@ -124,7 +130,9 @@ class SearchViewModel @Inject constructor(
 
     private fun searchImage(page: Int = 1, size: Int = 10) = viewModelScope.launch {
         searchQuery?.let { query ->
-            searchUseCase.searchImage(query = query, page = page, size = size).collect { result ->
+            searchUseCase.searchImage(query = query, page = page, size = size).catch {
+                _errorOccured.value = Result.Failure(ServiceError.SearchFail)
+            }.collect { result ->
                 searchImageState.value = result
             }
         }
@@ -132,7 +140,9 @@ class SearchViewModel @Inject constructor(
 
     private fun searchVideo(page: Int = 1, size: Int = 10) = viewModelScope.launch {
         searchQuery?.let { query ->
-            searchUseCase.searchVideo(query = query, page = page, size = size).collect { result ->
+            searchUseCase.searchVideo(query = query, page = page, size = size).catch {
+                _errorOccured.value = Result.Failure(ServiceError.SearchFail)
+            }.collect { result ->
                 searchVideoState.value = result
             }
         }
@@ -147,6 +157,9 @@ class SearchViewModel @Inject constructor(
 
             searchQuery?.let { query ->
                 searchUseCase.searchImage(query = query, page = pageToQuery, size = size)
+                    .catch {
+                        _errorOccured.value = Result.Failure(ServiceError.SearchFail)
+                    }
                     .collect { result ->
                         searchImageState.update { currentState ->
                             (currentState as? Result.Success)?.let { asSuccess ->
@@ -182,6 +195,9 @@ class SearchViewModel @Inject constructor(
 
             searchQuery?.let { query ->
                 searchUseCase.searchVideo(query = query, page = pageToQuery, size = size)
+                    .catch {
+                        _errorOccured.value = Result.Failure(ServiceError.SearchFail)
+                    }
                     .collect { result ->
                         searchVideoState.update { currentState ->
                             (currentState as? Result.Success)?.let { asSuccess ->

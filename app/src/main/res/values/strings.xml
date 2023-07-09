@@ -10,4 +10,6 @@
     <string name="hint_bookmark">저장된 북마크가 없어요./</string>
     <string name="hint_search">이미지나 비디오를 검색해봐요.</string>
     <string name="no_search_result">검색된 결과가 없어요.</string>
+
+    <string name="error_search_fail">검색에 실패했어요.</string>
 </resources>
