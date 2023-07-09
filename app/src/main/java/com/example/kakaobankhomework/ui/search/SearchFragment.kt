@@ -24,8 +24,6 @@ class SearchFragment : Fragment() {
 
     private val searchViewModel: SearchViewModel by viewModels()
 
-    private var needToScrollToTop = false
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,17 +44,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupUi() {
-        searchAdapter = SearchAdapter(searchViewModel).apply {
-            registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                    super.onItemRangeInserted(positionStart, itemCount)
-
-                    if (needToScrollToTop) {
-                        binding.searchRecyclerView.scrollToPosition(0)
-                    }
-                }
-            })
-        }
+        searchAdapter = SearchAdapter(searchViewModel)
 
         binding.searchRecyclerView.apply {
             adapter = searchAdapter
@@ -82,10 +70,6 @@ class SearchFragment : Fragment() {
             searchViewModel.searchResultFlow.collect { state ->
                 searchAdapter?.submitList(state.searchResults)
             }
-        }
-
-        searchViewModel.needToScrollToTop.observe(viewLifecycleOwner) {
-            needToScrollToTop = true
         }
     }
 

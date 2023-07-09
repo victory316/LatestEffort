@@ -101,14 +101,11 @@ class SearchViewModel @Inject constructor(
         it.searchResults.isEmpty()
     }.asLiveData(Dispatchers.Main)
 
-    val needToScrollToTop = MutableLiveData<Boolean>(false)
-
     init {
         viewModelScope.launch {
             queryText.asFlow()
                 .debounce(500L)
                 .collect {
-                    needToScrollToTop.value = true
                     searchImage()
                     searchVideo()
                 }
@@ -133,7 +130,7 @@ class SearchViewModel @Inject constructor(
 
     fun searchImageMore(position: Int, size: Int = 10) = viewModelScope.launch {
         if (position + 2 >= searchResultFlow.value.searchResults.size && !imagePaging &&
-            searchResultFlow.value.searchResults.size != 0
+            searchResultFlow.value.searchResults.isNotEmpty()
         ) {
             val pageToQuery = searchResultFlow.value.imageCurrentPage + 1
             imagePaging = true

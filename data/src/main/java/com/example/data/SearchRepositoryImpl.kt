@@ -49,7 +49,7 @@ class SearchRepositoryImpl @Inject constructor(
                             page = page ?: 0 + 1,
                             dateTime = it.datetime
                         )
-                    } ?: emptyList(),
+                    }?.sortedBy { it.dateTime } ?: emptyList(),
                     currentPage = page ?: 0 + 1,
                     isPageable = !dto.meta.isEnd,
                 )
@@ -83,7 +83,7 @@ class SearchRepositoryImpl @Inject constructor(
                             page = page ?: 0 + 1,
                             dateTime = it.datetime
                         )
-                    } ?: emptyList(),
+                    }?.sortedBy { it.dateTime } ?: emptyList(),
                     currentPage = page ?: 0 + 1,
                     isPageable = !dto.meta.isEnd,
                 )
