@@ -20,8 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="이미지나 비디오를 검색해봐요."
-            app:endIconDrawable="@android:drawable/ic_menu_search"
-            app:endIconMode="custom"
+            app:endIconDrawable="@android:drawable/ic_delete"
+            app:endIconMode="clear_text"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -39,6 +39,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_input"
             tools:itemCount="200" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="검색된 결과가 없어요."
+            app:isVisible="@{viewModel.noResults}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

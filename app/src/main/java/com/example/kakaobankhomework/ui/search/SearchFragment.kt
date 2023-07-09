@@ -62,11 +62,6 @@ class SearchFragment : Fragment() {
                 }
             })
         }
-
-        binding.searchInput.setEndIconOnClickListener {
-            searchViewModel.searchImage()
-            searchViewModel.searchVideo()
-        }
     }
 
     private fun initObserves() {

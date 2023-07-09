@@ -2,6 +2,8 @@ package com.example.kakaobankhomework.ui.search
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.domain.BookmarkUseCase
 import com.example.domain.SearchUseCase
@@ -10,10 +12,13 @@ import com.example.domain.model.SearchResultVideo
 import com.example.domain.model.result.Result
 import com.example.kakaobankhomework.model.ItemSearch
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -92,7 +97,22 @@ class SearchViewModel @Inject constructor(
     private val searchQuery
         get() = queryText.value
 
-    fun searchImage(page: Int = 1, size: Int = 10) = viewModelScope.launch {
+    val noResults = searchResultFlow.map {
+        it.searchResults.isEmpty()
+    }.asLiveData(Dispatchers.Main)
+
+    init {
+        viewModelScope.launch {
+            queryText.asFlow()
+                .debounce(1000L)
+                .collect {
+                    searchImage()
+                    searchVideo()
+                }
+        }
+    }
+
+    private fun searchImage(page: Int = 1, size: Int = 10) = viewModelScope.launch {
         searchQuery?.let { query ->
             searchUseCase.searchImage(query = query, page = page, size = size).collect { result ->
                 searchImageState.value = result
@@ -100,7 +120,7 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun searchVideo(page: Int = 1, size: Int = 10) = viewModelScope.launch {
+    private fun searchVideo(page: Int = 1, size: Int = 10) = viewModelScope.launch {
         searchQuery?.let { query ->
             searchUseCase.searchVideo(query = query, page = page, size = size).collect { result ->
                 searchVideoState.value = result
