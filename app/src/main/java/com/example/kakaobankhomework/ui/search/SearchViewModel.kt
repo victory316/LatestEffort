@@ -229,13 +229,12 @@ class SearchViewModel @Inject constructor(
     fun onBookmarkClick(item: ItemSearch.SearchResult) {
         if (item.isBookmarked) {
             bookmarkUseCase.removeBookmark(item.thumbnailUrl)
-            updateImageBookmark(url = item.thumbnailUrl, bookmarked = false)
-            updateVideoBookmark(url = item.thumbnailUrl, bookmarked = false)
         } else {
             bookmarkUseCase.addBookmark(item.thumbnailUrl)
-            updateImageBookmark(url = item.thumbnailUrl, bookmarked = true)
-            updateVideoBookmark(url = item.thumbnailUrl, bookmarked = true)
         }
+
+        updateImageBookmark(url = item.thumbnailUrl, bookmarked = !item.isBookmarked)
+        updateVideoBookmark(url = item.thumbnailUrl, bookmarked = !item.isBookmarked)
     }
 
     fun updateVideoBookmark(url: String, bookmarked: Boolean) {
