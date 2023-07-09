@@ -29,6 +29,7 @@ androidxTestRules = "1.5.0"
 androidxTestRunner = "1.5.1"
 archCoreTesting = "2.1.0"
 livedataTesting = "1.3.0"
+mockitoKotlin = "5.0.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -64,6 +65,7 @@ androidx-test-runner = { group = "androidx.test", name = "runner", version.ref =
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version = "1.1.5" }
 androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "archCoreTesting" }
 livedata-testing = { group = "com.jraska.livedata", name = "testing-ktx", version.ref = "livedataTesting" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

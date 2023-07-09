@@ -238,9 +238,8 @@ class SearchViewModel @Inject constructor(
 
     fun updateVideoBookmark(url: String, bookmarked: Boolean) {
         searchVideoState.update { currentState ->
-            (currentState as? Result.Success)?.let { asSuccess ->
+            currentState.getSuccess()?.let { asSuccess ->
                 val currentData = asSuccess.data.result
-
                 val index = currentData.indexOfFirst { it.thumbnailUrl == url }
 
                 if (index != -1) {
@@ -250,9 +249,7 @@ class SearchViewModel @Inject constructor(
                         set(index, prevItem.copy(bookmarked = bookmarked))
                     }.toList()
 
-                    Result.Success(
-                        asSuccess.data.copy(result = updated)
-                    )
+                    Result.Success(asSuccess.data.copy(result = updated))
                 } else {
                     currentState
                 }
@@ -262,10 +259,10 @@ class SearchViewModel @Inject constructor(
 
     fun updateImageBookmark(url: String, bookmarked: Boolean) {
         searchImageState.update { currentState ->
-            (currentState as? Result.Success)?.let { asSuccess ->
+            currentState.getSuccess()?.let { asSuccess ->
                 val currentData = asSuccess.data.result
-
                 val index = currentData.indexOfFirst { it.thumbnailUrl == url }
+
                 if (index != -1) {
                     val prevItem = currentData[index]
 
@@ -273,9 +270,7 @@ class SearchViewModel @Inject constructor(
                         set(index, prevItem.copy(bookmarked = bookmarked))
                     }.toList()
 
-                    Result.Success(
-                        asSuccess.data.copy(result = updated)
-                    )
+                    Result.Success(asSuccess.data.copy(result = updated))
                 } else {
                     currentState
                 }
