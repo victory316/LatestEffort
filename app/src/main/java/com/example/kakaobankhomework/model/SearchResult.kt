@@ -24,7 +24,7 @@ sealed class SearchItem(
 
     data class SearchPage(
         val searchPageIndex: Int
-    ) : SearchItem(R.layout.item_bookmarked)
+    ) : SearchItem(R.layout.item_search_page_header)
 }
 
 

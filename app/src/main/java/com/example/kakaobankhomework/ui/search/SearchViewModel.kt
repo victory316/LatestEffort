@@ -26,9 +26,8 @@ class SearchViewModel @Inject constructor(
     private val searchUseCase: SearchUseCase,
 ) : ViewModel() {
 
-    private var _isPaging = false
-    val isPaging
-        get() = _isPaging
+    private var imagePaging = false
+    private var videoPaging = false
 
     private var _lastImagePage = 0
     private val lastImagePage
@@ -43,38 +42,35 @@ class SearchViewModel @Inject constructor(
 
     val searchResultFlow: StateFlow<SearchUiState> =
         combine(searchImageState, searchVideoState) { images, videos ->
-            _isPaging = false
-
             if (images is Result.Success && videos is Result.Success) {
-                val imageResult = images.data.result.sortedBy { it.dateTime }.map {
+                val imageResult = images.data.result.map {
                     if (lastImagePage != it.page) {
+                        _lastImagePage = it.page
                         SearchItem.SearchPage(it.page)
+                    } else {
+                        SearchItem.SearchResult(
+                            id = 0,
+                            thumbnailUrl = it.thumbnailUrl,
+                            type = SearchItem.SearchResult.Type.IMAGE,
+                            dateTime = it.dateTime,
+                            isBookmarked = it.bookmarked,
+                        )
                     }
-
-                    _lastImagePage = it.page
-
-                    SearchItem.SearchResult(
-                        id = 0,
-                        thumbnailUrl = it.thumbnailUrl,
-                        type = SearchItem.SearchResult.Type.IMAGE,
-                        dateTime = it.dateTime,
-                        isBookmarked = it.bookmarked,
-                    )
                 }
-                val videoResult = videos.data.result.sortedBy { it.dateTime }.map {
+
+                val videoResult = videos.data.result.map {
                     if (lastVideoPage != it.page) {
+                        _lastVideoPage = it.page
                         SearchItem.SearchPage(it.page)
+                    } else {
+                        SearchItem.SearchResult(
+                            id = 0,
+                            thumbnailUrl = it.thumbnailUrl,
+                            type = SearchItem.SearchResult.Type.VIDEO,
+                            dateTime = it.dateTime,
+                            isBookmarked = it.bookmarked,
+                        )
                     }
-
-                    _lastVideoPage = it.page
-
-                    SearchItem.SearchResult(
-                        id = 0,
-                        thumbnailUrl = it.thumbnailUrl,
-                        type = SearchItem.SearchResult.Type.VIDEO,
-                        dateTime = it.dateTime,
-                        isBookmarked = it.bookmarked,
-                    )
                 }
 
                 SearchUiState(
@@ -114,9 +110,11 @@ class SearchViewModel @Inject constructor(
     }
 
     fun searchImageMore(position: Int, size: Int = 10) = viewModelScope.launch {
-        if (position >= searchResultFlow.value.searchResults.size - 3) {
-            _isPaging = true
+        if (position + 2 >= searchResultFlow.value.searchResults.size && !imagePaging &&
+            searchResultFlow.value.searchResults.size != 0
+        ) {
             val pageToQuery = searchResultFlow.value.imageCurrentPage + 1
+            imagePaging = true
 
             searchQuery?.let { query ->
                 searchUseCase.searchImage(query = query, page = pageToQuery, size = size)
@@ -125,9 +123,9 @@ class SearchViewModel @Inject constructor(
                             (currentState as? Result.Success)?.let { asSuccess ->
                                 val pagedItems =
                                     (result as? Result.Success)?.data?.result ?: emptyList()
-                                val mergedItems = (asSuccess.data.result + pagedItems).sortedBy {
-                                    it.dateTime
-                                }
+
+                                val mergedItems =
+                                    asSuccess.data.result + pagedItems
                                 val updatedPage =
                                     (result as? Result.Success)?.data?.currentPage ?: 0
 
@@ -139,15 +137,19 @@ class SearchViewModel @Inject constructor(
                                 )
                             } ?: currentState
                         }
+
+                        imagePaging = false
                     }
             }
         }
     }
 
     fun searchVideoMore(position: Int, size: Int = 10) = viewModelScope.launch {
-        if (position >= searchResultFlow.value.searchResults.size - 3) {
-            _isPaging = true
+        if (position + 2 >= searchResultFlow.value.searchResults.size && !videoPaging &&
+            searchResultFlow.value.searchResults.size != 0
+        ) {
             val pageToQuery = searchResultFlow.value.videoCurrentPage + 1
+            videoPaging = true
 
             searchQuery?.let { query ->
                 searchUseCase.searchVideo(query = query, page = pageToQuery, size = size)
@@ -156,9 +158,7 @@ class SearchViewModel @Inject constructor(
                             (currentState as? Result.Success)?.let { asSuccess ->
                                 val pagedItems =
                                     (result as? Result.Success)?.data?.result ?: emptyList()
-                                val mergedItems = (asSuccess.data.result + pagedItems).sortedBy {
-                                    it.dateTime
-                                }
+                                val mergedItems = asSuccess.data.result + pagedItems
                                 val updatedPage =
                                     (result as? Result.Success)?.data?.currentPage ?: 0
 
@@ -170,6 +170,8 @@ class SearchViewModel @Inject constructor(
                                 )
                             } ?: currentState
                         }
+
+                        videoPaging = false
                     }
             }
         }

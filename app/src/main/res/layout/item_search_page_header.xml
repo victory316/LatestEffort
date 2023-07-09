@@ -10,13 +10,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
+            app:headerPageIndex="@{item.searchPageIndex}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/design_default_color_on_primary"
-            android:text="@{item.searchPageIndex}" />
+            android:background="@color/black"
+            android:textColor="@color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

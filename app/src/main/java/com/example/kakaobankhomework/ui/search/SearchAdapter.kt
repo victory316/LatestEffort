@@ -67,7 +67,13 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
 
 class TaskDiffCallback : DiffUtil.ItemCallback<SearchItem>() {
     override fun areItemsTheSame(oldItem: SearchItem, newItem: SearchItem): Boolean {
-        return oldItem.hashCode() == newItem.hashCode()
+        return when {
+            oldItem is SearchItem.SearchResult && newItem is SearchItem.SearchResult -> {
+                oldItem.thumbnailUrl == newItem.thumbnailUrl
+            }
+
+            else -> oldItem.hashCode() == newItem.hashCode()
+        }
     }
 
     override fun areContentsTheSame(oldItem: SearchItem, newItem: SearchItem): Boolean {

@@ -56,10 +56,8 @@ class SearchFragment : Fragment() {
                     (layoutManager as? LinearLayoutManager)?.let {
                         val lastPosition = it.findLastVisibleItemPosition()
 
-                        if (!searchViewModel.isPaging) {
-                            searchViewModel.searchImageMore(lastPosition)
-                            searchViewModel.searchVideoMore(lastPosition)
-                        }
+                        searchViewModel.searchImageMore(lastPosition)
+                        searchViewModel.searchVideoMore(lastPosition)
                     }
                 }
             })
