@@ -40,7 +40,6 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.hilt.android)
-    implementation(project(mapOf("path" to ":core")))
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)

@@ -55,7 +55,6 @@ dependencies {
     implementation(libs.volley)
     kapt(libs.hilt.compiler)
     implementation(project(mapOf("path" to ":domain")))
-    implementation(project(mapOf("path" to ":core")))
     implementation(project(mapOf("path" to ":data")))
 
     testImplementation(libs.junit)

@@ -16,8 +16,4 @@ object DispatchersModule {
     @Provides
     @Dispatcher(com.example.network.Dispatchers.IO)
     fun providesIODispatcher(): CoroutineDispatcher = Dispatchers.IO
-
-    @Provides
-    @Dispatcher(com.example.network.Dispatchers.Default)
-    fun providesDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 }

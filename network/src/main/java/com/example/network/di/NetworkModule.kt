@@ -19,12 +19,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providesNetworkJson(): Json = Json {
-        ignoreUnknownKeys = true
-    }
-
-    @Provides
-    @Singleton
     fun okHttpCallFactory(): Call.Factory = OkHttpClient.Builder()
         .addInterceptor(
             HttpLoggingInterceptor()
