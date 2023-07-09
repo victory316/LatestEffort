@@ -156,23 +156,22 @@ class SearchViewModel @Inject constructor(
                     .catch {
                         _errorOccurred.value = Result.Failure(ServiceError.SearchFail)
                     }
-                    .collect { result ->
+                    .collect { pagingResult ->
                         searchImageState.update { currentState ->
-                            currentState.getSuccess()?.let { asSuccess ->
-                                val pagedItems =
-                                    result.getSuccess()?.data?.result ?: emptyList()
+                            val pagedItems = pagingResult.getSuccess()?.data?.result
+                                ?: emptyList()
 
-                                val mergedItems =
-                                    asSuccess.data.result + pagedItems
-                                val updatedPage =
-                                    result.getSuccess()?.data?.currentPage ?: 0
-                                val updatedData = asSuccess.data.copy(
-                                    result = mergedItems,
-                                    currentPage = updatedPage
-                                )
+                            val mergedItems = currentState.getSuccess()?.data?.result
+                                ?.plus(pagedItems) ?: emptyList()
 
-                                Result.Success(updatedData)
-                            } ?: currentState
+                            val updatedPage = pagingResult.getSuccess()?.data?.currentPage ?: 0
+
+                            val updatedData = currentState.getSuccess()?.data?.copy(
+                                result = mergedItems,
+                                currentPage = updatedPage
+                            ) ?: return@update Result.Failure(ServiceError.PagingFail)
+
+                            Result.Success(updatedData)
                         }
 
                         imagePaging = false
@@ -192,23 +191,22 @@ class SearchViewModel @Inject constructor(
                     .catch {
                         _errorOccurred.value = Result.Failure(ServiceError.SearchFail)
                     }
-                    .collect { result ->
+                    .collect { pagingResult ->
                         searchVideoState.update { currentState ->
-                            currentState.getSuccess()?.let { asSuccess ->
-                                val pagedItems =
-                                    result.getSuccess()?.data?.result ?: emptyList()
+                            val pagedItems = pagingResult.getSuccess()?.data?.result
+                                ?: emptyList()
 
-                                val mergedItems =
-                                    asSuccess.data.result + pagedItems
-                                val updatedPage =
-                                    result.getSuccess()?.data?.currentPage ?: 0
-                                val updatedData = asSuccess.data.copy(
-                                    result = mergedItems,
-                                    currentPage = updatedPage
-                                )
+                            val mergedItems = currentState.getSuccess()?.data?.result
+                                ?.plus(pagedItems) ?: emptyList()
 
-                                Result.Success(updatedData)
-                            } ?: currentState
+                            val updatedPage = pagingResult.getSuccess()?.data?.currentPage ?: 0
+
+                            val updatedData = currentState.getSuccess()?.data?.copy(
+                                result = mergedItems,
+                                currentPage = updatedPage
+                            ) ?: return@update Result.Failure(ServiceError.PagingFail)
+
+                            Result.Success(updatedData)
                         }
 
                         videoPaging = false
