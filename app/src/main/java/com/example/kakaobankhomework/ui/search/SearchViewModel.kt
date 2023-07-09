@@ -145,7 +145,7 @@ class SearchViewModel @Inject constructor(
 
     fun searchVideoMore(position: Int, size: Int = 10) = viewModelScope.launch {
         if (position + 2 >= searchResultFlow.value.searchResults.size && !videoPaging &&
-            searchResultFlow.value.searchResults.size != 0
+            searchResultFlow.value.searchResults.isNotEmpty()
         ) {
             val pageToQuery = searchResultFlow.value.videoCurrentPage + 1
             videoPaging = true
@@ -179,8 +179,59 @@ class SearchViewModel @Inject constructor(
     fun onBookmarkClick(item: ItemSearch.SearchResult) {
         if (item.isBookmarked) {
             bookmarkUseCase.removeBookmark(item.thumbnailUrl)
+            updateImageBookmark(url = item.thumbnailUrl, bookmarked = false)
+            updateVideoBookmark(url = item.thumbnailUrl, bookmarked = false)
         } else {
             bookmarkUseCase.addBookmark(item.thumbnailUrl)
+            updateImageBookmark(url = item.thumbnailUrl, bookmarked = true)
+            updateVideoBookmark(url = item.thumbnailUrl, bookmarked = true)
+        }
+    }
+
+    fun updateVideoBookmark(url: String, bookmarked: Boolean) {
+        searchVideoState.update { currentState ->
+            (currentState as? Result.Success)?.let { asSuccess ->
+                val currentData = asSuccess.data.result
+
+                val index = currentData.indexOfFirst { it.thumbnailUrl == url }
+
+                if (index != -1) {
+                    val prevItem = currentData.get(index)
+
+                    val updated = currentData.toMutableList().apply {
+                        set(index, prevItem.copy(bookmarked = bookmarked))
+                    }.toList()
+
+                    Result.Success(
+                        asSuccess.data.copy(result = updated)
+                    )
+                } else {
+                    currentState
+                }
+            } ?: currentState
+        }
+    }
+
+    fun updateImageBookmark(url: String, bookmarked: Boolean) {
+        searchImageState.update { currentState ->
+            (currentState as? Result.Success)?.let { asSuccess ->
+                val currentData = asSuccess.data.result
+
+                val index = currentData.indexOfFirst { it.thumbnailUrl == url }
+                if (index != -1) {
+                    val prevItem = currentData.get(index)
+
+                    val updated = currentData.toMutableList().apply {
+                        set(index, prevItem.copy(bookmarked = bookmarked))
+                    }.toList()
+
+                    Result.Success(
+                        asSuccess.data.copy(result = updated)
+                    )
+                } else {
+                    currentState
+                }
+            } ?: currentState
         }
     }
 }

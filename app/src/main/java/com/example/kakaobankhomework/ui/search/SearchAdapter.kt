@@ -76,6 +76,12 @@ class TaskDiffCallback : DiffUtil.ItemCallback<ItemSearch>() {
     }
 
     override fun areContentsTheSame(oldItem: ItemSearch, newItem: ItemSearch): Boolean {
-        return oldItem == newItem
+        return when {
+            oldItem is ItemSearch.SearchResult && newItem is ItemSearch.SearchResult -> {
+                oldItem.isBookmarked == newItem.isBookmarked
+            }
+
+            else -> oldItem == newItem
+        }
     }
 }
