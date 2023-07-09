@@ -12,6 +12,7 @@ import com.example.domain.model.SearchResultVideo
 import com.example.domain.model.result.Result
 import com.example.domain.model.result.ServiceError
 import com.example.kakaobankhomework.model.ItemSearch
+import com.example.kakaobankhomework.util.getSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -157,21 +158,20 @@ class SearchViewModel @Inject constructor(
                     }
                     .collect { result ->
                         searchImageState.update { currentState ->
-                            (currentState as? Result.Success)?.let { asSuccess ->
+                            currentState.getSuccess()?.let { asSuccess ->
                                 val pagedItems =
-                                    (result as? Result.Success)?.data?.result ?: emptyList()
+                                    result.getSuccess()?.data?.result ?: emptyList()
 
                                 val mergedItems =
                                     asSuccess.data.result + pagedItems
                                 val updatedPage =
-                                    (result as? Result.Success)?.data?.currentPage ?: 0
-
-                                Result.Success(
-                                    asSuccess.data.copy(
-                                        result = mergedItems,
-                                        currentPage = updatedPage
-                                    )
+                                    result.getSuccess()?.data?.currentPage ?: 0
+                                val updatedData = asSuccess.data.copy(
+                                    result = mergedItems,
+                                    currentPage = updatedPage
                                 )
+
+                                Result.Success(updatedData)
                             } ?: currentState
                         }
 
@@ -194,19 +194,20 @@ class SearchViewModel @Inject constructor(
                     }
                     .collect { result ->
                         searchVideoState.update { currentState ->
-                            (currentState as? Result.Success)?.let { asSuccess ->
+                            currentState.getSuccess()?.let { asSuccess ->
                                 val pagedItems =
-                                    (result as? Result.Success)?.data?.result ?: emptyList()
-                                val mergedItems = asSuccess.data.result + pagedItems
-                                val updatedPage =
-                                    (result as? Result.Success)?.data?.currentPage ?: 0
+                                    result.getSuccess()?.data?.result ?: emptyList()
 
-                                Result.Success(
-                                    asSuccess.data.copy(
-                                        result = mergedItems,
-                                        currentPage = updatedPage
-                                    )
+                                val mergedItems =
+                                    asSuccess.data.result + pagedItems
+                                val updatedPage =
+                                    result.getSuccess()?.data?.currentPage ?: 0
+                                val updatedData = asSuccess.data.copy(
+                                    result = mergedItems,
+                                    currentPage = updatedPage
                                 )
+
+                                Result.Success(updatedData)
                             } ?: currentState
                         }
 
