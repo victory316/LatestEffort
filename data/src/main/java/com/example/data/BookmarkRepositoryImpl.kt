@@ -12,14 +12,22 @@ class BookmarkRepositoryImpl @Inject constructor(
     override fun loadBookmarks(): List<String> {
         val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
 
-        return currentIds?.toList() ?: emptyList()
+        val sorted = currentIds?.map {
+            it.split("][")
+        }?.let {
+            it.sortedBy { it[0] }
+        }?.map {
+            it[1]
+        }?.toList()
+
+        return sorted ?: emptyList()
     }
 
     override fun addBookmark(id: String) {
         val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
 
         currentIds?.toMutableSet()?.apply {
-            add(id)
+            add("${this.size}][$id")
         }.also {
             sharedPreferences.edit().apply {
                 putStringSet(bookmarkIds, it)
@@ -32,7 +40,7 @@ class BookmarkRepositoryImpl @Inject constructor(
         val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
 
         currentIds?.toMutableSet()?.apply {
-            remove(id)
+            removeIf { it.contains(id) }
         }.also {
             sharedPreferences.edit().apply {
                 putStringSet(bookmarkIds, it)
