@@ -101,11 +101,14 @@ class SearchViewModel @Inject constructor(
         it.searchResults.isEmpty()
     }.asLiveData(Dispatchers.Main)
 
+    val needToScrollToTop = MutableLiveData<Boolean>(false)
+
     init {
         viewModelScope.launch {
             queryText.asFlow()
-                .debounce(1000L)
+                .debounce(500L)
                 .collect {
+                    needToScrollToTop.value = true
                     searchImage()
                     searchVideo()
                 }
@@ -216,7 +219,7 @@ class SearchViewModel @Inject constructor(
                 val index = currentData.indexOfFirst { it.thumbnailUrl == url }
 
                 if (index != -1) {
-                    val prevItem = currentData.get(index)
+                    val prevItem = currentData[index]
 
                     val updated = currentData.toMutableList().apply {
                         set(index, prevItem.copy(bookmarked = bookmarked))
@@ -239,7 +242,7 @@ class SearchViewModel @Inject constructor(
 
                 val index = currentData.indexOfFirst { it.thumbnailUrl == url }
                 if (index != -1) {
-                    val prevItem = currentData.get(index)
+                    val prevItem = currentData[index]
 
                     val updated = currentData.toMutableList().apply {
                         set(index, prevItem.copy(bookmarked = bookmarked))

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaobankhomework.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -22,6 +23,8 @@ class SearchFragment : Fragment() {
     private var searchAdapter: SearchAdapter? = null
 
     private val searchViewModel: SearchViewModel by viewModels()
+
+    private var needToScrollToTop = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +46,17 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupUi() {
-        searchAdapter = SearchAdapter(searchViewModel)
+        searchAdapter = SearchAdapter(searchViewModel).apply {
+            registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                    super.onItemRangeInserted(positionStart, itemCount)
+
+                    if (needToScrollToTop) {
+                        binding.searchRecyclerView.scrollToPosition(0)
+                    }
+                }
+            })
+        }
 
         binding.searchRecyclerView.apply {
             adapter = searchAdapter
@@ -69,6 +82,10 @@ class SearchFragment : Fragment() {
             searchViewModel.searchResultFlow.collect { state ->
                 searchAdapter?.submitList(state.searchResults)
             }
+        }
+
+        searchViewModel.needToScrollToTop.observe(viewLifecycleOwner) {
+            needToScrollToTop = true
         }
     }
 
