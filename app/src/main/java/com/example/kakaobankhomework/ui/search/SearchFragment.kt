@@ -14,7 +14,6 @@ import com.example.kakaobankhomework.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

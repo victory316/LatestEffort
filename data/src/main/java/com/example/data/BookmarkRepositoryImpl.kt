@@ -50,6 +50,6 @@ class BookmarkRepositoryImpl @Inject constructor(
     }
 
     override fun clearAllBookmark() {
-        sharedPreferences.edit().clear()
+        sharedPreferences.edit().clear().apply()
     }
 }

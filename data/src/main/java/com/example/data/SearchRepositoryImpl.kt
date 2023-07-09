@@ -46,11 +46,11 @@ class SearchRepositoryImpl @Inject constructor(
                         Image(
                             thumbnailUrl = it.thumbnailUrl,
                             bookmarked = isBookmarked ?: false,
-                            page = page ?: 0 + 1,
+                            page = page ?: (0 + 1),
                             dateTime = it.datetime
                         )
                     }?.sortedBy { it.dateTime } ?: emptyList(),
-                    currentPage = page ?: 0 + 1,
+                    currentPage = page ?: (0 + 1),
                     isPageable = !dto.meta.isEnd,
                 )
             }
@@ -80,11 +80,11 @@ class SearchRepositoryImpl @Inject constructor(
                         Video(
                             thumbnailUrl = it.thumbnail,
                             bookmarked = isBookmarked ?: false,
-                            page = page ?: 0 + 1,
+                            page = page ?: (0 + 1),
                             dateTime = it.datetime
                         )
                     }?.sortedBy { it.dateTime } ?: emptyList(),
-                    currentPage = page ?: 0 + 1,
+                    currentPage = page ?: (0 + 1),
                     isPageable = !dto.meta.isEnd,
                 )
             }

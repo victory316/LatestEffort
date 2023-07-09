@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="20dp"
-            android:text="책갈피"
+            android:text="@string/menu_bookmark"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="저장된 책갈피가 없어요."
+            android:text="@string/hint_bookmark"
             app:isVisible="@{viewModel.noBookmarks}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
