@@ -39,7 +39,7 @@ class BookmarkViewModelTest {
 
         viewModel.loadBookmarks()
 
-        assert(viewModel.bookmakrs.value?.contains(bookmarkItem) != true)
+        assert(viewModel.bookmarks.value?.contains(bookmarkItem) != true)
     }
 
     @Test

@@ -50,7 +50,7 @@ class BookmarkFragment : Fragment() {
 
     private fun initObserves() {
         lifecycleScope.launch {
-            bookmarkViewModel.bookmakrs.collect { bookmarked ->
+            bookmarkViewModel.bookmarks.collect { bookmarked ->
                 bookmarked?.let { bookmarkAdapter?.submitList(it) }
             }
         }

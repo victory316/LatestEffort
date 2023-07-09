@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.domain.BookmarkUseCase
-import com.example.kakaobankhomework.RxBus
+import com.example.kakaobankhomework.util.RxBus
 import com.example.kakaobankhomework.model.ItemBookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +21,7 @@ class BookmarkViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _bookmarks = MutableStateFlow<List<String>>(emptyList())
-    val bookmakrs: StateFlow<List<ItemBookmark>?> = _bookmarks.map { list ->
+    val bookmarks: StateFlow<List<ItemBookmark>?> = _bookmarks.map { list ->
         list.map {
             ItemBookmark(it)
         }
@@ -31,7 +31,7 @@ class BookmarkViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
     )
 
-    val noBookmarks = bookmakrs.map {
+    val noBookmarks = bookmarks.map {
         it?.isEmpty() == true
     }.asLiveData(Dispatchers.Main)
 
