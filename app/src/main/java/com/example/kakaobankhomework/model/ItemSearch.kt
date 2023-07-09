@@ -9,9 +9,7 @@ sealed class ItemSearch(
 ) {
 
     data class SearchResult(
-        val id: Int,
         val thumbnailUrl: String,
-        val type: Type,
         val dateTime: Date,
         var isBookmarked: Boolean = false
     ) : ItemSearch(R.layout.item_search_result) {

@@ -62,9 +62,7 @@ class SearchViewModel @Inject constructor(
 
                     imageResult.add(
                         ItemSearch.SearchResult(
-                            id = 0,
                             thumbnailUrl = it.thumbnailUrl,
-                            type = ItemSearch.SearchResult.Type.IMAGE,
                             dateTime = it.dateTime,
                             isBookmarked = it.bookmarked,
                         )
@@ -82,9 +80,7 @@ class SearchViewModel @Inject constructor(
 
                     videoResult.add(
                         ItemSearch.SearchResult(
-                            id = 0,
                             thumbnailUrl = it.thumbnailUrl,
-                            type = ItemSearch.SearchResult.Type.IMAGE,
                             dateTime = it.dateTime,
                             isBookmarked = it.bookmarked,
                         )
@@ -149,10 +145,9 @@ class SearchViewModel @Inject constructor(
     }
 
     fun searchImageMore(position: Int, size: Int = 10) = viewModelScope.launch {
-        if (position + 2 >= searchResultFlow.value.searchResults.size && !imagePaging &&
-            searchResultFlow.value.searchResults.isNotEmpty()
-        ) {
+        if (imageIsPageable(position)) {
             val pageToQuery = searchResultFlow.value.imageCurrentPage + 1
+
             imagePaging = true
 
             searchQuery?.let { query ->
@@ -187,10 +182,9 @@ class SearchViewModel @Inject constructor(
     }
 
     fun searchVideoMore(position: Int, size: Int = 10) = viewModelScope.launch {
-        if (position + 2 >= searchResultFlow.value.searchResults.size && !videoPaging &&
-            searchResultFlow.value.searchResults.isNotEmpty()
-        ) {
+        if (videoIsPageable(position)) {
             val pageToQuery = searchResultFlow.value.videoCurrentPage + 1
+
             videoPaging = true
 
             searchQuery?.let { query ->
@@ -220,6 +214,16 @@ class SearchViewModel @Inject constructor(
                     }
             }
         }
+    }
+
+    private fun imageIsPageable(position: Int): Boolean {
+        return position + 2 >= searchResultFlow.value.searchResults.size && !imagePaging
+                && searchResultFlow.value.imagePageable
+    }
+
+    private fun videoIsPageable(position: Int): Boolean {
+        return position + 2 >= searchResultFlow.value.searchResults.size && !videoPaging
+                && searchResultFlow.value.videoPageable
     }
 
     fun onBookmarkClick(item: ItemSearch.SearchResult) {
