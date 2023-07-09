@@ -46,9 +46,9 @@ class SearchViewModel @Inject constructor(
     private val searchImageState = MutableStateFlow<Result<SearchResultImage>>(Result.Loading)
     private val searchVideoState = MutableStateFlow<Result<SearchResultVideo>>(Result.Loading)
 
-    private val _errorOccured = MutableLiveData<Result.Failure>()
-    val errorOccured
-        get() = _errorOccured
+    private val _errorOccurred = MutableLiveData<Result.Failure>()
+    val errorOccurred
+        get() = _errorOccurred
 
     val searchResultFlow: StateFlow<SearchUiState> =
         combine(searchImageState, searchVideoState) { images, videos ->
@@ -131,7 +131,7 @@ class SearchViewModel @Inject constructor(
     private fun searchImage(page: Int = 1, size: Int = 10) = viewModelScope.launch {
         searchQuery?.let { query ->
             searchUseCase.searchImage(query = query, page = page, size = size).catch {
-                _errorOccured.value = Result.Failure(ServiceError.SearchFail)
+                _errorOccurred.value = Result.Failure(ServiceError.SearchFail)
             }.collect { result ->
                 searchImageState.value = result
             }
@@ -141,7 +141,7 @@ class SearchViewModel @Inject constructor(
     private fun searchVideo(page: Int = 1, size: Int = 10) = viewModelScope.launch {
         searchQuery?.let { query ->
             searchUseCase.searchVideo(query = query, page = page, size = size).catch {
-                _errorOccured.value = Result.Failure(ServiceError.SearchFail)
+                _errorOccurred.value = Result.Failure(ServiceError.SearchFail)
             }.collect { result ->
                 searchVideoState.value = result
             }
@@ -158,7 +158,7 @@ class SearchViewModel @Inject constructor(
             searchQuery?.let { query ->
                 searchUseCase.searchImage(query = query, page = pageToQuery, size = size)
                     .catch {
-                        _errorOccured.value = Result.Failure(ServiceError.SearchFail)
+                        _errorOccurred.value = Result.Failure(ServiceError.SearchFail)
                     }
                     .collect { result ->
                         searchImageState.update { currentState ->
@@ -196,7 +196,7 @@ class SearchViewModel @Inject constructor(
             searchQuery?.let { query ->
                 searchUseCase.searchVideo(query = query, page = pageToQuery, size = size)
                     .catch {
-                        _errorOccured.value = Result.Failure(ServiceError.SearchFail)
+                        _errorOccurred.value = Result.Failure(ServiceError.SearchFail)
                     }
                     .collect { result ->
                         searchVideoState.update { currentState ->

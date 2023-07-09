@@ -87,7 +87,7 @@ class SearchFragment : Fragment() {
             }
         }
 
-        searchViewModel.errorOccured.observe(viewLifecycleOwner) {
+        searchViewModel.errorOccurred.observe(viewLifecycleOwner) {
             Toast.makeText(context, getString(R.string.error_search_fail), Toast.LENGTH_SHORT)
                 .show()
         }
