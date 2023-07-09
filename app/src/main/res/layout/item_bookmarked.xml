@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.example.kakaobankhomework.model.ItemBookmarked" />
+            type="com.example.kakaobankhomework.model.ItemBookmark" />
 
         <variable
             name="viewModel"

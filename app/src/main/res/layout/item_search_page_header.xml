@@ -5,7 +5,7 @@
 
         <variable
             name="item"
-            type="com.example.kakaobankhomework.model.SearchItem.SearchPage" />
+            type="com.example.kakaobankhomework.model.ItemOnSearch.SearchPage" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

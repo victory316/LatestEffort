@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.example.kakaobankhomework.model.SearchItem.SearchResult" />
+            type="com.example.kakaobankhomework.model.ItemOnSearch.SearchResult" />
 
         <variable
             name="viewModel"

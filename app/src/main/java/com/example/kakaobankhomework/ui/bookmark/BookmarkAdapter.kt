@@ -6,11 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaobankhomework.databinding.ItemBookmarkedBinding
-import com.example.kakaobankhomework.model.ItemBookmarked
-import com.example.kakaobankhomework.model.SearchItem
+import com.example.kakaobankhomework.model.ItemBookmark
 
 class BookmarkAdapter(private val viewModel: BookmarkViewModel) :
-    ListAdapter<ItemBookmarked, BookmarkAdapter.ViewHolder>(TaskDiffCallback()) {
+    ListAdapter<ItemBookmark, BookmarkAdapter.ViewHolder>(TaskDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -25,10 +24,10 @@ class BookmarkAdapter(private val viewModel: BookmarkViewModel) :
     class ViewHolder private constructor(val binding: ItemBookmarkedBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: BookmarkViewModel, item: ItemBookmarked) {
+        fun bind(viewModel: BookmarkViewModel, item: ItemBookmark) {
 
             when (item) {
-                is ItemBookmarked -> {
+                is ItemBookmark -> {
                     binding.item = item
                     binding.viewModel = viewModel
                 }
@@ -48,12 +47,12 @@ class BookmarkAdapter(private val viewModel: BookmarkViewModel) :
     }
 }
 
-class TaskDiffCallback : DiffUtil.ItemCallback<ItemBookmarked>() {
-    override fun areItemsTheSame(oldItem: ItemBookmarked, newItem: ItemBookmarked): Boolean {
+class TaskDiffCallback : DiffUtil.ItemCallback<ItemBookmark>() {
+    override fun areItemsTheSame(oldItem: ItemBookmark, newItem: ItemBookmark): Boolean {
         return oldItem.hashCode() == newItem.hashCode()
     }
 
-    override fun areContentsTheSame(oldItem: ItemBookmarked, newItem: ItemBookmarked): Boolean {
+    override fun areContentsTheSame(oldItem: ItemBookmark, newItem: ItemBookmark): Boolean {
         return oldItem == newItem
     }
 }

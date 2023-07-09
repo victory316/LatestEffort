@@ -1,6 +1,5 @@
 package com.example.kakaobankhomework.ui.search
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +8,7 @@ import com.example.domain.SearchUseCase
 import com.example.domain.model.SearchResultImage
 import com.example.domain.model.SearchResultVideo
 import com.example.domain.model.result.Result
-import com.example.kakaobankhomework.model.SearchItem
+import com.example.kakaobankhomework.model.ItemOnSearch
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -46,12 +45,12 @@ class SearchViewModel @Inject constructor(
                 val imageResult = images.data.result.map {
                     if (lastImagePage != it.page) {
                         _lastImagePage = it.page
-                        SearchItem.SearchPage(it.page)
+                        ItemOnSearch.SearchPage(it.page)
                     } else {
-                        SearchItem.SearchResult(
+                        ItemOnSearch.SearchResult(
                             id = 0,
                             thumbnailUrl = it.thumbnailUrl,
-                            type = SearchItem.SearchResult.Type.IMAGE,
+                            type = ItemOnSearch.SearchResult.Type.IMAGE,
                             dateTime = it.dateTime,
                             isBookmarked = it.bookmarked,
                         )
@@ -61,12 +60,12 @@ class SearchViewModel @Inject constructor(
                 val videoResult = videos.data.result.map {
                     if (lastVideoPage != it.page) {
                         _lastVideoPage = it.page
-                        SearchItem.SearchPage(it.page)
+                        ItemOnSearch.SearchPage(it.page)
                     } else {
-                        SearchItem.SearchResult(
+                        ItemOnSearch.SearchResult(
                             id = 0,
                             thumbnailUrl = it.thumbnailUrl,
-                            type = SearchItem.SearchResult.Type.VIDEO,
+                            type = ItemOnSearch.SearchResult.Type.VIDEO,
                             dateTime = it.dateTime,
                             isBookmarked = it.bookmarked,
                         )
@@ -177,7 +176,7 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun onBookmarkClick(item: SearchItem.SearchResult) {
+    fun onBookmarkClick(item: ItemOnSearch.SearchResult) {
         if (item.isBookmarked) {
             bookmarkUseCase.removeBookmark(item.thumbnailUrl)
         } else {

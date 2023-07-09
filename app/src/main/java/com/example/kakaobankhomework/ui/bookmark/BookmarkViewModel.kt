@@ -3,7 +3,7 @@ package com.example.kakaobankhomework.ui.bookmark
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.BookmarkUseCase
-import com.example.kakaobankhomework.model.ItemBookmarked
+import com.example.kakaobankhomework.model.ItemBookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,9 +18,9 @@ class BookmarkViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _bookmarks = MutableStateFlow<List<String>>(emptyList())
-    val bookmakrs: StateFlow<List<ItemBookmarked>?> = _bookmarks.map { list ->
+    val bookmakrs: StateFlow<List<ItemBookmark>?> = _bookmarks.map { list ->
         list.map {
-            ItemBookmarked(it)
+            ItemBookmark(it)
         }
     }.stateIn(
         scope = viewModelScope,
@@ -32,7 +32,7 @@ class BookmarkViewModel @Inject constructor(
         _bookmarks.value = bookmarkUseCase.loadBookmarks()
     }
 
-    fun onBookmarkClick(item: ItemBookmarked) {
+    fun onBookmarkClick(item: ItemBookmark) {
         bookmarkUseCase.removeBookmark(item.thumbnailUrl)
         loadBookmarks()
     }
