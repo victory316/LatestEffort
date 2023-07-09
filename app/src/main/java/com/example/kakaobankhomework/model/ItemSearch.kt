@@ -4,7 +4,7 @@ import androidx.annotation.LayoutRes
 import com.example.kakaobankhomework.R
 import java.util.Date
 
-sealed class ItemOnSearch(
+sealed class ItemSearch(
     @LayoutRes val layoutResId: Int
 ) {
 
@@ -14,7 +14,7 @@ sealed class ItemOnSearch(
         val type: Type,
         val dateTime: Date,
         var isBookmarked: Boolean = false
-    ) : ItemOnSearch(R.layout.item_search_result) {
+    ) : ItemSearch(R.layout.item_search_result) {
         enum class Type {
             IMAGE,
             VIDEO
@@ -23,7 +23,7 @@ sealed class ItemOnSearch(
 
     data class SearchPage(
         val searchPageIndex: Int
-    ) : ItemOnSearch(R.layout.item_search_page_header)
+    ) : ItemSearch(R.layout.item_search_page_header)
 }
 
 

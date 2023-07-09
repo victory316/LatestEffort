@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.glide)
     implementation(libs.volley)
+    implementation(libs.lifecycleKtx)
     kapt(libs.hilt.compiler)
     implementation(project(mapOf("path" to ":domain")))
     implementation(project(mapOf("path" to ":data")))

@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaobankhomework.databinding.ItemSearchPageHeaderBinding
 import com.example.kakaobankhomework.databinding.ItemSearchResultBinding
-import com.example.kakaobankhomework.model.ItemOnSearch
+import com.example.kakaobankhomework.model.ItemSearch
 
 class SearchAdapter(private val viewModel: SearchViewModel) :
-    ListAdapter<ItemOnSearch, SearchAdapter.ViewHolder>(TaskDiffCallback()) {
+    ListAdapter<ItemSearch, SearchAdapter.ViewHolder>(TaskDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -29,17 +29,17 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
     class ViewHolder private constructor(val binding: ViewDataBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: SearchViewModel, item: ItemOnSearch) {
+        fun bind(viewModel: SearchViewModel, item: ItemSearch) {
             when (binding) {
                 is ItemSearchResultBinding -> {
-                    (item as? ItemOnSearch.SearchResult)?.let {
+                    (item as? ItemSearch.SearchResult)?.let {
                         binding.item = item
                         binding.viewModel = viewModel
                     }
                 }
 
                 is ItemSearchPageHeaderBinding -> {
-                    (item as? ItemOnSearch.SearchPage)?.let {
+                    (item as? ItemSearch.SearchPage)?.let {
                         binding.item = item
                     }
                 }
@@ -64,10 +64,10 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
     }
 }
 
-class TaskDiffCallback : DiffUtil.ItemCallback<ItemOnSearch>() {
-    override fun areItemsTheSame(oldItem: ItemOnSearch, newItem: ItemOnSearch): Boolean {
+class TaskDiffCallback : DiffUtil.ItemCallback<ItemSearch>() {
+    override fun areItemsTheSame(oldItem: ItemSearch, newItem: ItemSearch): Boolean {
         return when {
-            oldItem is ItemOnSearch.SearchResult && newItem is ItemOnSearch.SearchResult -> {
+            oldItem is ItemSearch.SearchResult && newItem is ItemSearch.SearchResult -> {
                 oldItem.thumbnailUrl == newItem.thumbnailUrl
             }
 
@@ -75,7 +75,7 @@ class TaskDiffCallback : DiffUtil.ItemCallback<ItemOnSearch>() {
         }
     }
 
-    override fun areContentsTheSame(oldItem: ItemOnSearch, newItem: ItemOnSearch): Boolean {
+    override fun areContentsTheSame(oldItem: ItemSearch, newItem: ItemSearch): Boolean {
         return oldItem == newItem
     }
 }

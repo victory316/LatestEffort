@@ -1,10 +1,12 @@
 package com.example.kakaobankhomework.ui.bookmark
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.domain.BookmarkUseCase
 import com.example.kakaobankhomework.model.ItemBookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -27,6 +29,10 @@ class BookmarkViewModel @Inject constructor(
         initialValue = emptyList(),
         started = SharingStarted.WhileSubscribed(5_000),
     )
+
+    val noBookmarks = bookmakrs.map {
+        it?.isEmpty() == true
+    }.asLiveData(Dispatchers.Main)
 
     fun loadBookmarks() {
         _bookmarks.value = bookmarkUseCase.loadBookmarks()

@@ -34,5 +34,12 @@
             app:layout_constraintTop_toBottomOf="@id/title_text_view"
             tools:itemCount="200" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="저장된 책갈피가 없어요."
+            app:isVisible="@{viewModel.noBookmarks}" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
