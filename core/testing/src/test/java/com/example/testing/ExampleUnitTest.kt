@@ -1,4 +1,4 @@
-package com.example.kakaobankhomework
+package com.example.testing
 
 import org.junit.Test
 
