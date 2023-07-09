@@ -25,13 +25,8 @@ class BookmarkAdapter(private val viewModel: BookmarkViewModel) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(viewModel: BookmarkViewModel, item: ItemBookmark) {
-
-            when (item) {
-                is ItemBookmark -> {
-                    binding.item = item
-                    binding.viewModel = viewModel
-                }
-            }
+            binding.item = item
+            binding.viewModel = viewModel
 
             binding.executePendingBindings()
         }
