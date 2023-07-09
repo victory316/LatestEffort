@@ -47,11 +47,14 @@ class SearchViewModel @Inject constructor(
     val searchResultFlow: StateFlow<SearchUiState> =
         combine(searchImageState, searchVideoState) { images, videos ->
             if (images is Result.Success && videos is Result.Success) {
-                val imageResult = images.data.result.map {
+                val imageResult = mutableListOf<ItemSearch>()
+
+                images.data.result.forEach {
                     if (lastImagePage != it.page) {
-                        _lastImagePage = it.page
-                        ItemSearch.SearchPage(it.page)
-                    } else {
+                        imageResult.add(ItemSearch.SearchPage(it.page))
+                    }
+
+                    imageResult.add(
                         ItemSearch.SearchResult(
                             id = 0,
                             thumbnailUrl = it.thumbnailUrl,
@@ -59,22 +62,29 @@ class SearchViewModel @Inject constructor(
                             dateTime = it.dateTime,
                             isBookmarked = it.bookmarked,
                         )
-                    }
+                    )
+
+                    _lastImagePage = it.page
                 }
 
-                val videoResult = videos.data.result.map {
+                val videoResult = mutableListOf<ItemSearch>()
+
+                videos.data.result.forEach {
                     if (lastVideoPage != it.page) {
-                        _lastVideoPage = it.page
-                        ItemSearch.SearchPage(it.page)
-                    } else {
+                        videoResult.add(ItemSearch.SearchPage(it.page))
+                    }
+
+                    videoResult.add(
                         ItemSearch.SearchResult(
                             id = 0,
                             thumbnailUrl = it.thumbnailUrl,
-                            type = ItemSearch.SearchResult.Type.VIDEO,
+                            type = ItemSearch.SearchResult.Type.IMAGE,
                             dateTime = it.dateTime,
                             isBookmarked = it.bookmarked,
                         )
-                    }
+                    )
+
+                    _lastVideoPage = it.page
                 }
 
                 SearchUiState(
