@@ -19,6 +19,8 @@ okhttp = "4.10.0"
 gson = "2.10.1"
 glide = "4.15.1"
 lifecycleLivedataKtx = "2.4.0"
+rxAndroid = "3.0.2"
+rxJava = "3.1.5"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -44,6 +46,8 @@ gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 volley = { group = "com.android.volley", name = "volley", version = "1.2.1" }
 lifecycleKtx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+rxAndroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxAndroid" }
+rxJava = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxJava" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

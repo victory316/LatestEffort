@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.domain.BookmarkUseCase
+import com.example.kakaobankhomework.RxBus
 import com.example.kakaobankhomework.model.ItemBookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +41,7 @@ class BookmarkViewModel @Inject constructor(
 
     fun onBookmarkClick(item: ItemBookmark) {
         bookmarkUseCase.removeBookmark(item.thumbnailUrl)
+        RxBus.onBookmarkRemoved.onNext(item.thumbnailUrl)
         loadBookmarks()
     }
 }

@@ -57,6 +57,8 @@ dependencies {
     kapt(libs.hilt.compiler)
     implementation(project(mapOf("path" to ":domain")))
     implementation(project(mapOf("path" to ":data")))
+    implementation(libs.rxAndroid)
+    implementation(libs.rxJava)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
