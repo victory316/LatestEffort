@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.kakaobankhomework.ui.search.SearchFragment"
-        android:label="@string/first_fragment_label"
+        android:label="@string/search_fragment_label"
         tools:layout="@layout/fragment_search">
 
         <action
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.example.kakaobankhomework.ui.bookmark.BookmarkFragment"
-        android:label="@string/second_fragment_label"
+        android:label="@string/bookmark_fragment_label"
         tools:layout="@layout/fragment_bookmark">
 
         <action

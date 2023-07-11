@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SearchUseCase {
 
-    suspend fun searchImage(query: String, count: Int): Flow<Result<SearchResultImage>>
+    suspend fun searchImage(query: String, page: Int, size: Int): Flow<Result<SearchResultImage>>
 
-    suspend fun searchVideo(query: String, count: Int): Flow<Result<SearchResultVideo>>
+    suspend fun searchVideo(query: String, page: Int, size: Int): Flow<Result<SearchResultVideo>>
 }

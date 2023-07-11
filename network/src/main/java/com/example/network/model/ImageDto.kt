@@ -3,7 +3,6 @@ package com.example.network.model
 import kotlinx.serialization.Serializable
 import java.util.Date
 
-
 @Serializable
 data class ImageDto(
     val collection: String,
@@ -13,5 +12,5 @@ data class ImageDto(
     val height: Int,
     val displaySitename: String,
     val docUrl: String,
-    val dateTime: Date
+    val datetime: Date
 )

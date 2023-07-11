@@ -2,11 +2,11 @@ package com.example.domain
 
 interface BookmarkUseCase {
 
-    fun loadBookmarks()
+    fun loadBookmarks(): List<String>
 
-    fun addBookmark()
+    fun addBookmark(id: String)
 
-    fun removeBookmark()
+    fun removeBookmark(id: String)
 
     fun clearBookmark()
 }

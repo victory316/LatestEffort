@@ -21,19 +21,28 @@ private interface NetworkApi {
     @GET(value = "v2/search/image")
     suspend fun getImages(
         @Query("query") query: String,
-        @Query("size") size: Int?
+        @Query("sort") sort: String? = null,
+        @Query("page") page: Int? = null,
+        @Query("size") size: Int? = null,
     ): Response<ImageResultDto>
 
     @Headers("Authorization: KakaoAK $networkHeader")
     @GET(value = "v2/search/vclip")
     suspend fun getVideos(
         @Query("query") query: String,
-        @Query("size") size: Int?
+        @Query("sort") sort: String? = null,
+        @Query("page") page: Int? = null,
+        @Query("size") size: Int? = null,
     ): Response<VideoResultDto>
 }
 
 private const val networkHeader = "8883f58d6338fb1f3ed1c038a12c1ca3"
 private const val networkBaseUrl = "https://dapi.kakao.com"
+
+enum class SortBy(val stringKey: String) {
+    ACCURACY("accuracy"),
+    RECENCY("recency")
+}
 
 @Singleton
 class Network @Inject constructor(
@@ -46,16 +55,26 @@ class Network @Inject constructor(
         .addConverterFactory(
             GsonConverterFactory.create(
                 GsonBuilder().setFieldNamingPolicy(
-                    FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES
-                ).create()
-            )
+                    FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES,
+                ).create(),
+            ),
         )
         .build()
         .create(NetworkApi::class.java)
 
-    override suspend fun getImages(query: String, pages: Int?): Response<ImageResultDto> =
-        networkApi.getImages(query = query, size = pages)
+    override suspend fun getImages(
+        query: String,
+        sort: String?,
+        page: Int?,
+        size: Int?
+    ): Response<ImageResultDto> =
+        networkApi.getImages(query = query, sort = sort, page = page, size = size)
 
-    override suspend fun getVideos(query: String, pages: Int?): Response<VideoResultDto> =
-        networkApi.getVideos(query = query, size = pages)
+    override suspend fun getVideos(
+        query: String,
+        sort: String?,
+        page: Int?,
+        size: Int?
+    ): Response<VideoResultDto> =
+        networkApi.getVideos(query = query, sort = sort, page = page, size = size)
 }

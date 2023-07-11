@@ -1,41 +1,66 @@
 package com.example.kakaobankhomework.ui.bookmark
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.example.kakaobankhomework.R
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.kakaobankhomework.databinding.FragmentBookmarkBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class BookmarkFragment : Fragment() {
 
     private var _binding: FragmentBookmarkBinding? = null
     private val binding get() = _binding!!
+    private var bookmarkAdapter: BookmarkAdapter? = null
 
     private val bookmarkViewModel: BookmarkViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = FragmentBookmarkBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = this@BookmarkFragment
             viewModel = bookmarkViewModel
         }
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+        initViews()
+        initObserves()
+        loadOnResumed()
+    }
+
+    private fun initViews() {
+        bookmarkAdapter = BookmarkAdapter(bookmarkViewModel)
+
+        binding.bookmarkRecyclerView.adapter = bookmarkAdapter
+    }
+
+    private fun initObserves() {
+        lifecycleScope.launch {
+            bookmarkViewModel.bookmarks.collect { bookmarked ->
+                bookmarked?.let { bookmarkAdapter?.submitList(it) }
+            }
+        }
+    }
+
+    private fun loadOnResumed() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                bookmarkViewModel.loadBookmarks()
+            }
         }
     }
 
