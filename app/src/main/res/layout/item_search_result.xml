@@ -6,11 +6,11 @@
 
         <variable
             name="item"
-            type="com.example.kakaobankhomework.model.ItemSearch.SearchResult" />
+            type="com.example.latesteffort.model.ItemSearch.SearchResult" />
 
         <variable
             name="viewModel"
-            type="com.example.kakaobankhomework.ui.search.SearchViewModel" />
+            type="com.example.latesteffort.ui.search.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

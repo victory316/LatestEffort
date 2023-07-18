@@ -6,11 +6,11 @@
 
         <variable
             name="item"
-            type="com.example.kakaobankhomework.model.ItemBookmark" />
+            type="com.example.latesteffort.model.ItemBookmark" />
 
         <variable
             name="viewModel"
-            type="com.example.kakaobankhomework.ui.bookmark.BookmarkViewModel" />
+            type="com.example.latesteffort.ui.bookmark.BookmarkViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
