@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.kakaobankhomework"
+    namespace = "com.choidev.latesteffort"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.kakaobankhomework"
+        applicationId = "com.choidev.latesteffort"
         minSdk = 28
         targetSdk = 33
         versionCode = 1

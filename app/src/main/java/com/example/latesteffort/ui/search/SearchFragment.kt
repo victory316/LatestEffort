@@ -10,8 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kakaobankhomework.R
-import com.example.kakaobankhomework.databinding.FragmentSearchBinding
+import com.choidev.latesteffort.R
+import com.choidev.latesteffort.databinding.FragmentSearchBinding
 import com.example.latesteffort.util.RxBus
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers

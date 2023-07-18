@@ -7,8 +7,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kakaobankhomework.databinding.ItemSearchPageHeaderBinding
-import com.example.kakaobankhomework.databinding.ItemSearchResultBinding
+import com.choidev.latesteffort.databinding.ItemSearchPageHeaderBinding
+import com.choidev.latesteffort.databinding.ItemSearchResultBinding
 import com.example.latesteffort.model.ItemSearch
 
 class SearchAdapter(private val viewModel: SearchViewModel) :

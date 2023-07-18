@@ -6,8 +6,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
-import com.example.kakaobankhomework.R
-import com.example.kakaobankhomework.databinding.ActivityMainBinding
+import com.choidev.latesteffort.R
+import com.choidev.latesteffort.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
