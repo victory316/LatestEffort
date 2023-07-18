@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.example.kakaobankhomework.model.ItemSearch.SearchPage" />
+            type="com.example.latesteffort.model.ItemSearch.SearchPage" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
