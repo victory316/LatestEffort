@@ -1,6 +1,6 @@
-# SearchAndBookmarkHomework
+# LatestEffort
 
-### Latest effort of using search api and tech stacks below
+### Latest efforts of using various api and tech stacks
 
 - Multimodule
 - Android View
