@@ -1,7 +1,7 @@
 package com.choidev.latesteffort.feature.search_media.model
 
 import androidx.annotation.LayoutRes
-import com.choidev.latesteffort.R
+import com.choidev.latesteffort.feature.search_media.R
 import java.util.Date
 
 sealed class ItemSearch(
@@ -12,7 +12,7 @@ sealed class ItemSearch(
         val thumbnailUrl: String,
         val dateTime: Date,
         var isBookmarked: Boolean = false
-    ) : ItemSearch(R.layout.item_search_result)
+    ) : ItemSearch(R.layout.isz)
 
     data class SearchPage(
         val searchPageIndex: Int
