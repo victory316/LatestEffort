@@ -41,12 +41,16 @@ dependencies {
     implementation(libs.material)
     implementation(libs.hilt.android)
     implementation(libs.retrofit.core)
-
-    implementation(project(mapOf("path" to ":network")))
-    implementation(project(mapOf("path" to ":domain")))
+    implementation(libs.room)
+    implementation(libs.room.compiler)
+    implementation(libs.room.ktx)
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
+    testImplementation(libs.room.testing)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    implementation(project(mapOf("path" to ":network")))
+    implementation(project(mapOf("path" to ":domain")))
 }

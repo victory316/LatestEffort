@@ -30,6 +30,7 @@ androidxTestRunner = "1.5.1"
 archCoreTesting = "2.1.0"
 livedataTesting = "1.3.0"
 mockitoKotlin = "5.0.0"
+roomVersion = "2.5.2"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -58,6 +59,10 @@ volley = { group = "com.android.volley", name = "volley", version = "1.2.1" }
 lifecycleKtx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 rxAndroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxAndroid" }
 rxJava = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxJava" }
+room = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
+
 androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidxTestCore" }
 androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestExt" }
 androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidxTestRules" }
@@ -66,6 +71,7 @@ androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version 
 androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "archCoreTesting" }
 livedata-testing = { group = "com.jraska.livedata", name = "testing-ktx", version.ref = "livedataTesting" }
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
+room-testing = { group = "androidx.room", name = "room-testing", version.ref = "roomVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
