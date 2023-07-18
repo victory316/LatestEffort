@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "KakaoBankHomework"
+rootProject.name = "LatestEffort"
 include(":app")
 include(":data")
 include(":network")

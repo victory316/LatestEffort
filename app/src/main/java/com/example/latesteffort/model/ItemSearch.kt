@@ -1,7 +1,7 @@
 package com.example.latesteffort.model
 
 import androidx.annotation.LayoutRes
-import com.example.latesteffort.R
+import com.example.kakaobankhomework.R
 import java.util.Date
 
 sealed class ItemSearch(

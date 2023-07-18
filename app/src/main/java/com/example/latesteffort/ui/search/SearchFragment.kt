@@ -10,13 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kakaobankhomework.R
+import com.example.kakaobankhomework.databinding.FragmentSearchBinding
 import com.example.latesteffort.util.RxBus
-import com.example.latesteffort.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.launch
-import com.example.latesteffort.R
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
