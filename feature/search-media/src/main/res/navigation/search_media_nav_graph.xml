@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.latesteffort.ui.search.SearchFragment"
+        android:name="com.choidev.latesteffort.feature.search_media.ui.search.SearchFragment"
         android:label="@string/search_fragment_label"
         tools:layout="@layout/fragment_search">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.example.latesteffort.ui.bookmark.BookmarkFragment"
+        android:name="com.choidev.latesteffort.feature.search_media.ui.bookmark.BookmarkFragment"
         android:label="@string/bookmark_fragment_label"
         tools:layout="@layout/fragment_bookmark">
 
