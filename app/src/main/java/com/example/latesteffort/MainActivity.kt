@@ -1,4 +1,4 @@
-package com.example.latesteffort.ui
+package com.example.latesteffort
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

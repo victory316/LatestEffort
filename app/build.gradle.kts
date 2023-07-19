@@ -57,6 +57,9 @@ dependencies {
     implementation(libs.rxAndroid)
     implementation(libs.rxJava)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.compose.runtime.tracing)
+    implementation(libs.androidx.compose.material3.windowSizeClass)
+    implementation(libs.androidx.activity.compose)
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
