@@ -5,15 +5,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.choidev.latesteffort.feature.search_media.extension.getSuccess
 import com.choidev.latesteffort.feature.search_media.model.ItemSearch
+import com.choidev.latesteffort.feature.search_media.ui.search.SearchUiState
 import com.example.domain.BookmarkUseCase
 import com.example.domain.SearchUseCase
 import com.example.domain.model.SearchResultImage
 import com.example.domain.model.SearchResultVideo
 import com.example.domain.model.result.Result
 import com.example.domain.model.result.ServiceError
-import com.example.latesteffort.model.ItemSearch
-import com.example.latesteffort.util.getSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
