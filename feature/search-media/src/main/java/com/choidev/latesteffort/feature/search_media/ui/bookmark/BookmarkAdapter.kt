@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.choidev.latesteffort.databinding.ItemBookmarkedBinding
-import com.example.latesteffort.model.ItemBookmark
+import com.choidev.latesteffort.feature.search_media.NewSearchViewModel
+import com.choidev.latesteffort.feature.search_media.databinding.ItemBookmarkedBinding
+import com.choidev.latesteffort.feature.search_media.model.ItemBookmark
 
-class BookmarkAdapter(private val viewModel: BookmarkViewModel) :
+class BookmarkAdapter(private val viewModel: NewSearchViewModel) :
     ListAdapter<ItemBookmark, BookmarkAdapter.ViewHolder>(TaskDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -24,7 +25,7 @@ class BookmarkAdapter(private val viewModel: BookmarkViewModel) :
     class ViewHolder private constructor(val binding: ItemBookmarkedBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: BookmarkViewModel, item: ItemBookmark) {
+        fun bind(viewModel: NewSearchViewModel, item: ItemBookmark) {
             binding.item = item
             binding.viewModel = viewModel
 

@@ -8,6 +8,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.choidev.latesteffort.R
 import com.choidev.latesteffort.databinding.ActivityMainBinding
+import com.choidev.latesteffort.feature.search_media.SearchMediaActivity
+import com.example.latesteffort.ext.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,6 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         binding.bottomNavigation.setupWithNavController(navController)
+
+        startNewActivity(SearchMediaActivity::class.java)
     }
 
     override fun onSupportNavigateUp(): Boolean {

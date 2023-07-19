@@ -75,4 +75,5 @@ dependencies {
     implementation(project(mapOf("path" to ":domain")))
     implementation(project(mapOf("path" to ":data")))
     implementation(project(mapOf("path" to ":core:testing")))
+    implementation(project(":feature:search-media"))
 }

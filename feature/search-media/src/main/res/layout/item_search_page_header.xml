@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.example.latesteffort.model.ItemSearch.SearchPage" />
+            type="com.choidev.latesteffort.feature.search_media.model.ItemSearch.SearchPage" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.latesteffort.ui.bookmark.BookmarkViewModel" />
+            type="com.choidev.latesteffort.feature.search_media.NewSearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="20dp"
-            android:text="@string/menu_bookmark"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/hint_bookmark"
             app:isVisible="@{viewModel.noBookmarks}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

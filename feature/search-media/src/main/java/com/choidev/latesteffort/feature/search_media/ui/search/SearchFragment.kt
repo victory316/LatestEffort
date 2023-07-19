@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.choidev.latesteffort.R
-import com.choidev.latesteffort.databinding.FragmentSearchBinding
-import com.example.latesteffort.util.RxBus
+import com.choidev.latesteffort.feature.search_media.NewSearchViewModel
+import com.choidev.latesteffort.feature.search_media.R
+import com.choidev.latesteffort.feature.search_media.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
@@ -27,7 +28,7 @@ class SearchFragment : Fragment() {
 
     private var eventBus: Disposable? = null
 
-    private val searchViewModel: SearchViewModel by viewModels()
+    private val searchViewModel: NewSearchViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,12 +73,12 @@ class SearchFragment : Fragment() {
     }
 
     private fun initSubscribes() {
-        eventBus = RxBus.onBookmarkRemoved
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { url ->
-                searchViewModel.updateImageBookmark(url = url, bookmarked = false)
-                searchViewModel.updateVideoBookmark(url = url, bookmarked = false)
-            }
+//        eventBus = RxBus.onBookmarkRemoved
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe { url ->
+//                searchViewModel.updateImageBookmark(url = url, bookmarked = false)
+//                searchViewModel.updateVideoBookmark(url = url, bookmarked = false)
+//            }
     }
 
     private fun initObserves() {

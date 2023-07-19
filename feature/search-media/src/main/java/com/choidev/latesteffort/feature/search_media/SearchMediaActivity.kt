@@ -23,6 +23,7 @@ class SearchMediaActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         binding.bottomNavigation.setupWithNavController(navController)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

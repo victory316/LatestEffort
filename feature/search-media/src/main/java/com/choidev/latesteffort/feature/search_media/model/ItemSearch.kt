@@ -12,7 +12,7 @@ sealed class ItemSearch(
         val thumbnailUrl: String,
         val dateTime: Date,
         var isBookmarked: Boolean = false
-    ) : ItemSearch(R.layout.isz)
+    ) : ItemSearch(R.layout.item_search_result)
 
     data class SearchPage(
         val searchPageIndex: Int

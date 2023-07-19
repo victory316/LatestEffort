@@ -7,11 +7,12 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.choidev.latesteffort.databinding.ItemSearchPageHeaderBinding
-import com.choidev.latesteffort.databinding.ItemSearchResultBinding
-import com.example.latesteffort.model.ItemSearch
+import com.choidev.latesteffort.feature.search_media.NewSearchViewModel
+import com.choidev.latesteffort.feature.search_media.databinding.ItemSearchPageHeaderBinding
+import com.choidev.latesteffort.feature.search_media.databinding.ItemSearchResultBinding
+import com.choidev.latesteffort.feature.search_media.model.ItemSearch
 
-class SearchAdapter(private val viewModel: SearchViewModel) :
+class SearchAdapter(private val viewModel: NewSearchViewModel) :
     ListAdapter<ItemSearch, SearchAdapter.ViewHolder>(TaskDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -29,7 +30,7 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
     class ViewHolder private constructor(val binding: ViewDataBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: SearchViewModel, item: ItemSearch) {
+        fun bind(viewModel: NewSearchViewModel, item: ItemSearch) {
             when (binding) {
                 is ItemSearchResultBinding -> {
                     (item as? ItemSearch.SearchResult)?.let {

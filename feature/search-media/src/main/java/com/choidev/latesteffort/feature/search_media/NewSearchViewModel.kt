@@ -6,6 +6,7 @@ import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.choidev.latesteffort.feature.search_media.extension.getSuccess
+import com.choidev.latesteffort.feature.search_media.model.ItemBookmark
 import com.choidev.latesteffort.feature.search_media.model.ItemSearch
 import com.choidev.latesteffort.feature.search_media.ui.search.SearchUiState
 import com.example.domain.BookmarkUseCase
@@ -277,5 +278,30 @@ class NewSearchViewModel @Inject constructor(
                 }
             } ?: currentState
         }
+    }
+
+    private val _bookmarks = MutableStateFlow<List<String>>(emptyList())
+    val bookmarks: StateFlow<List<ItemBookmark>?> = _bookmarks.map { list ->
+        list.map {
+            ItemBookmark(it)
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        initialValue = emptyList(),
+        started = SharingStarted.WhileSubscribed(5_000),
+    )
+
+    val noBookmarks = bookmarks.map {
+        it?.isEmpty() == true
+    }.asLiveData(Dispatchers.Main)
+
+    fun loadBookmarks() {
+        _bookmarks.value = bookmarkUseCase.loadBookmarks()
+    }
+
+    fun onBookmarkClick(item: ItemBookmark) {
+        bookmarkUseCase.removeBookmark(item.thumbnailUrl)
+//        RxBus.onBookmarkRemoved.onNext(item.thumbnailUrl)
+        loadBookmarks()
     }
 }
