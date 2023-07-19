@@ -36,6 +36,8 @@ androidxComposeCompiler = "1.4.5"
 androidxComposeMaterial3 = "1.1.0-alpha06"
 androidxComposeRuntimeTracing = "1.0.0-alpha01"
 androidxActivity = "1.7.0"
+androidxHiltNavigationCompose = "1.0.0"
+androidxNavigation = "2.5.3"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -81,6 +83,10 @@ androidx-compose-ui-testManifest = { group = "androidx.compose.ui", name = "ui-t
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
+androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "androidxNavigation" }
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
 
 androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidxTestCore" }
