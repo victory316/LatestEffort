@@ -40,7 +40,7 @@ class BookmarkRepositoryImpl @Inject constructor(
         val currentIds = sharedPreferences.getStringSet(bookmarkIds, setOf())
 
         currentIds?.toMutableSet()?.apply {
-            removeIf { it.contains(id) }
+            removeIf { id in it }
         }.also {
             sharedPreferences.edit().apply {
                 putStringSet(bookmarkIds, it)
