@@ -1,8 +1,6 @@
 package com.example.latesteffort
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.latesteffort.model.ItemBookmark
-import com.example.latesteffort.ui.bookmark.BookmarkViewModel
 import com.example.testing.TestBookmarkUseCase
 import com.jraska.livedata.test
 import kotlinx.coroutines.Dispatchers

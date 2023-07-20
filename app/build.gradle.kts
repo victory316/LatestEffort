@@ -36,7 +36,11 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.3"
+    }
     buildFeatures {
+        compose = true
         viewBinding = true
         dataBinding = true
     }
@@ -57,6 +61,15 @@ dependencies {
     implementation(libs.rxAndroid)
     implementation(libs.rxJava)
     implementation(libs.hilt.android)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.runtime.tracing)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material3.windowSizeClass)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.ui.graphics)
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
@@ -75,4 +88,5 @@ dependencies {
     implementation(project(mapOf("path" to ":domain")))
     implementation(project(mapOf("path" to ":data")))
     implementation(project(mapOf("path" to ":core:testing")))
+    implementation(project(":feature:search-media"))
 }

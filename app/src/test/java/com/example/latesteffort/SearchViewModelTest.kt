@@ -4,8 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.domain.BookmarkUseCase
 import com.example.domain.model.result.Result
 import com.example.domain.model.result.ServiceError
-import com.example.latesteffort.model.ItemSearch
-import com.example.latesteffort.ui.search.SearchViewModel
 import com.example.testing.TestSearchUseCase
 import com.jraska.livedata.test
 import kotlinx.coroutines.Dispatchers

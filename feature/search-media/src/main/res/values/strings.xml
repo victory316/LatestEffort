@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">LatestEffort</string>
+    <string name="title_activity_main">LatestEffort</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="search_fragment_label">Search Fragment</string>
+    <string name="bookmark_fragment_label">Bookmark Fragment</string>
+
+    <string name="menu_search">검색</string>
+    <string name="menu_bookmark">북마크</string>
+    <string name="hint_bookmark">저장된 북마크가 없어요./</string>
+    <string name="hint_search">이미지나 비디오를 검색해봐요.</string>
+    <string name="no_search_result">검색된 결과가 없어요.</string>
+
+    <string name="error_search_fail">검색에 실패했어요.</string>
+</resources>
