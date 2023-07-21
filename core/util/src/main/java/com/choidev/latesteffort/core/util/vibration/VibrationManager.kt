@@ -2,6 +2,7 @@ package com.choidev.latesteffort.core.util.vibration
 
 import android.content.Context
 import android.os.Build
+import android.os.VibrationEffect
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -10,7 +11,7 @@ class VibrationManager @Inject constructor(
     @ApplicationContext context: Context
 ) {
 
-    private var vibrator: VibrationAdapter = when (Build.VERSION.SDK_INT) {
+    private val vibrator: VibrationAdapter = when (Build.VERSION.SDK_INT) {
         in 26..30 -> {
             VibratorBelowQ(context)
         }
@@ -20,11 +21,23 @@ class VibrationManager @Inject constructor(
         }
     }
 
-    fun vibrate(duration: Long = 1000L, repeat: Int = 0) {
-        vibrator.vibrate()
+    fun vibrate(
+        duration: Long = 1000L,
+        repeat: Int = -1,
+        amplitude: Int = VibrationEffect.DEFAULT_AMPLITUDE
+    ) {
+        vibrator.vibrate(
+            duration = duration,
+            repeat = repeat,
+            amplitude = amplitude
+        )
     }
 
-    fun vibrateWithPattern(timing: List<Long>, amplitudes: List<Int>, repeat: Int = 0) {
-        vibrator.vibrate()
+    fun vibrateWithPattern(timing: LongArray, amplitudes: IntArray, repeat: Int = -1) {
+        vibrator.vibrateWithPattern(
+            timing = timing,
+            amplitudes = amplitudes,
+            effect = repeat
+        )
     }
 }
