@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.choidev.domain.catalog.model.CatalogType
 import com.choidev.latesteffort.feature.search_media.SearchMediaActivity
+import com.choidev.vibration.navigation.vibrationRoute
 import com.example.latesteffort.MainViewModel
 import com.example.latesteffort.action.NavigateAction
 import com.example.latesteffort.action.presenter.ActionPresenter
@@ -78,8 +79,13 @@ fun CatalogListsUi(
                     CatalogItem(
                         icon = Icons.Rounded.Search,
                         title = "미디어 검색하기",
-                        presenter = presenter,
-                        modifier = Modifier.fillParentMaxWidth()
+                        modifier = Modifier
+                            .fillParentMaxWidth()
+                            .clickable {
+                                presenter.onClick(
+                                    NavigateAction.StartActivity(SearchMediaActivity::class.java)
+                                )
+                            }
                     )
                 }
 
@@ -87,8 +93,13 @@ fun CatalogListsUi(
                     CatalogItem(
                         icon = Icons.Default.MoreVert,
                         title = "진동 테스트",
-                        presenter = presenter,
-                        modifier = Modifier.fillParentMaxWidth()
+                        modifier = Modifier
+                            .fillParentMaxWidth()
+                            .clickable {
+                                presenter.onClick(
+                                    NavigateAction.NavGraphDestination(vibrationRoute)
+                                )
+                            }
                     )
                 }
             }
@@ -100,16 +111,10 @@ fun CatalogListsUi(
 fun CatalogItem(
     icon: ImageVector,
     title: String,
-    presenter: ActionPresenter,
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier
-            .clickable {
-                presenter.onClick(
-                    NavigateAction.StartActivity(SearchMediaActivity::class.java)
-                )
-            }
+        modifier = modifier
     ) {
         Row(
             modifier = Modifier.padding(12.dp)
