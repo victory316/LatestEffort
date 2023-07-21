@@ -32,7 +32,7 @@ import com.choidev.core.actions.presenter.ActionPresenter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CatalogScreen(
-    presenter: com.choidev.core.actions.presenter.ActionPresenter,
+    presenter: ActionPresenter,
     mainViewModel: MainViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
@@ -63,7 +63,7 @@ fun CatalogScreen(
 fun CatalogListsUi(
     catalogs: List<CatalogType>,
     modifier: Modifier = Modifier,
-    presenter: com.choidev.core.actions.presenter.ActionPresenter
+    presenter: ActionPresenter
 ) {
     LazyColumn(
         modifier = modifier,
@@ -79,7 +79,7 @@ fun CatalogListsUi(
                             .fillParentMaxWidth()
                             .clickable {
                                 presenter.onClick(
-                                    com.choidev.core.actions.NavigateAction.StartActivity(SearchMediaActivity::class.java)
+                                    NavigateAction.StartActivity(SearchMediaActivity::class.java)
                                 )
                             }
                     )
@@ -93,7 +93,9 @@ fun CatalogListsUi(
                             .fillParentMaxWidth()
                             .clickable {
                                 presenter.onClick(
-                                    com.choidev.core.actions.NavigateAction.NavGraphDestination(vibrationRoute)
+                                    NavigateAction.NavGraphDestination(
+                                        vibrationRoute
+                                    )
                                 )
                             }
                     )

@@ -14,16 +14,22 @@ import javax.inject.Inject
 class VibrationViewModel @Inject constructor() : ViewModel() {
 
     private val _vibrationState =
-        MutableStateFlow<VibrationState>(VibrationState(activated = false, 0L))
+        MutableStateFlow<VibrationState>(VibrationState())
     val vibrationState = _vibrationState.stateIn(
         scope = viewModelScope,
-        initialValue = VibrationState(activated = false, 0L),
+        initialValue = VibrationState(),
         started = SharingStarted.WhileSubscribed(5_000)
     )
 
     fun switchVibration(activate: Boolean) {
         _vibrationState.update {
             it.copy(activated = activate)
+        }
+    }
+
+    fun repeatVibration(repeat: Boolean) {
+        _vibrationState.update {
+            it.copy(repeat = repeat)
         }
     }
 
