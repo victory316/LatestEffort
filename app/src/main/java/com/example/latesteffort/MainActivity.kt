@@ -72,5 +72,12 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun handleVibrationAction(action: VibrationAction) {
+        when (action) {
+            is VibrationAction.Vibrate -> {
+                if (action.activate) {
+                    vibrationManager.vibrate(duration = action.duration)
+                }
+            }
+        }
     }
 }
