@@ -4,6 +4,7 @@
 
 - Multimodule
 - Android View
+- Jetpack Compose
 - Kotlin Flow
 - Clean architecture
 - Android architecture recommendations
