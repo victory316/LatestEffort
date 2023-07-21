@@ -7,3 +7,5 @@ import androidx.compose.runtime.Composable
 fun VibrationScreen() {
     Text("Vibe vibe")
 }
+
+
