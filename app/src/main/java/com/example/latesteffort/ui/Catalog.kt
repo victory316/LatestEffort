@@ -18,6 +18,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -40,9 +41,7 @@ fun CatalogScreen(
         topBar = { TopAppBar(title = { Text(text = "Welcome to my latest effort.") }) },
         modifier = modifier
             .padding(start = 16.dp, end = 16.dp)
-            .fillMaxSize()
     ) { paddingValues ->
-
         when {
             menus.isSuccess -> {
                 CatalogListsUi(
@@ -71,22 +70,38 @@ fun CatalogListsUi(
         items(catalogs) { type ->
             when (type) {
                 CatalogType.SEARCH_MEDIA -> {
-                    Card(
-                        modifier
-                            .clickable {
-                                presenter.onClick(
-                                    NavigateAction.StartActivity(SearchMediaActivity::class.java)
-                                )
-                            }
-                            .fillParentMaxWidth()
-                    ) {
-                        Row {
-                            Icon(Icons.Rounded.Search, contentDescription = null)
-                            Text(text = "미디어 검색하기")
-                        }
-                    }
+                    CatalogItem(
+                        icon = Icons.Rounded.Search,
+                        title = "미디어 검색하기",
+                        presenter = presenter,
+                        modifier = Modifier.fillParentMaxWidth()
+                    )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun CatalogItem(
+    icon: ImageVector,
+    title: String,
+    presenter: ActionPresenter,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier
+            .clickable {
+                presenter.onClick(
+                    NavigateAction.StartActivity(SearchMediaActivity::class.java)
+                )
+            }
+    ) {
+        Row(
+            modifier = Modifier.padding(12.dp)
+        ) {
+            Icon(icon, contentDescription = null)
+            Text(text = title)
         }
     }
 }
