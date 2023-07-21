@@ -12,7 +12,7 @@ class VibrationManager @Inject constructor(
 ) {
 
     private val vibrator: VibrationAdapter = when (Build.VERSION.SDK_INT) {
-        in 26..30 -> {
+        in 28..30 -> {
             VibratorBelowQ(context)
         }
 

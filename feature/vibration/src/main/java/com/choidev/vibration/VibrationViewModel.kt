@@ -6,6 +6,4 @@ import javax.inject.Inject
 
 @HiltViewModel
 class VibrationViewModel @Inject constructor() : ViewModel() {
-
-    fun
 }

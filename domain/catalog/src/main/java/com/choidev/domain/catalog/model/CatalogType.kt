@@ -1,5 +1,6 @@
 package com.choidev.domain.catalog.model
 
 enum class CatalogType {
-    SEARCH_MEDIA
+    SEARCH_MEDIA,
+    VIBRATION
 }
