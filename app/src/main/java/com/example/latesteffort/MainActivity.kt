@@ -5,11 +5,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
-import com.example.latesteffort.action.Action
-import com.example.latesteffort.action.NavigateAction
-import com.example.latesteffort.action.NavigateAction.NavGraphDestination
-import com.example.latesteffort.action.NavigateAction.StartActivity
-import com.example.latesteffort.action.presenter.SimpleActionPresenter
+import com.choidev.core.actions.Action
+import com.choidev.core.actions.NavigateAction
+import com.choidev.core.actions.NavigateAction.NavGraphDestination
+import com.choidev.core.actions.NavigateAction.StartActivity
+import com.choidev.core.actions.presenter.SimpleActionPresenter
 import com.example.latesteffort.ext.startNewActivity
 import com.example.latesteffort.navigation.LeNavHost
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,10 +27,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-            val presenter = object : SimpleActionPresenter() {
-                override fun onClick(action: Action) {
+            val presenter = object : com.choidev.core.actions.presenter.SimpleActionPresenter() {
+                override fun onClick(action: com.choidev.core.actions.Action) {
                     when (action) {
-                        is NavigateAction -> {
+                        is com.choidev.core.actions.NavigateAction -> {
                             when (action) {
                                 is NavGraphDestination -> {
                                     navController.navigate(action.destination)

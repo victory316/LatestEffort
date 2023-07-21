@@ -5,6 +5,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.latesteffort.core.util.vibration.VibrationManager
 import java.security.PrivateKey
 import javax.inject.Inject
@@ -12,17 +13,11 @@ import javax.inject.Inject
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VibrationScreen(
-    vibrationManager: VibrationManager
+    presenter: ActionPresenter
 ) {
-
-    @Inject
-    lateinit var vibrationManager: VibrationManager
-
     Scaffold(
-        topBar = { TopAppBar(title = "진동 테스트") }
-    ) {
+        topBar = { TopAppBar(title = { Text(text = "진동 테스트") }) }
+    ) { paddingValues ->
 
     }
 }
-
-

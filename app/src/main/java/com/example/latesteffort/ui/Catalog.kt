@@ -2,13 +2,9 @@ package com.example.latesteffort.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -30,13 +26,13 @@ import com.choidev.domain.catalog.model.CatalogType
 import com.choidev.latesteffort.feature.search_media.SearchMediaActivity
 import com.choidev.vibration.navigation.vibrationRoute
 import com.example.latesteffort.MainViewModel
-import com.example.latesteffort.action.NavigateAction
-import com.example.latesteffort.action.presenter.ActionPresenter
+import com.choidev.core.actions.NavigateAction
+import com.choidev.core.actions.presenter.ActionPresenter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CatalogScreen(
-    presenter: ActionPresenter,
+    presenter: com.choidev.core.actions.presenter.ActionPresenter,
     mainViewModel: MainViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
@@ -67,7 +63,7 @@ fun CatalogScreen(
 fun CatalogListsUi(
     catalogs: List<CatalogType>,
     modifier: Modifier = Modifier,
-    presenter: ActionPresenter
+    presenter: com.choidev.core.actions.presenter.ActionPresenter
 ) {
     LazyColumn(
         modifier = modifier,
@@ -83,7 +79,7 @@ fun CatalogListsUi(
                             .fillParentMaxWidth()
                             .clickable {
                                 presenter.onClick(
-                                    NavigateAction.StartActivity(SearchMediaActivity::class.java)
+                                    com.choidev.core.actions.NavigateAction.StartActivity(SearchMediaActivity::class.java)
                                 )
                             }
                     )
@@ -97,7 +93,7 @@ fun CatalogListsUi(
                             .fillParentMaxWidth()
                             .clickable {
                                 presenter.onClick(
-                                    NavigateAction.NavGraphDestination(vibrationRoute)
+                                    com.choidev.core.actions.NavigateAction.NavGraphDestination(vibrationRoute)
                                 )
                             }
                     )

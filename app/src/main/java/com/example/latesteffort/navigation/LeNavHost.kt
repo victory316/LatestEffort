@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.vibration.navigation.vibrationScreen
-import com.example.latesteffort.action.presenter.ActionPresenter
 
 @Composable
 fun LeNavHost(
@@ -19,6 +19,6 @@ fun LeNavHost(
         modifier = modifier
     ) {
         catalogScreen(presenter)
-        vibrationScreen()
+        vibrationScreen(presenter)
     }
 }

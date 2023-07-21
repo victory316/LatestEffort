@@ -84,4 +84,5 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit)
 
     implementation(project(":core:util"))
+    implementation(project(":core:actions"))
 }

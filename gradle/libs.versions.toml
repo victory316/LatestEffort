@@ -1,5 +1,5 @@
 [versions]
-agp = "8.2.0-alpha10"
+agp = "8.1.0-rc01"
 androidGradlePlugin = "8.0.2"
 androidxTestCore = "1.5.0"
 androidxTestExt = "1.1.4"
