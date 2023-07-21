@@ -1,6 +1,6 @@
-package com.example.latesteffort.ui.action.presenter
+package com.example.latesteffort.action.presenter
 
-import com.example.latesteffort.ui.action.Action
+import com.example.latesteffort.action.Action
 
 open class SimpleActionPresenter : ActionPresenter {
 

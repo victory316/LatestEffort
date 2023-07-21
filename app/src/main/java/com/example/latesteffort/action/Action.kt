@@ -1,3 +1,3 @@
-package com.example.latesteffort.ui.action
+package com.example.latesteffort.action
 
 interface Action

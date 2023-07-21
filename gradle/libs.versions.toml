@@ -38,6 +38,7 @@ androidxComposeRuntimeTracing = "1.0.0-alpha01"
 androidxActivity = "1.7.0"
 androidxHiltNavigationCompose = "1.0.0"
 androidxNavigation = "2.5.3"
+androidxLifecycle = "2.6.0-alpha05"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -76,6 +77,7 @@ androidx-compose-material-iconsExtended = { group = "androidx.compose.material",
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "androidxComposeMaterial3" }
 androidx-compose-material3-windowSizeClass = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "androidxComposeMaterial3" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
+androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
 androidx-compose-runtime-tracing = { group = "androidx.compose.runtime", name = "runtime-tracing", version.ref = "androidxComposeRuntimeTracing" }
 androidx-compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4" }

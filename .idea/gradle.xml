@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/data/core" />
             <option value="$PROJECT_DIR$/data/search" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/domain/catalog" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/search-media" />
             <option value="$PROJECT_DIR$/network" />

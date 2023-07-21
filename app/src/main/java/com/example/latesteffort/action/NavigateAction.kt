@@ -1,3 +1,6 @@
-package com.example.latesteffort.ui.action
+package com.example.latesteffort.action
 
-data class NavigateAction(val label: String) : Action
+sealed interface NavigateAction : Action {
+    data class NavGraphDestination(val destination: String) : NavigateAction
+    data class StartActivity(val screenClass: Class<*>) : NavigateAction
+}

@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.rxJava)
     implementation(libs.hilt.android)
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.compose.runtime.tracing)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material3.windowSizeClass)
@@ -85,8 +86,9 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.ext.junit)
 
-    implementation(project(mapOf("path" to ":domain")))
-    implementation(project(mapOf("path" to ":data")))
     implementation(project(mapOf("path" to ":core:testing")))
+    implementation(project(mapOf("path" to ":domain")))
+    implementation(project(":domain:catalog"))
+    implementation(project(mapOf("path" to ":data")))
     implementation(project(":feature:search-media"))
 }
