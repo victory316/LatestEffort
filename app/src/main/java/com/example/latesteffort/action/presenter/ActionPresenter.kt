@@ -1,4 +1,4 @@
-package com.example.latesteffort.ui.presenter
+package com.example.latesteffort.ui.action.presenter
 
 import com.example.latesteffort.ui.action.Action
 

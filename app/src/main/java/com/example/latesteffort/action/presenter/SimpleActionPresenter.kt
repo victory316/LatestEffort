@@ -1,8 +1,8 @@
-package com.example.latesteffort.ui.presenter
+package com.example.latesteffort.ui.action.presenter
 
 import com.example.latesteffort.ui.action.Action
 
-open class SimpleActionPresenter: ActionPresenter {
+open class SimpleActionPresenter : ActionPresenter {
 
     override fun onClick(action: Action) {
     }
