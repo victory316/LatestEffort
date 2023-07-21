@@ -86,9 +86,10 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.ext.junit)
 
-    implementation(project(mapOf("path" to ":core:testing")))
-    implementation(project(mapOf("path" to ":domain")))
+    implementation(project(":core:design"))
+    implementation(project(":core:testing"))
+    implementation(project(":domain"))
     implementation(project(":domain:catalog"))
-    implementation(project(mapOf("path" to ":data")))
+    implementation(project(":data"))
     implementation(project(":feature:search-media"))
 }

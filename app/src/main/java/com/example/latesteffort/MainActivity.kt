@@ -1,5 +1,6 @@
 package com.example.latesteffort
 
+import LeTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -41,7 +42,9 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            CatalogScreen(presenter)
+            LeTheme {
+                CatalogScreen(presenter)
+            }
         }
     }
 }

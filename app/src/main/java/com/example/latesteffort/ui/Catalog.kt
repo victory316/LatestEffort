@@ -80,9 +80,7 @@ fun CatalogListsUi(
                             }
                             .fillParentMaxWidth()
                     ) {
-                        Row(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
+                        Row {
                             Icon(Icons.Rounded.Search, contentDescription = null)
                             Text(text = "미디어 검색하기")
                         }
