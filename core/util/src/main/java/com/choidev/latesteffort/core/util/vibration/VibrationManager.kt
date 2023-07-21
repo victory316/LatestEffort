@@ -7,8 +7,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 
-class VibrationManager @Inject constructor(
-    @ApplicationContext context: Context
+class VibrationManager constructor(
+    context: Context
 ) {
 
     private val vibrator: VibrationAdapter = when (Build.VERSION.SDK_INT) {

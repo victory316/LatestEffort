@@ -4,18 +4,25 @@ import LeTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.choidev.core.actions.Action
 import com.choidev.core.actions.NavigateAction
 import com.choidev.core.actions.NavigateAction.NavGraphDestination
 import com.choidev.core.actions.NavigateAction.StartActivity
+import com.choidev.core.actions.VibrationAction
 import com.choidev.core.actions.presenter.SimpleActionPresenter
+import com.choidev.latesteffort.core.util.vibration.VibrationManager
 import com.example.latesteffort.ext.startNewActivity
 import com.example.latesteffort.navigation.LeNavHost
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var vibrationManager: VibrationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,20 +34,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-            val presenter = object : com.choidev.core.actions.presenter.SimpleActionPresenter() {
-                override fun onClick(action: com.choidev.core.actions.Action) {
+            val presenter = object : SimpleActionPresenter() {
+                override fun onClick(action: Action) {
                     when (action) {
-                        is com.choidev.core.actions.NavigateAction -> {
-                            when (action) {
-                                is NavGraphDestination -> {
-                                    navController.navigate(action.destination)
-                                }
+                        is NavigateAction -> handleNavigateAction(
+                            navController = navController,
+                            action = action
+                        )
 
-                                is StartActivity -> {
-                                    startNewActivity(action.screenClass)
-                                }
-                            }
-                        }
+                        is VibrationAction -> handleVibrationAction(action)
                     }
                 }
             }
@@ -52,5 +54,23 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    private fun handleNavigateAction(
+        navController: NavHostController,
+        action: NavigateAction
+    ) {
+        when (action) {
+            is NavGraphDestination -> {
+                navController.navigate(action.destination)
+            }
+
+            is StartActivity -> {
+                startNewActivity(action.screenClass)
+            }
+        }
+    }
+
+    private fun handleVibrationAction(action: VibrationAction) {
     }
 }
