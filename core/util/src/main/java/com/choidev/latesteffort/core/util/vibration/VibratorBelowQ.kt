@@ -16,8 +16,8 @@ class VibratorBelowQ(
         }
     }
 
-    override fun vibrateWithPattern(timing: LongArray, amplitudes: IntArray, effect: Int) {
-        VibrationEffect.createWaveform(timing, amplitudes, effect).also { effect ->
+    override fun vibrateWithPattern(timing: LongArray, amplitudes: IntArray, repeat: Int) {
+        VibrationEffect.createWaveform(timing, amplitudes, repeat).also { effect ->
             vibrator.vibrate(effect)
         }
     }

@@ -22,9 +22,9 @@ class VibratorFromQ(
         vibrator.vibrate(combined)
     }
 
-    override fun vibrateWithPattern(timing: LongArray, amplitudes: IntArray, effect: Int) {
+    override fun vibrateWithPattern(timing: LongArray, amplitudes: IntArray, repeat: Int) {
         val effect =
-            VibrationEffect.createWaveform(timing, amplitudes, VibrationEffect.DEFAULT_AMPLITUDE)
+            VibrationEffect.createWaveform(timing, amplitudes, repeat)
         val combined = CombinedVibration.createParallel(effect)
 
         vibrator.vibrate(combined)

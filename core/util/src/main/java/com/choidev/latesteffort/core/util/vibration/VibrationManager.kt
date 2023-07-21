@@ -33,11 +33,15 @@ class VibrationManager @Inject constructor(
         )
     }
 
-    fun vibrateWithPattern(timing: LongArray, amplitudes: IntArray, repeat: Int = -1) {
+    fun vibrateWithPattern(
+        timing: LongArray,
+        amplitudes: IntArray,
+        repeat: Int = VibrationEffect.DEFAULT_AMPLITUDE
+    ) {
         vibrator.vibrateWithPattern(
             timing = timing,
             amplitudes = amplitudes,
-            effect = repeat
+            repeat = repeat
         )
     }
 }
