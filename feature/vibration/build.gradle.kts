@@ -82,4 +82,6 @@ dependencies {
     androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.ext.junit)
+
+    implementation(project(":core:util"))
 }
