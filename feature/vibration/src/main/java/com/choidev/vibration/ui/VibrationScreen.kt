@@ -37,6 +37,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -47,6 +48,7 @@ import com.choidev.core.actions.VibrationAction
 import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.core.actions.presenter.SimpleActionPresenter
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
+import com.choidev.vibration.R
 import com.choidev.vibration.VibrationViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -59,7 +61,11 @@ fun VibrationScreen(
     val openPatternDialog = remember { mutableStateOf(false) }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text(text = "진동 테스트") }) },
+        topBar = {
+            TopAppBar(title = {
+                Text(text = stringResource(id = R.string.title_feature_vibration))
+            })
+        },
         modifier = Modifier
             .padding(horizontal = ScreenPaddingHorizontal())
     ) { paddingValues ->
@@ -71,7 +77,7 @@ fun VibrationScreen(
 
             Column {
                 Text(
-                    text = "Vibration effect 테스트",
+                    text = stringResource(id = R.string.title_vibration_effects),
                     style = MaterialTheme.typography.titleMedium
                 )
                 effects.forEach { effect ->
@@ -98,14 +104,14 @@ fun VibrationScreen(
                         )
                     }
                 ) {
-                    Text(text = "테스트 하기")
+                    Text(text = stringResource(id = R.string.button_test))
                 }
             }
 
             Divider()
 
             Text(
-                text = "패턴 진동 테스트",
+                text = stringResource(id = R.string.title_pattern_vibration_test),
                 style = MaterialTheme.typography.titleMedium
             )
 
@@ -113,7 +119,7 @@ fun VibrationScreen(
                 Button(
                     onClick = { openPatternDialog.value = true }
                 ) {
-                    Text(text = "패턴 추가하기")
+                    Text(text = stringResource(id = R.string.button_add_pattern))
                 }
             } else {
                 FlowRow(
@@ -138,7 +144,7 @@ fun VibrationScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "반복 활성화",
+                    text = stringResource(id = R.string.switch_activate_vibration_repeat),
                     modifier = Modifier.align(CenterVertically)
                 )
                 Switch(
@@ -154,15 +160,17 @@ fun VibrationScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
+                val errorMessage = stringResource(id = R.string.error_no_patterns)
+
                 Text(
-                    text = "진동 활성화",
+                    text = stringResource(id = R.string.button_test_pattern_vibration),
                     modifier = Modifier.align(CenterVertically)
                 )
                 IconButton(onClick = {
                     when {
                         vibrationState.value.patterns.isEmpty() -> {
                             presenter.onClick(
-                                SystemAction.ShowToast(message = "지정된 패턴이 없어 진행할 수 없어요.")
+                                SystemAction.ShowToast(message = errorMessage)
                             )
                         }
 
@@ -240,12 +248,12 @@ fun PatternInputDialog(
                 verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 Text(
-                    text = "패턴을 새로 추가하세요.",
+                    text = stringResource(id = R.string.title_add_new_pattern),
                     style = MaterialTheme.typography.titleMedium
                 )
 
                 OutlinedTextField(
-                    label = { Text(text = "Duration") },
+                    label = { Text(text = stringResource(id = R.string.input_amplitude)) },
                     value = pattern.first.toString(),
                     onValueChange = {
                         durationError = false
@@ -260,12 +268,12 @@ fun PatternInputDialog(
                     isError = durationError,
                     supportingText = {
                         if (durationError) {
-                            Text(text = "처리할 수 없는 값 이에요.")
+                            Text(text = stringResource(id = R.string.error_invalid_input))
                         }
                     }
                 )
                 OutlinedTextField(
-                    label = { Text(text = "Amplitude") },
+                    label = { Text(text = stringResource(id = R.string.input_duration)) },
                     value = pattern.second.toString(),
                     onValueChange = {
                         amplitudeError = false
@@ -281,7 +289,7 @@ fun PatternInputDialog(
                     isError = amplitudeError,
                     supportingText = {
                         if (amplitudeError) {
-                            Text(text = "Amplitude는 255를 초과할 수 없어요.")
+                            Text(text = stringResource(id = R.string.error_max_amplitude_reached))
                         }
                     }
                 )
@@ -290,7 +298,7 @@ fun PatternInputDialog(
                     onClick = { onConfirmed.invoke(pattern) },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = "추가하기")
+                    Text(text = stringResource(id = R.string.button_add))
                 }
             }
         }
