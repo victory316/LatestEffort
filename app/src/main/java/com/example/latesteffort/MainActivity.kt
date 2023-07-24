@@ -2,6 +2,7 @@ package com.example.latesteffort
 
 import LeTheme
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.NavHostController
@@ -10,6 +11,7 @@ import com.choidev.core.actions.Action
 import com.choidev.core.actions.NavigateAction
 import com.choidev.core.actions.NavigateAction.NavGraphDestination
 import com.choidev.core.actions.NavigateAction.StartActivity
+import com.choidev.core.actions.SystemAction
 import com.choidev.core.actions.VibrationAction
 import com.choidev.core.actions.mapToId
 import com.choidev.core.actions.presenter.SimpleActionPresenter
@@ -44,6 +46,8 @@ class MainActivity : ComponentActivity() {
                         )
 
                         is VibrationAction -> handleVibrationAction(action)
+
+                        is SystemAction -> handleSystemAction(action)
                     }
                 }
             }
@@ -72,6 +76,14 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun handleSystemAction(action: SystemAction) {
+        when (action) {
+            is SystemAction.ShowToast -> {
+                Toast.makeText(this, action.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun handleVibrationAction(action: VibrationAction) {
         when (action) {
             is VibrationAction.Vibrate -> {
@@ -87,20 +99,11 @@ class MainActivity : ComponentActivity() {
                 vibrationManager.vibrateEffect(action.effect.mapToId())
             }
 
-            is VibrationAction.RepeatVibrate -> {
-                if (action.activate && action.repeat) {
-                    vibrationManager.vibrate(
-                        duration = action.duration,
-                        amplitude = action.amplitude,
-                        repeat = 0
-                    )
-                }
-            }
-
             is VibrationAction.VibratePattern -> {
                 vibrationManager.vibrateWithPattern(
                     timing = action.patterns.map { it.first.toLong() }.toLongArray(),
-                    amplitudes = action.patterns.map { it.second }.toIntArray()
+                    amplitudes = action.patterns.map { it.second }.toIntArray(),
+                    repeat = if (action.repeat) 0 else -1
                 )
             }
         }

@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.choidev.core.actions.SystemAction
 import com.choidev.core.actions.VibrationAction
 import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.core.actions.presenter.SimpleActionPresenter
@@ -133,7 +134,7 @@ fun VibrationScreen(
                 }
             }
             Row(
-                horizontalArrangement = Arrangement.End,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
@@ -143,16 +144,6 @@ fun VibrationScreen(
                 Switch(
                     checked = vibrationState.value.repeat,
                     onCheckedChange = {
-                        presenter.onClick(
-                            VibrationAction.RepeatVibrate(
-                                activate = !checked,
-                                duration = 1000L,
-                                repeat = !vibrationState.value.repeat,
-                                effect = vibrationState.value.effect,
-                                amplitude = vibrationState.value.amplitude
-                            )
-                        )
-
                         viewModel.repeatVibration(!vibrationState.value.repeat)
                     },
                     modifier = Modifier.padding()
@@ -160,7 +151,7 @@ fun VibrationScreen(
             }
 
             Row(
-                horizontalArrangement = Arrangement.End,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
@@ -168,9 +159,18 @@ fun VibrationScreen(
                     modifier = Modifier.align(CenterVertically)
                 )
                 IconButton(onClick = {
-                    presenter.onClick(
-                        VibrationAction.VibratePattern(vibrationState.value.patterns)
-                    )
+                    if (vibrationState.value.patterns.isEmpty()) {
+                        presenter.onClick(
+                            SystemAction.ShowToast(message = "지정된 패턴이 없어 진행할 수 없어요.")
+                        )
+                    } else {
+                        presenter.onClick(
+                            VibrationAction.VibratePattern(
+                                vibrationState.value.repeat,
+                                vibrationState.value.patterns
+                            )
+                        )
+                    }
                 }) {
                     Icon(Icons.Default.PlayArrow, contentDescription = null)
                 }
