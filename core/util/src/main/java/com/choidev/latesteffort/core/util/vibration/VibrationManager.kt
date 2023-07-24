@@ -46,4 +46,8 @@ class VibrationManager constructor(
             repeat = repeat
         )
     }
+
+    fun stopVibration() {
+        vibrator.stopVibration()
+    }
 }

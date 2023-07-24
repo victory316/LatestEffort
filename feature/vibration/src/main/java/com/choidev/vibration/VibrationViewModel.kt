@@ -5,12 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.choidev.core.actions.VibrationAction
 import com.choidev.vibration.state.VibrationState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 @HiltViewModel
 class VibrationViewModel @Inject constructor() : ViewModel() {
@@ -22,13 +23,29 @@ class VibrationViewModel @Inject constructor() : ViewModel() {
         started = SharingStarted.WhileSubscribed(5_000)
     )
 
-    private var availableAmplitude: Int by Delegates.vetoable(0) { _, _, newValue ->
-        newValue in 0..255
-    }
-
     fun repeatVibration(repeat: Boolean) {
         _vibrationState.update {
             it.copy(repeat = repeat)
+        }
+    }
+
+    fun toggleVibrationPattern() {
+        _vibrationState.update {
+            it.copy(activated = !it.activated)
+        }
+
+        if (!vibrationState.value.repeat) {
+            viewModelScope.launch {
+                val totalTime = vibrationState.value.patterns
+                    .map { it.first }
+                    .reduce { acc, i -> acc + i }
+
+                delay(totalTime.toLong())
+
+                _vibrationState.update {
+                    it.copy(activated = false)
+                }
+            }
         }
     }
 

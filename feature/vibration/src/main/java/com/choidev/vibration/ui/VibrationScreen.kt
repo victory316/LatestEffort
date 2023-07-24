@@ -13,6 +13,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.Button
@@ -55,7 +56,6 @@ fun VibrationScreen(
     viewModel: VibrationViewModel = hiltViewModel()
 ) {
     val vibrationState = viewModel.vibrationState.collectAsStateWithLifecycle()
-    val checked = vibrationState.value.activated
     val openPatternDialog = remember { mutableStateOf(false) }
 
     Scaffold(
@@ -159,20 +159,34 @@ fun VibrationScreen(
                     modifier = Modifier.align(CenterVertically)
                 )
                 IconButton(onClick = {
-                    if (vibrationState.value.patterns.isEmpty()) {
-                        presenter.onClick(
-                            SystemAction.ShowToast(message = "지정된 패턴이 없어 진행할 수 없어요.")
-                        )
-                    } else {
-                        presenter.onClick(
-                            VibrationAction.VibratePattern(
-                                vibrationState.value.repeat,
-                                vibrationState.value.patterns
+                    when {
+                        vibrationState.value.patterns.isEmpty() -> {
+                            presenter.onClick(
+                                SystemAction.ShowToast(message = "지정된 패턴이 없어 진행할 수 없어요.")
                             )
-                        )
+                        }
+
+                        vibrationState.value.activated -> {
+                            presenter.onClick(VibrationAction.StopVibration)
+                            viewModel.toggleVibrationPattern()
+                        }
+
+                        else -> {
+                            presenter.onClick(
+                                VibrationAction.VibratePattern(
+                                    vibrationState.value.repeat,
+                                    vibrationState.value.patterns
+                                )
+                            )
+                            viewModel.toggleVibrationPattern()
+                        }
                     }
                 }) {
-                    Icon(Icons.Default.PlayArrow, contentDescription = null)
+                    if (vibrationState.value.activated) {
+                        Icon(Icons.Rounded.Close, contentDescription = null)
+                    } else {
+                        Icon(Icons.Default.PlayArrow, contentDescription = null)
+                    }
                 }
             }
         }

@@ -28,4 +28,8 @@ class VibratorBelowQ(
             vibrator.vibrate(effect)
         }
     }
+
+    override fun stopVibration() {
+        vibrator.cancel()
+    }
 }

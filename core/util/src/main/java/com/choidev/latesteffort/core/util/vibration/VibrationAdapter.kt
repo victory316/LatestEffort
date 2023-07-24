@@ -7,4 +7,6 @@ interface VibrationAdapter {
     fun vibrateWithEffect(effectId: Int)
 
     fun vibrateWithPattern(timing: LongArray, amplitudes: IntArray, repeat: Int)
+
+    fun stopVibration()
 }

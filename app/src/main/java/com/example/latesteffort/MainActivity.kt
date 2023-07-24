@@ -106,6 +106,10 @@ class MainActivity : ComponentActivity() {
                     repeat = if (action.repeat) 0 else -1
                 )
             }
+
+            VibrationAction.StopVibration -> {
+                vibrationManager.stopVibration()
+            }
         }
     }
 }

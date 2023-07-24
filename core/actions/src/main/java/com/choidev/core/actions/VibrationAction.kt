@@ -20,6 +20,8 @@ sealed interface VibrationAction : Action {
         val patterns: List<Pair<Int, Int>>
     ) : VibrationAction
 
+    object StopVibration : VibrationAction
+
     enum class VibrationEffect {
         EFFECT_CLICK,
         EFFECT_DOUBLE_CLICK,

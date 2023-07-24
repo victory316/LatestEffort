@@ -36,4 +36,8 @@ class VibratorFromQ(
 
         vibrator.vibrate(combined)
     }
+
+    override fun stopVibration() {
+        vibrator.cancel()
+    }
 }
