@@ -1,4 +1,4 @@
-package com.example.data.repository.ext
+package com.example.data.ext
 
 import com.example.domain.model.result.Result
 import com.example.domain.model.result.ServiceError

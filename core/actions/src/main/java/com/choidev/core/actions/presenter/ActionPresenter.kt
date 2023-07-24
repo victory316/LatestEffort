@@ -1,6 +1,6 @@
-package com.example.latesteffort.action.presenter
+package com.choidev.core.actions.presenter
 
-import com.example.latesteffort.action.Action
+import com.choidev.core.actions.Action
 
 interface ActionPresenter {
     fun onClick(action: Action)

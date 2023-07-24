@@ -1,4 +1,4 @@
-package com.example.latesteffort.action
+package com.choidev.core.actions
 
 sealed interface NavigateAction : Action {
     data class NavGraphDestination(val destination: String) : NavigateAction

@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/actions" />
             <option value="$PROJECT_DIR$/core/design" />
             <option value="$PROJECT_DIR$/core/testing" />
             <option value="$PROJECT_DIR$/core/util" />
@@ -22,6 +23,7 @@
             <option value="$PROJECT_DIR$/domain/catalog" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/search-media" />
+            <option value="$PROJECT_DIR$/feature/vibration" />
             <option value="$PROJECT_DIR$/network" />
           </set>
         </option>
