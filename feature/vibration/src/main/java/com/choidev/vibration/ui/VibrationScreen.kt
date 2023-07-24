@@ -2,7 +2,6 @@ package com.choidev.vibration.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -17,16 +16,16 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -114,16 +113,21 @@ fun VibrationScreen(
                     Text(text = "패턴 추가하기")
                 }
             } else {
-                FlowRow {
-                    vibrationState.value.patterns.forEach {
-                        VibratePatternChip(duration = it.first, amplitude = it.second)
-                    }
-                }
-
-                IconButton(
-                    onClick = { /*TODO*/ }
+                FlowRow(
+                    modifier = Modifier.padding(6.dp),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    Icon(Icons.Rounded.Add, contentDescription = null)
+                    vibrationState.value.patterns.forEach {
+                        VibratePatternChip(
+                            duration = it.first,
+                            amplitude = it.second,
+                            onClicked = { viewModel.removeVibrationPattern(it) }
+                        )
+                    }
+                    ElevatedAssistChip(
+                        onClick = { openPatternDialog.value = true },
+                        label = { Icon(Icons.Rounded.Add, contentDescription = null) }
+                    )
                 }
             }
 
@@ -151,22 +155,35 @@ fun VibrationScreen(
     }
 
     if (openPatternDialog.value) {
-        PatternInputDialog { openPatternDialog.value = false }
+        PatternInputDialog(
+            onDismiss = {
+                openPatternDialog.value = false
+            },
+            onConfirmed = {
+                viewModel.addVibrationPattern(it)
+                openPatternDialog.value = false
+            }
+        )
     }
 }
 
 @Composable
-fun VibratePatternChip(duration: Int, amplitude: Int) {
-    Box {
-        Row {
-            Text(text = "D : $duration A : $amplitude")
-        }
-    }
+fun VibratePatternChip(
+    duration: Int, amplitude: Int,
+    onClicked: () -> Unit
+) {
+    ElevatedAssistChip(
+        onClick = { onClicked.invoke() },
+        label = { Text(text = "D : $duration A : $amplitude") }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PatternInputDialog(onDismiss: () -> Unit) {
+fun PatternInputDialog(
+    onDismiss: () -> Unit,
+    onConfirmed: (pattern: Pair<Int, Int>) -> Unit
+) {
     var pattern by remember { mutableStateOf(Pair(0, 0)) }
 
     AlertDialog(
@@ -187,29 +204,25 @@ fun PatternInputDialog(onDismiss: () -> Unit) {
                     style = MaterialTheme.typography.titleMedium
                 )
 
-                Row {
-                    Text(text = "Duration")
-                    TextField(
-                        value = pattern.first.toString(),
-                        onValueChange = { pattern = pattern.copy(first = it.convertIntSafely()) },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number
-                        )
+                OutlinedTextField(
+                    label = { Text(text = "Duration") },
+                    value = pattern.first.toString(),
+                    onValueChange = { pattern = pattern.copy(first = it.convertIntSafely()) },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number
                     )
-                }
-                Row {
-                    Text(text = "Amplitude")
-                    TextField(
-                        value = pattern.second.toString(),
-                        onValueChange = { pattern = pattern.copy(second = it.convertIntSafely()) },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number
-                        )
+                )
+                OutlinedTextField(
+                    label = { Text(text = "Amplitude") },
+                    value = pattern.second.toString(),
+                    onValueChange = { pattern = pattern.copy(second = it.convertIntSafely()) },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number
                     )
-                }
+                )
 
                 Button(
-                    onClick = { onDismiss.invoke() },
+                    onClick = { onConfirmed.invoke(pattern) },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(text = "추가하기")

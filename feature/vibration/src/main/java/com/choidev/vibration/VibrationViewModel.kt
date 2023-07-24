@@ -69,4 +69,14 @@ class VibrationViewModel @Inject constructor() : ViewModel() {
             )
         }
     }
+
+    fun removeVibrationPattern(patternPair: Pair<Int, Int>) {
+        _vibrationState.update {
+            it.copy(
+                patterns = it.patterns.toMutableList().apply {
+                    remove(patternPair)
+                }.toList()
+            )
+        }
+    }
 }
