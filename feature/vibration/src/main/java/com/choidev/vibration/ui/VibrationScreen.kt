@@ -1,9 +1,12 @@
 package com.choidev.vibration.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -46,16 +49,36 @@ fun VibrationScreen(
 
             Column {
                 Text(text = "진동 종류 선택")
-                effects.forEach {
-                    Row {
-                        RadioButton(selected = false, onClick = { /*TODO*/ })
+                effects.forEach { effect ->
+                    Row(
+                        modifier = Modifier.clickable {
+                            viewModel.selectVibrationEffect(effect)
+                        }
+                    ) {
+                        RadioButton(
+                            selected = vibrationState.value.effect == effect,
+                            onClick = { viewModel.selectVibrationEffect(effect) }
+                        )
                         Text(
-                            text = it.name,
+                            text = effect.name,
                             modifier = Modifier.align(CenterVertically)
                         )
                     }
                 }
+
+                Button(
+                    onClick = {
+                        presenter.onClick(
+                            VibrationAction.VibrateEffect(effect = vibrationState.value.effect)
+                        )
+                    }
+                ) {
+                    Text(text = "테스트 하기")
+                }
             }
+
+            Divider()
+
             Column {
                 Text(text = "진동 세기 조절하기")
                 Slider(
@@ -64,6 +87,8 @@ fun VibrationScreen(
                     onValueChange = { viewModel.vibrationAmplitude(it.toInt()) }
                 )
             }
+
+            Divider()
 
             Column {
                 Text(text = "반복 활성화")
@@ -85,6 +110,8 @@ fun VibrationScreen(
                     modifier = Modifier.padding()
                 )
             }
+
+            Divider()
 
             Column {
                 Text(text = "강도")

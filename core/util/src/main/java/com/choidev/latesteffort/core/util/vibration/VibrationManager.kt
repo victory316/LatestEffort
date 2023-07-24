@@ -3,8 +3,6 @@ package com.choidev.latesteffort.core.util.vibration
 import android.content.Context
 import android.os.Build
 import android.os.VibrationEffect
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
 
 class VibrationManager constructor(
@@ -31,6 +29,10 @@ class VibrationManager constructor(
             repeat = repeat,
             amplitude = amplitude
         )
+    }
+
+    fun vibrateEffect(effectId: Int) {
+        vibrator.vibrateWithEffect(effectId)
     }
 
     fun vibrateWithPattern(

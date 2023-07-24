@@ -11,6 +11,7 @@ import com.choidev.core.actions.NavigateAction
 import com.choidev.core.actions.NavigateAction.NavGraphDestination
 import com.choidev.core.actions.NavigateAction.StartActivity
 import com.choidev.core.actions.VibrationAction
+import com.choidev.core.actions.mapToId
 import com.choidev.core.actions.presenter.SimpleActionPresenter
 import com.choidev.latesteffort.core.util.vibration.VibrationManager
 import com.example.latesteffort.ext.startNewActivity
@@ -80,6 +81,10 @@ class MainActivity : ComponentActivity() {
                         amplitude = action.amplitude
                     )
                 }
+            }
+
+            is VibrationAction.VibrateEffect -> {
+                vibrationManager.vibrateEffect(action.effect.mapToId())
             }
 
             is VibrationAction.RepeatVibrate -> {

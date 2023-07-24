@@ -16,7 +16,14 @@ class VibratorFromQ(
         context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
 
     override fun vibrate(duration: Long, repeat: Int, amplitude: Int) {
-        val effect = VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE)
+        val effect = VibrationEffect.createOneShot(duration, amplitude)
+        val combined = CombinedVibration.createParallel(effect)
+
+        vibrator.vibrate(combined)
+    }
+
+    override fun vibrateWithEffect(effectId: Int) {
+        val effect = VibrationEffect.createPredefined(effectId)
         val combined = CombinedVibration.createParallel(effect)
 
         vibrator.vibrate(combined)
