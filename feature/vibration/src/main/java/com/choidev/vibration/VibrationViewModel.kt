@@ -59,4 +59,14 @@ class VibrationViewModel @Inject constructor() : ViewModel() {
             it.copy(effect = effect)
         }
     }
+
+    fun addVibrationPattern(patternPair: Pair<Int, Int>) {
+        _vibrationState.update {
+            it.copy(
+                patterns = it.patterns.toMutableList().apply {
+                    add(patternPair)
+                }.toList()
+            )
+        }
+    }
 }

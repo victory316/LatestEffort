@@ -2,22 +2,40 @@ package com.choidev.vibration.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Slider
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,7 +46,7 @@ import com.choidev.core.actions.presenter.SimpleActionPresenter
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
 import com.choidev.vibration.VibrationViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun VibrationScreen(
     presenter: ActionPresenter,
@@ -36,6 +54,7 @@ fun VibrationScreen(
 ) {
     val vibrationState = viewModel.vibrationState.collectAsStateWithLifecycle()
     val checked = vibrationState.value.activated
+    val openPatternDialog = remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = { TopAppBar(title = { Text(text = "진동 테스트") }) },
@@ -88,13 +107,24 @@ fun VibrationScreen(
                 style = MaterialTheme.typography.titleMedium
             )
 
-            Column {
-                Text(text = "진동 세기 조절하기")
-                Slider(
-                    value = vibrationState.value.amplitude.toFloat(),
-                    valueRange = 0f..255f,
-                    onValueChange = { viewModel.vibrationAmplitude(it.toInt()) }
-                )
+            if (vibrationState.value.patterns.isEmpty()) {
+                Button(
+                    onClick = { openPatternDialog.value = true }
+                ) {
+                    Text(text = "패턴 추가하기")
+                }
+            } else {
+                FlowRow {
+                    vibrationState.value.patterns.forEach {
+                        VibratePatternChip(duration = it.first, amplitude = it.second)
+                    }
+                }
+
+                IconButton(
+                    onClick = { /*TODO*/ }
+                ) {
+                    Icon(Icons.Rounded.Add, contentDescription = null)
+                }
             }
 
             Column {
@@ -117,27 +147,73 @@ fun VibrationScreen(
                     modifier = Modifier.padding()
                 )
             }
+        }
+    }
 
-            Divider()
+    if (openPatternDialog.value) {
+        PatternInputDialog { openPatternDialog.value = false }
+    }
+}
 
-            Column {
-                Text(text = "강도")
-                Switch(
-                    checked = checked,
-                    onCheckedChange = {
-                        presenter.onClick(
-                            VibrationAction.Vibrate(
-                                activate = !checked,
-                                duration = 1000L,
-                                effect = vibrationState.value.effect,
-                                amplitude = vibrationState.value.amplitude
-                            )
-                        )
+@Composable
+fun VibratePatternChip(duration: Int, amplitude: Int) {
+    Box {
+        Row {
+            Text(text = "D : $duration A : $amplitude")
+        }
+    }
+}
 
-                        viewModel.switchVibration(!checked)
-                    },
-                    modifier = Modifier.padding()
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PatternInputDialog(onDismiss: () -> Unit) {
+    var pattern by remember { mutableStateOf(Pair(0, 0)) }
+
+    AlertDialog(
+        onDismissRequest = { onDismiss.invoke() },
+    ) {
+        Surface(
+            modifier = Modifier
+                .wrapContentSize(),
+            shape = MaterialTheme.shapes.large,
+            tonalElevation = AlertDialogDefaults.TonalElevation
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                Text(
+                    text = "패턴을 새로 추가하세요.",
+                    style = MaterialTheme.typography.titleMedium
                 )
+
+                Row {
+                    Text(text = "Duration")
+                    TextField(
+                        value = pattern.first.toString(),
+                        onValueChange = { pattern = pattern.copy(first = it.convertIntSafely()) },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number
+                        )
+                    )
+                }
+                Row {
+                    Text(text = "Amplitude")
+                    TextField(
+                        value = pattern.second.toString(),
+                        onValueChange = { pattern = pattern.copy(second = it.convertIntSafely()) },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number
+                        )
+                    )
+                }
+
+                Button(
+                    onClick = { onDismiss.invoke() },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "추가하기")
+                }
             }
         }
     }
@@ -147,4 +223,12 @@ fun VibrationScreen(
 @Composable
 fun PreviewVibrationScreen() {
     VibrationScreen(presenter = SimpleActionPresenter())
+}
+
+fun String.convertIntSafely(): Int {
+    return if (this.isNotEmpty()) {
+        this.toInt()
+    } else {
+        0
+    }
 }
