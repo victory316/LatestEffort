@@ -96,6 +96,13 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             }
+
+            is VibrationAction.VibratePattern -> {
+                vibrationManager.vibrateWithPattern(
+                    timing = action.patterns.map { it.first.toLong() }.toLongArray(),
+                    amplitudes = action.patterns.map { it.second }.toIntArray()
+                )
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.choidev.vibration
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.choidev.core.actions.VibrationAction
@@ -27,30 +26,9 @@ class VibrationViewModel @Inject constructor() : ViewModel() {
         newValue in 0..255
     }
 
-    fun switchVibration(activate: Boolean) {
-        _vibrationState.update {
-            it.copy(activated = activate)
-        }
-    }
-
     fun repeatVibration(repeat: Boolean) {
         _vibrationState.update {
             it.copy(repeat = repeat)
-        }
-    }
-
-    fun vibrationDuration(duration: Long) {
-        _vibrationState.update {
-            it.copy(duration = duration)
-        }
-    }
-
-    fun vibrationAmplitude(amplitude: Int) {
-        Log.d("LOGGING", "amp :$amplitude: ")
-        availableAmplitude = amplitude
-        Log.d("LOGGING", "availableAmplitude :$availableAmplitude: ")
-        _vibrationState.update {
-            it.copy(amplitude = availableAmplitude)
         }
     }
 

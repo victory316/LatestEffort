@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AlertDialogDefaults
@@ -19,6 +20,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
@@ -130,9 +132,14 @@ fun VibrationScreen(
                     )
                 }
             }
-
-            Column {
-                Text(text = "반복 활성화")
+            Row(
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "반복 활성화",
+                    modifier = Modifier.align(CenterVertically)
+                )
                 Switch(
                     checked = vibrationState.value.repeat,
                     onCheckedChange = {
@@ -150,6 +157,23 @@ fun VibrationScreen(
                     },
                     modifier = Modifier.padding()
                 )
+            }
+
+            Row(
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "진동 활성화",
+                    modifier = Modifier.align(CenterVertically)
+                )
+                IconButton(onClick = {
+                    presenter.onClick(
+                        VibrationAction.VibratePattern(vibrationState.value.patterns)
+                    )
+                }) {
+                    Icon(Icons.Default.PlayArrow, contentDescription = null)
+                }
             }
         }
     }
@@ -185,6 +209,8 @@ fun PatternInputDialog(
     onConfirmed: (pattern: Pair<Int, Int>) -> Unit
 ) {
     var pattern by remember { mutableStateOf(Pair(0, 0)) }
+    var durationError by remember { mutableStateOf(false) }
+    var amplitudeError by remember { mutableStateOf(false) }
 
     AlertDialog(
         onDismissRequest = { onDismiss.invoke() },
@@ -207,18 +233,43 @@ fun PatternInputDialog(
                 OutlinedTextField(
                     label = { Text(text = "Duration") },
                     value = pattern.first.toString(),
-                    onValueChange = { pattern = pattern.copy(first = it.convertIntSafely()) },
+                    onValueChange = {
+                        durationError = false
+                        handlePatternInput(
+                            operation = { pattern = pattern.copy(first = it.convertIntSafely()) },
+                            onErrorOccurred = { durationError = true }
+                        )
+                    },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number
-                    )
+                    ),
+                    isError = durationError,
+                    supportingText = {
+                        if (durationError) {
+                            Text(text = "처리할 수 없는 값 이에요.")
+                        }
+                    }
                 )
                 OutlinedTextField(
                     label = { Text(text = "Amplitude") },
                     value = pattern.second.toString(),
-                    onValueChange = { pattern = pattern.copy(second = it.convertIntSafely()) },
+                    onValueChange = {
+                        amplitudeError = false
+                        handlePatternInput(
+                            operation = { pattern = pattern.copy(second = it.convertIntSafely()) },
+                            additionalCondition = { it.convertIntSafely() <= 255 },
+                            onErrorOccurred = { amplitudeError = true }
+                        )
+                    },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number
-                    )
+                    ),
+                    isError = amplitudeError,
+                    supportingText = {
+                        if (amplitudeError) {
+                            Text(text = "Amplitude는 255를 초과할 수 없어요.")
+                        }
+                    }
                 )
 
                 Button(
@@ -229,6 +280,21 @@ fun PatternInputDialog(
                 }
             }
         }
+    }
+}
+
+private fun handlePatternInput(
+    operation: () -> Unit,
+    additionalCondition: (() -> Boolean)? = null,
+    onErrorOccurred: () -> Unit
+) {
+    try {
+        additionalCondition?.let { check(it.invoke()) }
+        operation.invoke()
+    } catch (e: NumberFormatException) {
+        onErrorOccurred.invoke()
+    } catch (e: IllegalStateException) {
+        onErrorOccurred.invoke()
     }
 }
 

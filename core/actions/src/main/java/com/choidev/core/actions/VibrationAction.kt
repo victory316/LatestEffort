@@ -15,6 +15,10 @@ sealed interface VibrationAction : Action {
         val effect: VibrationEffect
     ) : VibrationAction
 
+    data class VibratePattern(
+        val patterns: List<Pair<Int, Int>>
+    ) : VibrationAction
+
     data class RepeatVibrate(
         val activate: Boolean,
         val duration: Long,
