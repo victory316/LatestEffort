@@ -85,4 +85,5 @@ dependencies {
 
     implementation(project(":core:util"))
     implementation(project(":core:actions"))
+    implementation(project(":core:design"))
 }

@@ -28,6 +28,8 @@ import com.choidev.vibration.navigation.vibrationRoute
 import com.example.latesteffort.MainViewModel
 import com.choidev.core.actions.NavigateAction
 import com.choidev.core.actions.presenter.ActionPresenter
+import com.choidev.latesteffort.core.design.compose.LazyColumnPaddingVertical
+import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,7 +43,7 @@ fun CatalogScreen(
     Scaffold(
         topBar = { TopAppBar(title = { Text(text = "Welcome to my latest effort.") }) },
         modifier = modifier
-            .padding(start = 16.dp, end = 16.dp)
+            .padding(horizontal = ScreenPaddingHorizontal())
     ) { paddingValues ->
         when {
             menus.isSuccess -> {
@@ -67,7 +69,7 @@ fun CatalogListsUi(
 ) {
     LazyColumn(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(6.dp)
+        verticalArrangement = Arrangement.spacedBy(LazyColumnPaddingVertical())
     ) {
         items(catalogs) { type ->
             when (type) {
