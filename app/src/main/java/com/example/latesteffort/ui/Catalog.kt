@@ -12,6 +12,7 @@ import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -22,14 +23,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.choidev.core.actions.NavigateAction
+import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.domain.catalog.model.CatalogType
+import com.choidev.latesteffort.core.design.compose.LazyColumnPaddingVertical
+import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
 import com.choidev.latesteffort.feature.search_media.SearchMediaActivity
 import com.choidev.vibration.navigation.vibrationRoute
 import com.example.latesteffort.MainViewModel
-import com.choidev.core.actions.NavigateAction
-import com.choidev.core.actions.presenter.ActionPresenter
-import com.choidev.latesteffort.core.design.compose.LazyColumnPaddingVertical
-import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +44,7 @@ fun CatalogScreen(
     Scaffold(
         topBar = { TopAppBar(title = { Text(text = "Welcome to my latest effort.") }) },
         modifier = modifier
-            .padding(horizontal = ScreenPaddingHorizontal())
+            .padding(horizontal = ScreenPaddingHorizontal(), vertical = 12.dp)
     ) { paddingValues ->
         when {
             menus.isSuccess -> {
@@ -68,7 +69,7 @@ fun CatalogListsUi(
     presenter: ActionPresenter
 ) {
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.padding(top = 12.dp),
         verticalArrangement = Arrangement.spacedBy(LazyColumnPaddingVertical())
     ) {
         items(catalogs) { type ->
@@ -117,10 +118,14 @@ fun CatalogItem(
         modifier = modifier
     ) {
         Row(
-            modifier = Modifier.padding(12.dp)
+            modifier = Modifier.padding(16.dp)
         ) {
             Icon(icon, contentDescription = null)
-            Text(text = title)
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(start = 6.dp)
+            )
         }
     }
 }

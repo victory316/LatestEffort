@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
@@ -43,12 +44,15 @@ fun VibrationScreen(
     ) { paddingValues ->
         Column(
             modifier = Modifier.padding(paddingValues),
-            verticalArrangement = Arrangement.spacedBy(6.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             val effects = VibrationAction.VibrationEffect.values()
 
             Column {
-                Text(text = "진동 종류 선택")
+                Text(
+                    text = "Vibration effect 테스트",
+                    style = MaterialTheme.typography.titleMedium
+                )
                 effects.forEach { effect ->
                     Row(
                         modifier = Modifier.clickable {
@@ -79,6 +83,11 @@ fun VibrationScreen(
 
             Divider()
 
+            Text(
+                text = "패턴 진동 테스트",
+                style = MaterialTheme.typography.titleMedium
+            )
+
             Column {
                 Text(text = "진동 세기 조절하기")
                 Slider(
@@ -87,8 +96,6 @@ fun VibrationScreen(
                     onValueChange = { viewModel.vibrationAmplitude(it.toInt()) }
                 )
             }
-
-            Divider()
 
             Column {
                 Text(text = "반복 활성화")
