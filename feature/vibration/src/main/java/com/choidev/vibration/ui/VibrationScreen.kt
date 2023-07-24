@@ -253,7 +253,7 @@ fun PatternInputDialog(
                 )
 
                 OutlinedTextField(
-                    label = { Text(text = stringResource(id = R.string.input_amplitude)) },
+                    label = { Text(text = stringResource(id = R.string.input_duration)) },
                     value = pattern.first.toString(),
                     onValueChange = {
                         durationError = false
@@ -273,7 +273,7 @@ fun PatternInputDialog(
                     }
                 )
                 OutlinedTextField(
-                    label = { Text(text = stringResource(id = R.string.input_duration)) },
+                    label = { Text(text = stringResource(id = R.string.input_amplitude)) },
                     value = pattern.second.toString(),
                     onValueChange = {
                         amplitudeError = false
