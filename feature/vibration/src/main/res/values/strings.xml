@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_feature_vibration">Vibration Test</string>
+    <string name="title_vibration_effects">Vibration effect test</string>
+    <string name="button_test">Test</string>
+    <string name="title_pattern_vibration_test">Pattern Vibration test</string>
+    <string name="button_add_pattern">Add pattern</string>
+    <string name="switch_activate_vibration_repeat">Repeat</string>
+    <string name="button_test_pattern_vibration">Play pattern</string>
+    <string name="error_no_patterns">No patterns to play.</string>
+    <string name="title_add_new_pattern">Add new pattern</string>
+    <string name="error_invalid_input">Invalid input.</string>
+    <string name="error_max_amplitude_reached">Amplitude can not exceed 255</string>
+    <string name="button_add">Add</string>
+    <string name="input_duration" translatable="false">Duration</string>
+    <string name="input_amplitude" translatable="false">Amplitude</string>
+</resources>

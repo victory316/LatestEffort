@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_feature_vibration">진동 테스트</string>
+    <string name="title_vibration_effects">Vibration effect 테스트</string>
+    <string name="button_test">테스트하기</string>
+    <string name="title_pattern_vibration_test">패턴 진동 테스트</string>
+    <string name="button_add_pattern">패턴 추가하기</string>
+    <string name="switch_activate_vibration_repeat">반복 활성화</string>
+    <string name="button_test_pattern_vibration">진동 활성화</string>
+    <string name="error_no_patterns">지정된 패턴이 없어 진행할 수 없어요.</string>
+    <string name="title_add_new_pattern">패턴을 새로 추가하세요</string>
+    <string name="error_invalid_input">처리할 수 없는 값이에요.</string>
+    <string name="error_max_amplitude_reached">Amplitude는 255를 초과할 수 없어요.</string>
+    <string name="button_add">추가하기</string>
+</resources>

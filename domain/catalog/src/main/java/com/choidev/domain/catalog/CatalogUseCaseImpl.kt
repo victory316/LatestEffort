@@ -11,7 +11,8 @@ class CatalogUseCaseImpl @Inject constructor() : CatalogUseCase {
         emit(
             runCatching {
                 listOf(
-                    CatalogType.SEARCH_MEDIA
+                    CatalogType.SEARCH_MEDIA,
+                    CatalogType.VIBRATION
                 )
             }
         )

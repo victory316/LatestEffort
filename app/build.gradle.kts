@@ -14,8 +14,8 @@ android {
         applicationId = "com.choidev.latesteffort"
         minSdk = 28
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -59,8 +59,6 @@ dependencies {
     implementation(libs.lifecycleKtx)
     implementation(libs.androidx.junit.ktx)
     implementation(libs.rxAndroid)
-    implementation(libs.rxJava)
-    implementation(libs.hilt.android)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.compose.runtime.tracing)
@@ -68,10 +66,12 @@ dependencies {
     implementation(libs.androidx.compose.material3.windowSizeClass)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.ui.graphics)
+    implementation(libs.rxJava)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
@@ -89,8 +89,11 @@ dependencies {
 
     implementation(project(":core:design"))
     implementation(project(":core:testing"))
+    implementation(project(":core:util"))
+    implementation(project(":core:actions"))
     implementation(project(":domain"))
     implementation(project(":domain:catalog"))
     implementation(project(":data"))
     implementation(project(":feature:search-media"))
+    implementation(project(":feature:vibration"))
 }
