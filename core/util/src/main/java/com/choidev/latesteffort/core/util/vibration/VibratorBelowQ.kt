@@ -10,6 +10,7 @@ class VibratorBelowQ(
 ) : VibrationAdapter {
 
     private val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
     override fun vibrate(duration: Long, repeat: Int, amplitude: Int) {
         VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE).also { effect ->
             vibrator.vibrate(effect)

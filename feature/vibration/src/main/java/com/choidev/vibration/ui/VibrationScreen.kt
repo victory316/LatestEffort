@@ -2,13 +2,17 @@ package com.choidev.vibration.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,21 +42,26 @@ fun VibrationScreen(
             modifier = Modifier.padding(paddingValues),
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            Column {
-                Text(text = "진동 활성화")
-                Switch(
-                    checked = checked,
-                    onCheckedChange = {
-                        presenter.onClick(
-                            VibrationAction.Vibrate(
-                                activate = !checked,
-                                duration = 1000L
-                            )
-                        )
+            val effects = VibrationAction.VibrationEffect.values()
 
-                        viewModel.switchVibration(!checked)
-                    },
-                    modifier = Modifier.padding()
+            Column {
+                Text(text = "진동 종류 선택")
+                effects.forEach {
+                    Row {
+                        RadioButton(selected = false, onClick = { /*TODO*/ })
+                        Text(
+                            text = it.name,
+                            modifier = Modifier.align(CenterVertically)
+                        )
+                    }
+                }
+            }
+            Column {
+                Text(text = "진동 세기 조절하기")
+                Slider(
+                    value = vibrationState.value.amplitude.toFloat(),
+                    valueRange = 0f..255f,
+                    onValueChange = { viewModel.vibrationAmplitude(it.toInt()) }
                 )
             }
 
@@ -65,7 +74,9 @@ fun VibrationScreen(
                             VibrationAction.RepeatVibrate(
                                 activate = !checked,
                                 duration = 1000L,
-                                repeat = !vibrationState.value.repeat
+                                repeat = !vibrationState.value.repeat,
+                                effect = vibrationState.value.effect,
+                                amplitude = vibrationState.value.amplitude
                             )
                         )
 
@@ -83,7 +94,9 @@ fun VibrationScreen(
                         presenter.onClick(
                             VibrationAction.Vibrate(
                                 activate = !checked,
-                                duration = 1000L
+                                duration = 1000L,
+                                effect = vibrationState.value.effect,
+                                amplitude = vibrationState.value.amplitude
                             )
                         )
 

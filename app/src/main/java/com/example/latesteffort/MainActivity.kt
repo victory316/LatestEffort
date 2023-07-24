@@ -75,13 +75,20 @@ class MainActivity : ComponentActivity() {
         when (action) {
             is VibrationAction.Vibrate -> {
                 if (action.activate) {
-                    vibrationManager.vibrate(duration = action.duration)
+                    vibrationManager.vibrate(
+                        duration = action.duration,
+                        amplitude = action.amplitude
+                    )
                 }
             }
 
             is VibrationAction.RepeatVibrate -> {
                 if (action.activate && action.repeat) {
-                    vibrationManager.vibrate(duration = action.duration, repeat = 0)
+                    vibrationManager.vibrate(
+                        duration = action.duration,
+                        amplitude = action.amplitude,
+                        repeat = 0
+                    )
                 }
             }
         }
