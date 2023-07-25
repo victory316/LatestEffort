@@ -14,8 +14,9 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -46,6 +47,7 @@ import com.choidev.latesteffort.feature.notification_test.navigation.notificatio
 import com.choidev.latesteffort.feature.search_media.SearchMediaActivity
 import com.choidev.vibration.navigation.vibrationRoute
 import com.example.latesteffort.MainViewModel
+import com.example.latesteffort.state.CatalogItemState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,6 +57,7 @@ fun CatalogScreen(
     modifier: Modifier = Modifier
 ) {
     val menus by mainViewModel.catalogs.collectAsStateWithLifecycle()
+
     var gridMode by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -71,12 +74,42 @@ fun CatalogScreen(
     ) { paddingValues ->
         when {
             menus.isSuccess -> {
-                Catalogs(
-                    catalogs = menus.getOrDefault(emptyList()),
-                    isGridMode = gridMode,
-                    modifier = Modifier.padding(paddingValues),
-                    presenter = presenter
-                )
+                menus.mapCatching { data ->
+                    data.map {
+                        when (it) {
+                            CatalogType.SEARCH_MEDIA -> {
+                                CatalogItemState(
+                                    title = "미디어 검색하기",
+                                    icon = Icons.Rounded.Search,
+                                    action = NavigateAction.StartActivity(SearchMediaActivity::class.java)
+                                )
+                            }
+
+                            CatalogType.VIBRATION -> {
+                                CatalogItemState(
+                                    title = "진동 테스트",
+                                    icon = Icons.Rounded.MoreVert,
+                                    action = NavigateAction.NavGraphDestination(vibrationRoute)
+                                )
+                            }
+
+                            CatalogType.NOTIFICATION -> {
+                                CatalogItemState(
+                                    title = "알림 테스트",
+                                    icon = Icons.Rounded.Notifications,
+                                    action = NavigateAction.NavGraphDestination(notificationRoute)
+                                )
+                            }
+                        }
+                    }
+                }.also { result ->
+                    Catalogs(
+                        itemState = result.getOrDefault(emptyList()),
+                        isGridMode = gridMode,
+                        modifier = Modifier.padding(paddingValues),
+                        presenter = presenter
+                    )
+                }
             }
 
             menus.isFailure -> {
@@ -88,21 +121,21 @@ fun CatalogScreen(
 
 @Composable
 fun Catalogs(
-    catalogs: List<CatalogType>,
+    itemState: List<CatalogItemState>,
     isGridMode: Boolean,
     presenter: ActionPresenter,
     modifier: Modifier = Modifier
 ) {
     if (!isGridMode) {
-        CatalogByListsUi(catalogs = catalogs, presenter = presenter, modifier = modifier)
+        CatalogByListsUi(catalogs = itemState, presenter = presenter, modifier = modifier)
     } else {
-        CatalogsByGridUi(catalogs = catalogs, presenter = presenter, modifier = modifier)
+        CatalogsByGridUi(catalogs = itemState, presenter = presenter, modifier = modifier)
     }
 }
 
 @Composable
 fun CatalogByListsUi(
-    catalogs: List<CatalogType>,
+    catalogs: List<CatalogItemState>,
     presenter: ActionPresenter,
     modifier: Modifier = Modifier
 ) {
@@ -110,49 +143,15 @@ fun CatalogByListsUi(
         modifier = modifier.padding(top = 12.dp),
         verticalArrangement = Arrangement.spacedBy(LazyColumnPaddingVertical())
     ) {
-        items(catalogs) { type ->
-            when (type) {
-                CatalogType.SEARCH_MEDIA -> {
-                    CatalogListItem(
-                        icon = Icons.Rounded.Search,
-                        title = "미디어 검색하기",
-                        modifier = Modifier
-                            .fillParentMaxWidth()
-                            .clickable {
-                                presenter.onClick(
-                                    NavigateAction.StartActivity(SearchMediaActivity::class.java)
-                                )
-                            }
-                    )
-                }
-
-                CatalogType.VIBRATION -> {
-                    CatalogListItem(
-                        icon = Icons.Default.MoreVert,
-                        title = "진동 테스트",
-                        modifier = Modifier
-                            .fillParentMaxWidth()
-                            .clickable {
-                                presenter.onClick(
-                                    NavigateAction.NavGraphDestination(vibrationRoute)
-                                )
-                            }
-                    )
-                }
-
-                CatalogType.NOTIFICATION -> {
-                    CatalogListItem(
-                        icon = Icons.Default.Notifications,
-                        title = "알림 테스트",
-                        modifier = Modifier
-                            .fillParentMaxWidth()
-                            .clickable {
-                                presenter.onClick(
-                                    NavigateAction.NavGraphDestination(notificationRoute)
-                                )
-                            }
-                    )
-                }
+        items(catalogs) { state ->
+            with(state) {
+                CatalogListItem(
+                    icon = icon,
+                    title = title,
+                    modifier = Modifier
+                        .fillParentMaxWidth()
+                        .clickable { presenter.onClick(state.action) }
+                )
             }
         }
     }
@@ -160,7 +159,7 @@ fun CatalogByListsUi(
 
 @Composable
 fun CatalogsByGridUi(
-    catalogs: List<CatalogType>,
+    catalogs: List<CatalogItemState>,
     modifier: Modifier = Modifier,
     presenter: ActionPresenter
 ) {
@@ -170,43 +169,15 @@ fun CatalogsByGridUi(
         verticalArrangement = Arrangement.spacedBy(3.dp),
         horizontalArrangement = Arrangement.spacedBy(3.dp)
     ) {
-        items(catalogs) { type ->
-            when (type) {
-                CatalogType.SEARCH_MEDIA ->
-                    CatalogGridItem(
-                        icon = Icons.Rounded.Search,
-                        title = "미디어 검색하기",
-                        modifier = Modifier
-                            .clickable {
-                                presenter.onClick(
-                                    NavigateAction.StartActivity(SearchMediaActivity::class.java)
-                                )
-                            }
-                    )
+        items(catalogs) { state ->
 
-                CatalogType.VIBRATION ->
-                    CatalogGridItem(
-                        icon = Icons.Default.MoreVert,
-                        title = "진동 테스트",
-                        modifier = Modifier
-                            .clickable {
-                                presenter.onClick(
-                                    NavigateAction.NavGraphDestination(vibrationRoute)
-                                )
-                            }
-                    )
-
-                CatalogType.NOTIFICATION ->
-                    CatalogGridItem(
-                        icon = Icons.Default.Notifications,
-                        title = "알림 테스트",
-                        modifier = Modifier
-                            .clickable {
-                                presenter.onClick(
-                                    NavigateAction.NavGraphDestination(notificationRoute)
-                                )
-                            }
-                    )
+            with(state) {
+                CatalogGridItem(
+                    icon = icon,
+                    title = title,
+                    modifier = Modifier
+                        .clickable { presenter.onClick(action) }
+                )
             }
         }
     }
