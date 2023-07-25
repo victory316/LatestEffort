@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,6 +29,7 @@ import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.domain.catalog.model.CatalogType
 import com.choidev.latesteffort.core.design.compose.LazyColumnPaddingVertical
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
+import com.choidev.latesteffort.feature.notification_test.navigation.notificationRoute
 import com.choidev.latesteffort.feature.search_media.SearchMediaActivity
 import com.choidev.vibration.navigation.vibrationRoute
 import com.example.latesteffort.MainViewModel
@@ -96,9 +98,21 @@ fun CatalogListsUi(
                             .fillParentMaxWidth()
                             .clickable {
                                 presenter.onClick(
-                                    NavigateAction.NavGraphDestination(
-                                        vibrationRoute
-                                    )
+                                    NavigateAction.NavGraphDestination(vibrationRoute)
+                                )
+                            }
+                    )
+                }
+
+                CatalogType.NOTIFICATION -> {
+                    CatalogItem(
+                        icon = Icons.Default.Notifications,
+                        title = "알림 테스트",
+                        modifier = Modifier
+                            .fillParentMaxWidth()
+                            .clickable {
+                                presenter.onClick(
+                                    NavigateAction.NavGraphDestination(notificationRoute)
                                 )
                             }
                     )

@@ -5,17 +5,18 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.choidev.core.actions.presenter.ActionPresenter
+import com.choidev.latesteffort.feature.notification_test.ui.NotificationTestScreen
 
-const val notificationTestRoute = "feature_notification_test"
+const val notificationRoute = "feature_notification_test"
 
 fun NavController.navigateToNotification(navOptions: NavOptions? = null) {
-    navigate(notificationTestRoute, navOptions)
+    navigate(notificationRoute, navOptions)
 }
 
-fun NavGraphBuilder.notificationTestScreen(presenter: ActionPresenter) {
+fun NavGraphBuilder.notificationScreen(presenter: ActionPresenter) {
     composable(
-        route = notificationTestRoute
+        route = notificationRoute
     ) {
-
+        NotificationTestScreen(presenter)
     }
 }

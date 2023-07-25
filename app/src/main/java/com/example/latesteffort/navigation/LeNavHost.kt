@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.choidev.core.actions.presenter.ActionPresenter
+import com.choidev.latesteffort.feature.notification_test.navigation.notificationScreen
 import com.choidev.vibration.navigation.vibrationScreen
 
 @Composable
@@ -20,5 +21,6 @@ fun LeNavHost(
     ) {
         catalogScreen(presenter)
         vibrationScreen(presenter)
+        notificationScreen(presenter)
     }
 }
