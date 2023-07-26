@@ -189,7 +189,6 @@ fun CatalogsByGridUi(
         horizontalArrangement = Arrangement.spacedBy(3.dp)
     ) {
         items(catalogs) { state ->
-
             with(state) {
                 CatalogGridItem(
                     icon = icon,

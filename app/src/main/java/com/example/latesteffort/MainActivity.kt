@@ -12,7 +12,7 @@ import com.choidev.core.actions.NavigateAction
 import com.choidev.core.actions.NavigateAction.NavGraphDestination
 import com.choidev.core.actions.NavigateAction.StartActivity
 import com.choidev.core.actions.SystemAction
-import com.choidev.core.actions.VibrationAction
+import com.choidev.core.actions.VibrateAction
 import com.choidev.core.actions.mapToId
 import com.choidev.core.actions.presenter.SimpleActionPresenter
 import com.choidev.latesteffort.core.util.vibration.VibrationManager
@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
                             action = action
                         )
 
-                        is VibrationAction -> handleVibrationAction(action)
+                        is VibrateAction -> handleVibrationAction(action)
 
                         is SystemAction -> handleSystemAction(action)
                     }
@@ -84,9 +84,9 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun handleVibrationAction(action: VibrationAction) {
+    private fun handleVibrationAction(action: VibrateAction) {
         when (action) {
-            is VibrationAction.Vibrate -> {
+            is VibrateAction.Vibrate -> {
                 if (action.activate) {
                     vibrationManager.vibrate(
                         duration = action.duration,
@@ -95,11 +95,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            is VibrationAction.VibrateEffect -> {
+            is VibrateAction.VibrateEffect -> {
                 vibrationManager.vibrateEffect(action.effect.mapToId())
             }
 
-            is VibrationAction.VibratePattern -> {
+            is VibrateAction.VibratePattern -> {
                 vibrationManager.vibrateWithPattern(
                     timing = action.patterns.map { it.first.toLong() }.toLongArray(),
                     amplitudes = action.patterns.map { it.second }.toIntArray(),
@@ -107,7 +107,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            VibrationAction.StopVibration -> {
+            VibrateAction.StopVibration -> {
                 vibrationManager.stopVibration()
             }
         }

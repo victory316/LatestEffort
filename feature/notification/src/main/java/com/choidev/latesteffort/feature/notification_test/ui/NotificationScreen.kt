@@ -22,8 +22,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.choidev.core.actions.NotificationAction
+import com.choidev.core.actions.SystemAction
 import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.core.actions.presenter.SimpleActionPresenter
+import com.choidev.latesteffort.core.design.compose.LazyColumnPaddingVertical
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
 import com.choidev.latesteffort.feature.notification_test.state.OnNewNotificationDialog
 
@@ -67,8 +70,10 @@ fun NotificationTestScreen(presenter: ActionPresenter) {
             }
             Divider()
             Text(text = "알림 목록")
-
-            LazyColumn {
+            LazyColumn(
+                modifier = Modifier.padding(top = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(LazyColumnPaddingVertical())
+            ) {
                 items(10) {
                     NotificationItemUi()
                 }
@@ -78,15 +83,36 @@ fun NotificationTestScreen(presenter: ActionPresenter) {
 
     when (newNotification) {
         OnNewNotificationDialog.BASIC -> {
-            NotificationDialog(onDismiss = { /*TODO*/ }, onConfirmed = {})
+            NotificationDialog(
+                onDismiss = { newNotification = null },
+                onConfirmed = {
+                    presenter.onClick(
+                        NotificationAction.BasicNotification(
+                            title = "하하",
+                            message = "호호"
+                        )
+                    )
+                }
+            )
         }
 
         OnNewNotificationDialog.MEDIA -> {
-            MessagingNotificationDialog(onDismiss = { /*TODO*/ }, onConfirmed = {})
+            presenter.onClick(SystemAction.ShowToast("미디어 알림을 띄웁니다."))
+            presenter.onClick(NotificationAction.MediaNotification)
         }
 
         OnNewNotificationDialog.MESSAGING -> {
-            MessagingNotificationDialog(onDismiss = { /*TODO*/ }, onConfirmed = {})
+            MessagingNotificationDialog(
+                onDismiss = { newNotification = null },
+                onConfirmed = {
+                    presenter.onClick(
+                        NotificationAction.BasicNotification(
+                            title = "하하",
+                            message = "호호"
+                        )
+                    )
+                }
+            )
         }
 
         null -> {

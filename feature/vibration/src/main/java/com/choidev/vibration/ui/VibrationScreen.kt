@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.choidev.core.actions.SystemAction
-import com.choidev.core.actions.VibrationAction
+import com.choidev.core.actions.VibrateAction
 import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.core.actions.presenter.SimpleActionPresenter
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
@@ -64,7 +64,7 @@ fun VibrationScreen(
             modifier = Modifier.padding(paddingValues),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            val effects = VibrationAction.VibrationEffect.values()
+            val effects = VibrateAction.VibrationEffect.values()
 
             Column {
                 Text(
@@ -91,7 +91,7 @@ fun VibrationScreen(
                 Button(
                     onClick = {
                         presenter.onClick(
-                            VibrationAction.VibrateEffect(effect = vibrationState.value.effect)
+                            VibrateAction.VibrateEffect(effect = vibrationState.value.effect)
                         )
                     }
                 ) {
@@ -166,13 +166,13 @@ fun VibrationScreen(
                         }
 
                         vibrationState.value.activated -> {
-                            presenter.onClick(VibrationAction.StopVibration)
+                            presenter.onClick(VibrateAction.StopVibration)
                             viewModel.toggleVibrationPattern()
                         }
 
                         else -> {
                             presenter.onClick(
-                                VibrationAction.VibratePattern(
+                                VibrateAction.VibratePattern(
                                     vibrationState.value.repeat,
                                     vibrationState.value.patterns
                                 )
