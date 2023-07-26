@@ -52,6 +52,7 @@ import com.choidev.latesteffort.feature.search_media.SearchMediaActivity
 import com.choidev.vibration.navigation.vibrationRoute
 import com.example.latesteffort.MainViewModel
 import com.example.latesteffort.state.CatalogItemState
+import com.example.latesteffort.util.CatalogScreenHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,7 +96,7 @@ fun CatalogScreen(
                                 CatalogItemState(
                                     title = "미디어 검색하기",
                                     icon = Icons.Rounded.Search,
-                                    backgroundColor = MaterialTheme.colorScheme.primary.copy(0.1f),
+                                    backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
                                     action = NavigateAction.StartActivity(SearchMediaActivity::class.java),
                                 )
                             }
@@ -104,7 +105,7 @@ fun CatalogScreen(
                                 CatalogItemState(
                                     title = "진동 테스트",
                                     icon = Icons.Rounded.MoreVert,
-                                    backgroundColor = MaterialTheme.colorScheme.primary.copy(0.3f),
+                                    backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
                                     action = NavigateAction.NavGraphDestination(vibrationRoute)
                                 )
                             }
@@ -113,7 +114,7 @@ fun CatalogScreen(
                                 CatalogItemState(
                                     title = "알림 테스트",
                                     icon = Icons.Rounded.Notifications,
-                                    backgroundColor = MaterialTheme.colorScheme.primary.copy(0.4f),
+                                    backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
                                     action = NavigateAction.NavGraphDestination(notificationRoute)
                                 )
                             }
