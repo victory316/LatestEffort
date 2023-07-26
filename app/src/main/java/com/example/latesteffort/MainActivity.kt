@@ -42,7 +42,9 @@ class MainActivity : ComponentActivity() {
                             action = action
                         )
 
-                        is VibrateAction -> handleVibrationAction(action)
+                        is VibrateAction -> handleVibrationAction(
+                            action = action, vibrationManager = vibrationManager
+                        )
 
                         is SystemAction -> handleSystemAction(action)
                     }
