@@ -34,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -41,6 +42,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.choidev.core.actions.NavigateAction
 import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.domain.catalog.model.CatalogType
+import com.choidev.latesteffort.R
 import com.choidev.latesteffort.core.design.compose.LazyColumnPaddingVertical
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
 import com.choidev.latesteffort.feature.notification_test.navigation.notificationRoute
@@ -65,7 +67,17 @@ fun CatalogScreen(
             TopAppBar(title = { Text(text = "Welcome to my latest effort.") },
                 actions = {
                     IconToggleButton(checked = gridMode, onCheckedChange = { gridMode = it }) {
-                        Icon(Icons.Default.List, contentDescription = null)
+                        if (gridMode) {
+                            Icon(
+                                imageVector = Icons.Default.List,
+                                contentDescription = null
+                            )
+                        } else {
+                            Icon(
+                                painter = painterResource(id = R.drawable.baseline_apps_24),
+                                contentDescription = null
+                            )
+                        }
                     }
                 })
         },
