@@ -19,6 +19,7 @@ import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconToggleButton
@@ -33,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -93,7 +95,8 @@ fun CatalogScreen(
                                 CatalogItemState(
                                     title = "미디어 검색하기",
                                     icon = Icons.Rounded.Search,
-                                    action = NavigateAction.StartActivity(SearchMediaActivity::class.java)
+                                    backgroundColor = MaterialTheme.colorScheme.primary.copy(0.1f),
+                                    action = NavigateAction.StartActivity(SearchMediaActivity::class.java),
                                 )
                             }
 
@@ -101,6 +104,7 @@ fun CatalogScreen(
                                 CatalogItemState(
                                     title = "진동 테스트",
                                     icon = Icons.Rounded.MoreVert,
+                                    backgroundColor = MaterialTheme.colorScheme.primary.copy(0.3f),
                                     action = NavigateAction.NavGraphDestination(vibrationRoute)
                                 )
                             }
@@ -109,6 +113,7 @@ fun CatalogScreen(
                                 CatalogItemState(
                                     title = "알림 테스트",
                                     icon = Icons.Rounded.Notifications,
+                                    backgroundColor = MaterialTheme.colorScheme.primary.copy(0.4f),
                                     action = NavigateAction.NavGraphDestination(notificationRoute)
                                 )
                             }
@@ -160,6 +165,7 @@ fun CatalogByListsUi(
                 CatalogListItem(
                     icon = icon,
                     title = title,
+                    backgroundColor = backgroundColor,
                     modifier = Modifier
                         .fillParentMaxWidth()
                         .clickable { presenter.onClick(state.action) }
@@ -187,6 +193,7 @@ fun CatalogsByGridUi(
                 CatalogGridItem(
                     icon = icon,
                     title = title,
+                    backgroundColor = backgroundColor,
                     modifier = Modifier
                         .clickable { presenter.onClick(action) }
                 )
@@ -199,9 +206,13 @@ fun CatalogsByGridUi(
 fun CatalogListItem(
     icon: ImageVector,
     title: String,
+    backgroundColor: Color = Color.LightGray,
     modifier: Modifier = Modifier
 ) {
     Card(
+        colors = CardDefaults.cardColors(
+            containerColor = backgroundColor
+        ),
         modifier = modifier
     ) {
         Row(
@@ -221,12 +232,16 @@ fun CatalogListItem(
 fun CatalogGridItem(
     icon: ImageVector,
     title: String,
+    backgroundColor: Color = Color.LightGray,
     modifier: Modifier = Modifier
 ) {
     Card(
+        colors = CardDefaults.cardColors(
+            containerColor = backgroundColor
+        ),
         modifier = modifier
             .aspectRatio(1f)
-            .padding(6.dp),
+            .padding(6.dp)
     ) {
         Icon(
             icon, contentDescription = null,
@@ -243,7 +258,7 @@ fun PreviewCatalogListItem() {
     LeTheme {
         CatalogListItem(
             icon = Icons.Default.Notifications,
-            title = "알림 테스트"
+            title = "알림 테스트",
         )
     }
 }
