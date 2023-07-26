@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="le_notification_channel_name">알림 테스트</string>
+    <string name="le_notification_channel_description">알림 테스트를 위한 채널입니다.</string>
+    <string name="news_notification_group_summary">%1$d 개의 알림</string>
+</resources>
