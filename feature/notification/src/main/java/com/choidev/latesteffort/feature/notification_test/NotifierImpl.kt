@@ -113,30 +113,32 @@ class NotifierImpl @Inject constructor(
 
             val singleNotification = createNewsNotification {
                 setSmallIcon(R.mipmap.ic_launcher_foreground)
-                    .setContentTitle("")
-                    .setContentText("")
-                    .setContentIntent(newsPendingIntent())
-                    .setGroup(LE_NOTIFICATION_GROUP)
-                    .setAutoCancel(true)
-            }
-
-            val summaryNotification = createNewsNotification {
-                val title = getString(R.string.le_notification_channel_name)
-                setContentTitle(title)
-                    .setContentText(title)
-                    .setSmallIcon(
-                        com.google.android.material.R.drawable.ic_arrow_back_black_24,
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                    .setContentTitle("미디어 재생")
+                    .setContentText("음악")
+                    .addAction(
+                        com.google.android.material.R.drawable.material_ic_keyboard_arrow_previous_black_24dp,
+                        "Previous", newsPendingIntent()
                     )
-                    .setGroup(LE_NOTIFICATION_GROUP)
-                    .setGroupSummary(true)
+                    .addAction(
+                        com.google.android.material.R.drawable.btn_radio_off_mtrl,
+                        "Pause", newsPendingIntent()
+                    )
+                    .addAction(
+                        com.google.android.material.R.drawable.material_ic_keyboard_arrow_next_black_24dp,
+                        "Next", newsPendingIntent()
+                    )
+                    .setStyle(
+                        androidx.media.app.NotificationCompat.MediaStyle()
+                            .setShowActionsInCompactView(0, 1, 2)
+                    )
+                    .setContentIntent(newsPendingIntent())
                     .setAutoCancel(true)
-                    .build()
             }
 
             val notificationManager = NotificationManagerCompat.from(this)
 
             notificationManager.notify(Random.nextInt(), singleNotification)
-            notificationManager.notify(NEWS_NOTIFICATION_SUMMARY_ID, summaryNotification)
         }
     }
 
