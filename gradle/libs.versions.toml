@@ -15,6 +15,7 @@ androidxNavigation = "2.5.3"
 androidxLifecycle = "2.6.0-alpha05"
 androidxCoreSplashscreen = "1.0.0"
 androidx-test-ext-junit = "1.1.5"
+androidxMedia = "1.2.0"
 archCoreTesting = "2.1.0"
 appcompat = "1.6.1"
 kotlin = "1.8.10"
@@ -63,6 +64,7 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "androidxNavigation" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
+androidx-media = { group = "androidx.media", name = "media", version.ref = "androidxMedia" }
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation-ui-ktx" }
 room = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }

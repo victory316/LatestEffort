@@ -14,8 +14,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.net.toUri
+import com.choidev.core.actions.NotificationAction
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+import kotlin.random.Random
 
 private const val LE_CHANNEL_ID = ""
 private const val LE_NOTIFICATION_GROUP = ""
@@ -51,7 +53,15 @@ class NotifierImpl @Inject constructor(
         NotificationManagerCompat.from(this).createNotificationChannel(channel)
     }
 
-    override fun buildNotification() {
+    override fun buildNotification(action: NotificationAction) {
+        when (action) {
+            is NotificationAction.BasicNotification -> showBasicNotification(action)
+            NotificationAction.MediaNotification -> showMediaNotification()
+            is NotificationAction.MessageNotification -> showMessageNotification()
+        }
+    }
+
+    private fun showBasicNotification(action: NotificationAction.BasicNotification) {
         with(context) {
             if (ActivityCompat.checkSelfPermission(
                     this,
@@ -61,10 +71,48 @@ class NotifierImpl @Inject constructor(
                 return
             }
 
-            context.createNewsNotification {
-                setSmallIcon(
-                    com.google.android.material.R.drawable.ic_arrow_back_black_24,
-                )
+            val singleNotification = createNewsNotification {
+                setSmallIcon(R.mipmap.ic_launcher_foreground)
+                    .setContentTitle(action.title)
+                    .setContentText(action.message)
+                    .setContentIntent(newsPendingIntent())
+                    .setGroup(LE_NOTIFICATION_GROUP)
+                    .setAutoCancel(true)
+            }
+
+            val summaryNotification = createNewsNotification {
+                val title = getString(R.string.le_notification_channel_name)
+                setContentTitle(title)
+                    .setContentText(title)
+                    .setSmallIcon(
+                        com.google.android.material.R.drawable.ic_arrow_back_black_24,
+                    )
+                    .setStyle(newsNotificationStyle(title))
+                    .setGroup(LE_NOTIFICATION_GROUP)
+                    .setGroupSummary(true)
+                    .setAutoCancel(true)
+                    .build()
+            }
+
+            val notificationManager = NotificationManagerCompat.from(this)
+
+            notificationManager.notify(Random.nextInt(), singleNotification)
+            notificationManager.notify(NEWS_NOTIFICATION_SUMMARY_ID, summaryNotification)
+        }
+    }
+
+    private fun showMediaNotification() {
+        with(context) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS,
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
+
+            val singleNotification = createNewsNotification {
+                setSmallIcon(R.mipmap.ic_launcher_foreground)
                     .setContentTitle("")
                     .setContentText("")
                     .setContentIntent(newsPendingIntent())
@@ -79,7 +127,45 @@ class NotifierImpl @Inject constructor(
                     .setSmallIcon(
                         com.google.android.material.R.drawable.ic_arrow_back_black_24,
                     )
-                    // Build summary info into InboxStyle template.
+                    .setGroup(LE_NOTIFICATION_GROUP)
+                    .setGroupSummary(true)
+                    .setAutoCancel(true)
+                    .build()
+            }
+
+            val notificationManager = NotificationManagerCompat.from(this)
+
+            notificationManager.notify(Random.nextInt(), singleNotification)
+            notificationManager.notify(NEWS_NOTIFICATION_SUMMARY_ID, summaryNotification)
+        }
+    }
+
+    private fun showMessageNotification() {
+        with(context) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS,
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
+
+            val singleNotification = createNewsNotification {
+                setSmallIcon(R.mipmap.ic_launcher_foreground)
+                    .setContentTitle("")
+                    .setContentText("")
+                    .setContentIntent(newsPendingIntent())
+                    .setGroup(LE_NOTIFICATION_GROUP)
+                    .setAutoCancel(true)
+            }
+
+            val summaryNotification = createNewsNotification {
+                val title = getString(R.string.le_notification_channel_name)
+                setContentTitle(title)
+                    .setContentText(title)
+                    .setSmallIcon(
+                        com.google.android.material.R.drawable.ic_arrow_back_black_24,
+                    )
                     .setStyle(newsNotificationStyle(title))
                     .setGroup(LE_NOTIFICATION_GROUP)
                     .setGroupSummary(true)
@@ -87,8 +173,9 @@ class NotifierImpl @Inject constructor(
                     .build()
             }
 
-            // Send the notifications
             val notificationManager = NotificationManagerCompat.from(this)
+
+            notificationManager.notify(Random.nextInt(), singleNotification)
             notificationManager.notify(NEWS_NOTIFICATION_SUMMARY_ID, summaryNotification)
         }
     }
@@ -99,8 +186,7 @@ class NotifierImpl @Inject constructor(
         .setBigContentTitle(title)
         .setSummaryText(title)
 
-    private fun Context.newsPendingIntent(
-    ): PendingIntent? = PendingIntent.getActivity(
+    private fun Context.newsPendingIntent(): PendingIntent? = PendingIntent.getActivity(
         this,
         NEWS_NOTIFICATION_REQUEST_CODE,
         Intent().apply {
