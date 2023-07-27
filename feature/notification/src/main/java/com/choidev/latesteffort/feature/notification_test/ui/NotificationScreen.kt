@@ -22,17 +22,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.choidev.core.actions.NotificationAction
 import com.choidev.core.actions.SystemAction
 import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.core.actions.presenter.SimpleActionPresenter
 import com.choidev.latesteffort.core.design.compose.LazyColumnPaddingVertical
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
+import com.choidev.latesteffort.feature.notification_test.NotificationViewModel
 import com.choidev.latesteffort.feature.notification_test.state.OnNewNotificationDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NotificationTestScreen(presenter: ActionPresenter) {
+fun NotificationTestScreen(
+    presenter: ActionPresenter,
+    viewModel: NotificationViewModel = hiltViewModel()
+) {
     var newNotification: OnNewNotificationDialog? by remember { mutableStateOf(null) }
 
     Scaffold(
@@ -98,7 +103,8 @@ fun NotificationTestScreen(presenter: ActionPresenter) {
 
         OnNewNotificationDialog.MEDIA -> {
             presenter.onClick(SystemAction.ShowToast("미디어 알림을 띄웁니다."))
-            presenter.onClick(NotificationAction.MediaNotification)
+//            presenter.onClick(NotificationAction.MediaNotification)
+            viewModel.createNotification()
         }
 
         OnNewNotificationDialog.MESSAGING -> {

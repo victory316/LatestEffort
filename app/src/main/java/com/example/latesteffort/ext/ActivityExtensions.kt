@@ -39,7 +39,7 @@ fun Activity.handleSystemAction(action: SystemAction) {
     }
 }
 
-fun Activity.handleVibrationAction(
+fun Activity.handleVibrateAction(
     action: VibrateAction,
     vibrationManager: VibrationManager
 ) {
