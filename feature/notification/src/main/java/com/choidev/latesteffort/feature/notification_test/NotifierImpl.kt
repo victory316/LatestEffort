@@ -24,6 +24,7 @@ private const val LE_NOTIFICATION_GROUP = ""
 private const val NEWS_NOTIFICATION_REQUEST_CODE = 0
 private const val NEWS_NOTIFICATION_SUMMARY_ID = 1
 private const val TARGET_ACTIVITY_NAME = "com.example.latesteffort.MainActivity"
+private const val KEY_TEXT_REPLY = "key_text_reply"
 
 class NotifierImpl @Inject constructor(
     @ApplicationContext private val context: Context
@@ -152,33 +153,45 @@ class NotifierImpl @Inject constructor(
                 return
             }
 
+            var message1 = NotificationCompat.MessagingStyle.Message(
+                "message",
+                System.currentTimeMillis(),
+                "sender"
+            )
+
+            var message2 = NotificationCompat.MessagingStyle.Message(
+                "messageeeee",
+                System.currentTimeMillis(),
+                "sender2"
+            )
+
+            val remoteInput = androidx.core.app.RemoteInput.Builder(KEY_TEXT_REPLY)
+                .build()
+
+            val replyAction = NotificationCompat.Action.Builder(
+                android.R.drawable.ic_input_add,
+                "Add", newsPendingIntent()
+            )
+                .addRemoteInput(remoteInput)
+                .build()
+
             val singleNotification = createNewsNotification {
                 setSmallIcon(R.mipmap.ic_launcher_foreground)
-                    .setContentTitle("")
-                    .setContentText("")
                     .setContentIntent(newsPendingIntent())
-                    .setGroup(LE_NOTIFICATION_GROUP)
-                    .setAutoCancel(true)
-            }
-
-            val summaryNotification = createNewsNotification {
-                val title = getString(R.string.le_notification_channel_name)
-                setContentTitle(title)
-                    .setContentText(title)
-                    .setSmallIcon(
-                        com.google.android.material.R.drawable.ic_arrow_back_black_24,
+                    .setStyle(
+                        NotificationCompat.MessagingStyle(
+                            "ho"
+                        )
+                            .addMessage(message1)
+                            .addMessage(message2)
                     )
-                    .setStyle(newsNotificationStyle(title))
-                    .setGroup(LE_NOTIFICATION_GROUP)
-                    .setGroupSummary(true)
+                    .addAction(replyAction)
                     .setAutoCancel(true)
-                    .build()
             }
 
             val notificationManager = NotificationManagerCompat.from(this)
 
             notificationManager.notify(Random.nextInt(), singleNotification)
-            notificationManager.notify(NEWS_NOTIFICATION_SUMMARY_ID, summaryNotification)
         }
     }
 

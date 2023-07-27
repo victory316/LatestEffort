@@ -96,12 +96,13 @@ fun NotificationTestScreen(
             MessagingNotificationDialog(
                 onDismiss = { newNotification = null },
                 onConfirmed = {
-                    presenter.onClick(
-                        NotificationAction.BasicNotification(
-                            title = "하하",
-                            message = "호호"
+                    viewModel.createNotification(
+                        NotificationAction.MessageNotification(
+                            title = it.first,
+                            message = it.second
                         )
                     )
+                    newNotification = null
                 }
             )
         }
