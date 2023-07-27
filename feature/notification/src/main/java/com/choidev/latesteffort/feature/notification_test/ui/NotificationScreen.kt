@@ -76,10 +76,11 @@ fun NotificationTestScreen(
             NotificationDialog(
                 onDismiss = { newNotification = null },
                 onConfirmed = {
-                    presenter.onClick(
+                    newNotification = null
+                    viewModel.createNotification(
                         NotificationAction.BasicNotification(
-                            title = "하하",
-                            message = "호호"
+                            title = it.first,
+                            message = it.second
                         )
                     )
                 }
