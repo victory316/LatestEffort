@@ -21,8 +21,8 @@ import kotlin.random.Random
 
 private const val LE_CHANNEL_ID = ""
 private const val LE_NOTIFICATION_GROUP = ""
-private const val NEWS_NOTIFICATION_REQUEST_CODE = 0
-private const val NEWS_NOTIFICATION_SUMMARY_ID = 1
+private const val NOTIFICATION_REQUEST_CODE = 0
+private const val NOTIFICATION_SUMMARY_ID = 1
 private const val TARGET_ACTIVITY_NAME = "com.example.latesteffort.MainActivity"
 private const val KEY_TEXT_REPLY = "key_text_reply"
 
@@ -30,7 +30,7 @@ class NotifierImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : Notifier {
 
-    private fun Context.createNewsNotification(
+    private fun Context.createNotification(
         block: NotificationCompat.Builder.() -> Unit,
     ): Notification {
         ensureNotificationChannelExists()
@@ -72,22 +72,20 @@ class NotifierImpl @Inject constructor(
                 return
             }
 
-            val singleNotification = createNewsNotification {
+            val singleNotification = createNotification {
                 setSmallIcon(R.mipmap.ic_launcher_foreground)
                     .setContentTitle(action.title)
                     .setContentText(action.message)
-                    .setContentIntent(newsPendingIntent())
+                    .setContentIntent(normalPendingIntent())
                     .setGroup(LE_NOTIFICATION_GROUP)
                     .setAutoCancel(true)
             }
 
-            val summaryNotification = createNewsNotification {
+            val summaryNotification = createNotification {
                 val title = getString(R.string.le_notification_channel_name)
                 setContentTitle(title)
                     .setContentText(title)
-                    .setSmallIcon(
-                        com.google.android.material.R.drawable.ic_arrow_back_black_24,
-                    )
+                    .setSmallIcon(R.mipmap.ic_launcher_foreground)
                     .setStyle(newsNotificationStyle(title))
                     .setGroup(LE_NOTIFICATION_GROUP)
                     .setGroupSummary(true)
@@ -98,7 +96,7 @@ class NotifierImpl @Inject constructor(
             val notificationManager = NotificationManagerCompat.from(this)
 
             notificationManager.notify(Random.nextInt(), singleNotification)
-            notificationManager.notify(NEWS_NOTIFICATION_SUMMARY_ID, summaryNotification)
+            notificationManager.notify(NOTIFICATION_SUMMARY_ID, summaryNotification)
         }
     }
 
@@ -112,28 +110,28 @@ class NotifierImpl @Inject constructor(
                 return
             }
 
-            val singleNotification = createNewsNotification {
+            val singleNotification = createNotification {
                 setSmallIcon(R.mipmap.ic_launcher_foreground)
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setContentTitle("미디어 재생")
                     .setContentText("음악")
                     .addAction(
-                        com.google.android.material.R.drawable.material_ic_keyboard_arrow_previous_black_24dp,
-                        "Previous", newsPendingIntent()
+                        R.drawable.ic_previous,
+                        "Previous", normalPendingIntent()
                     )
                     .addAction(
-                        com.google.android.material.R.drawable.btn_radio_off_mtrl,
-                        "Pause", newsPendingIntent()
+                        R.drawable.ic_play,
+                        "Pause", normalPendingIntent()
                     )
                     .addAction(
-                        com.google.android.material.R.drawable.material_ic_keyboard_arrow_next_black_24dp,
-                        "Next", newsPendingIntent()
+                        R.drawable.ic_next,
+                        "Next", normalPendingIntent()
                     )
                     .setStyle(
                         androidx.media.app.NotificationCompat.MediaStyle()
                             .setShowActionsInCompactView(0, 1, 2)
                     )
-                    .setContentIntent(newsPendingIntent())
+                    .setContentIntent(normalPendingIntent())
                     .setAutoCancel(true)
             }
 
@@ -170,14 +168,14 @@ class NotifierImpl @Inject constructor(
 
             val replyAction = NotificationCompat.Action.Builder(
                 android.R.drawable.ic_input_add,
-                "Add", newsPendingIntent()
+                "Add", normalPendingIntent()
             )
                 .addRemoteInput(remoteInput)
                 .build()
 
-            val singleNotification = createNewsNotification {
+            val singleNotification = createNotification {
                 setSmallIcon(R.mipmap.ic_launcher_foreground)
-                    .setContentIntent(newsPendingIntent())
+                    .setContentIntent(normalPendingIntent())
                     .setStyle(
                         NotificationCompat.MessagingStyle(
                             "ho"
@@ -185,7 +183,6 @@ class NotifierImpl @Inject constructor(
                             .addMessage(message1)
                             .addMessage(message2)
                     )
-                    .addAction(replyAction)
                     .setAutoCancel(true)
             }
 
@@ -201,9 +198,23 @@ class NotifierImpl @Inject constructor(
         .setBigContentTitle(title)
         .setSummaryText(title)
 
-    private fun Context.newsPendingIntent(): PendingIntent? = PendingIntent.getActivity(
+    private fun Context.normalPendingIntent(): PendingIntent? = PendingIntent.getActivity(
         this,
-        NEWS_NOTIFICATION_REQUEST_CODE,
+        NOTIFICATION_REQUEST_CODE,
+        Intent().apply {
+            action = Intent.ACTION_VIEW
+            data = "www.naver.com".toUri()
+            component = ComponentName(
+                packageName,
+                TARGET_ACTIVITY_NAME,
+            )
+        },
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+    )
+
+    private fun Context.replyPendingIntent(): PendingIntent? = PendingIntent.getActivity(
+        this,
+        NOTIFICATION_REQUEST_CODE,
         Intent().apply {
             action = Intent.ACTION_VIEW
             data = "www.naver.com".toUri()
