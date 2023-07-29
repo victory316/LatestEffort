@@ -42,22 +42,19 @@ fun NotificationTestScreen(
     presenter: ActionPresenter,
     viewModel: NotificationViewModel = hiltViewModel()
 ) {
+
+    var newNotification: OnNewNotificationDialog? by remember { mutableStateOf(null) }
     val context = LocalContext.current
 
     val permission = android.Manifest.permission.POST_NOTIFICATIONS
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
-        if (isGranted) {
-            Log.d("dd", "isGranted")
-            // Open camera
-        } else {
-            Log.d("dd", "isGranted false")
-            // Show dialog
+        if (!isGranted) {
+            presenter.onClick(SystemAction.ShowToast("알림 테스트를 위해서는 알림 권한이 필요해요."))
+            newNotification = null
         }
     }
-
-    var newNotification: OnNewNotificationDialog? by remember { mutableStateOf(null) }
 
     Scaffold(
         topBar = {
@@ -144,10 +141,7 @@ fun checkAndRequestCameraPermission(
     launcher: ManagedActivityResultLauncher<String, Boolean>
 ) {
     val permissionCheckResult = ContextCompat.checkSelfPermission(context, permission)
-    if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
-        // Open camera because permission is already granted
-    } else {
-        // Request a permission
+    if (permissionCheckResult != PackageManager.PERMISSION_GRANTED) {
         launcher.launch(permission)
     }
 }
