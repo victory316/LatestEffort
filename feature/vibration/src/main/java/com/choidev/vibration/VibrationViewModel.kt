@@ -2,7 +2,7 @@ package com.choidev.vibration
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.choidev.core.actions.VibrationAction
+import com.choidev.core.actions.VibrateAction
 import com.choidev.vibration.state.VibrationState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -49,7 +49,7 @@ class VibrationViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun selectVibrationEffect(effect: VibrationAction.VibrationEffect) {
+    fun selectVibrationEffect(effect: VibrateAction.VibrationEffect) {
         _vibrationState.update {
             it.copy(effect = effect)
         }
