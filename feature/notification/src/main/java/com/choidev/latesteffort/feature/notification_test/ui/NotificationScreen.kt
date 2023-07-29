@@ -3,13 +3,11 @@ package com.choidev.latesteffort.feature.notification_test.ui
 import LeTheme
 import android.content.Context
 import android.content.pm.PackageManager
-import android.util.Log
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,7 +32,6 @@ import com.choidev.core.actions.presenter.SimpleActionPresenter
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
 import com.choidev.latesteffort.feature.notification_test.NotificationViewModel
 import com.choidev.latesteffort.feature.notification_test.state.OnNewNotificationDialog
-import java.util.jar.Manifest
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,8 +67,8 @@ fun NotificationTestScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(text = "알림 타입")
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            Column(
+                verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 Button(
                     onClick = { newNotification = OnNewNotificationDialog.BASIC }
@@ -106,11 +103,13 @@ fun NotificationTestScreen(
                     )
                 }
             )
+            requestPermissisonIfNeeded(context, permission, launcher)
         }
 
         OnNewNotificationDialog.MEDIA -> {
             presenter.onClick(SystemAction.ShowToast("미디어 알림을 띄웁니다."))
             viewModel.createNotification(NotificationAction.MediaNotification)
+            requestPermissisonIfNeeded(context, permission, launcher)
         }
 
         OnNewNotificationDialog.MESSAGING -> {
@@ -126,7 +125,7 @@ fun NotificationTestScreen(
                     newNotification = null
                 }
             )
-            checkAndRequestCameraPermission(context, permission, launcher)
+            requestPermissisonIfNeeded(context, permission, launcher)
         }
 
         null -> {
@@ -135,7 +134,7 @@ fun NotificationTestScreen(
     }
 }
 
-fun checkAndRequestCameraPermission(
+fun requestPermissisonIfNeeded(
     context: Context,
     permission: String,
     launcher: ManagedActivityResultLauncher<String, Boolean>
