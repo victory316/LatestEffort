@@ -4,12 +4,8 @@ import LeTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,17 +18,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.choidev.core.actions.NotificationAction
 import com.choidev.core.actions.SystemAction
 import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.core.actions.presenter.SimpleActionPresenter
-import com.choidev.latesteffort.core.design.compose.LazyColumnPaddingVertical
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
+import com.choidev.latesteffort.feature.notification_test.NotificationViewModel
 import com.choidev.latesteffort.feature.notification_test.state.OnNewNotificationDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NotificationTestScreen(presenter: ActionPresenter) {
+fun NotificationTestScreen(
+    presenter: ActionPresenter,
+    viewModel: NotificationViewModel = hiltViewModel()
+) {
     var newNotification: OnNewNotificationDialog? by remember { mutableStateOf(null) }
 
     Scaffold(
@@ -48,7 +48,7 @@ fun NotificationTestScreen(presenter: ActionPresenter) {
             modifier = Modifier.padding(paddingValues),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text(text = "알림 추가하기")
+            Text(text = "알림 타입")
             Row(
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
@@ -68,16 +68,6 @@ fun NotificationTestScreen(presenter: ActionPresenter) {
                     Text(text = "미디어")
                 }
             }
-            Divider()
-            Text(text = "알림 목록")
-            LazyColumn(
-                modifier = Modifier.padding(top = 12.dp),
-                verticalArrangement = Arrangement.spacedBy(LazyColumnPaddingVertical())
-            ) {
-                items(10) {
-                    NotificationItemUi()
-                }
-            }
         }
     }
 
@@ -86,10 +76,11 @@ fun NotificationTestScreen(presenter: ActionPresenter) {
             NotificationDialog(
                 onDismiss = { newNotification = null },
                 onConfirmed = {
-                    presenter.onClick(
+                    newNotification = null
+                    viewModel.createNotification(
                         NotificationAction.BasicNotification(
-                            title = "하하",
-                            message = "호호"
+                            title = it.first,
+                            message = it.second
                         )
                     )
                 }
@@ -98,19 +89,20 @@ fun NotificationTestScreen(presenter: ActionPresenter) {
 
         OnNewNotificationDialog.MEDIA -> {
             presenter.onClick(SystemAction.ShowToast("미디어 알림을 띄웁니다."))
-            presenter.onClick(NotificationAction.MediaNotification)
+            viewModel.createNotification(NotificationAction.MediaNotification)
         }
 
         OnNewNotificationDialog.MESSAGING -> {
             MessagingNotificationDialog(
                 onDismiss = { newNotification = null },
                 onConfirmed = {
-                    presenter.onClick(
-                        NotificationAction.BasicNotification(
-                            title = "하하",
-                            message = "호호"
+                    viewModel.createNotification(
+                        NotificationAction.MessageNotification(
+                            title = it.first,
+                            message = it.second
                         )
                     )
+                    newNotification = null
                 }
             )
         }
@@ -118,17 +110,6 @@ fun NotificationTestScreen(presenter: ActionPresenter) {
         null -> {
             /* no-op */
         }
-    }
-}
-
-@Composable
-fun NotificationItemUi() {
-    Card(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(text = "미디어")
-        Text(text = "4분후 알림")
-        Text(text = "중요도 높음")
     }
 }
 

@@ -13,7 +13,7 @@ import com.choidev.core.actions.presenter.SimpleActionPresenter
 import com.choidev.latesteffort.core.util.vibration.VibrationManager
 import com.example.latesteffort.ext.handleNavigateAction
 import com.example.latesteffort.ext.handleSystemAction
-import com.example.latesteffort.ext.handleVibrationAction
+import com.example.latesteffort.ext.handleVibrateAction
 import com.example.latesteffort.navigation.LeNavHost
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
                             action = action
                         )
 
-                        is VibrateAction -> handleVibrationAction(
+                        is VibrateAction -> handleVibrateAction(
                             action = action, vibrationManager = vibrationManager
                         )
 
