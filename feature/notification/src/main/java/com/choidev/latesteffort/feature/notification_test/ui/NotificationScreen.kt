@@ -114,7 +114,7 @@ fun NotificationTestScreen(
         }
 
         OnNewNotificationDialog.MESSAGING -> {
-            MessagingNotificationDialog(
+            NotificationDialog(
                 onDismiss = { newNotification = null },
                 onConfirmed = {
                     viewModel.createNotification(

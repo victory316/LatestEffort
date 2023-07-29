@@ -72,29 +72,29 @@ fun NotificationDialog(
                     })
                 }
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = "중요도 설정", style = MaterialTheme.typography.titleSmall
-                    )
-                    OutlinedButton(onClick = { /*TODO*/ }) {
-                        Text(text = "URGENT")
-                    }
-                }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = "잠금 해제 상태 필요", style = MaterialTheme.typography.titleSmall
-                    )
-                    Checkbox(checked = false, onCheckedChange = { })
-                }
+//                Row(
+//                    verticalAlignment = Alignment.CenterVertically,
+//                    horizontalArrangement = Arrangement.SpaceBetween,
+//                    modifier = Modifier.fillMaxWidth()
+//                ) {
+//                    Text(
+//                        text = "중요도 설정", style = MaterialTheme.typography.titleSmall
+//                    )
+//                    OutlinedButton(onClick = { /*TODO*/ }) {
+//                        Text(text = "URGENT")
+//                    }
+//                }
+//
+//                Row(
+//                    verticalAlignment = Alignment.CenterVertically,
+//                    horizontalArrangement = Arrangement.SpaceBetween,
+//                    modifier = Modifier.fillMaxWidth()
+//                ) {
+//                    Text(
+//                        text = "잠금 해제 상태 필요", style = MaterialTheme.typography.titleSmall
+//                    )
+//                    Checkbox(checked = false, onCheckedChange = { })
+//                }
 
                 Button(
                     onClick = { onConfirmed.invoke(message) }
