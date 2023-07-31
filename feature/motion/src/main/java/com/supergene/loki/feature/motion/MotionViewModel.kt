@@ -18,6 +18,8 @@ class MotionViewModel @Inject constructor(
     private val motionManager: MotionManager
 ) : ViewModel() {
 
+    val currentRate = MutableStateFlow(SensorRate.NORMAL)
+
     private val _accelerometerData = MutableStateFlow(AccelerometerData())
     val accelerometerData = _accelerometerData.stateIn(
         scope = viewModelScope,
@@ -30,6 +32,8 @@ class MotionViewModel @Inject constructor(
     }
 
     fun observeAccelerometer(rate: SensorRate = SensorRate.NORMAL) {
+        currentRate.value = rate
+
         motionManager.observeAccelerometer(rate) {
             _accelerometerData.value = it.copy(
                 gravityX = it.gravityX.roundTo(2),
