@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material3.windowSizeClass)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.core.splashscreen)
@@ -96,4 +97,5 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":feature:search-media"))
     implementation(project(":feature:vibration"))
+    implementation(project(":feature:notification"))
 }

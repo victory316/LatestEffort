@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LatestEffort</string>
+    <string name="menu_search">검색</string>
+    <string name="menu_bookmark">북마크</string>
+    <string name="hint_bookmark">저장된 북마크가 없어요.</string>
+    <string name="hint_search">이미지나 비디오를 검색해봐요.</string>
+    <string name="no_search_result">검색된 결과가 없어요.</string>
+    <string name="error_search_fail">검색에 실패했어요.</string>
+    <string name="catalog_menu_media_search">미디어 검색하기</string>
+    <string name="catalog_menu_vibration_test">진동 테스트</string>
+    <string name="catalog_menu_notification_test">알림 테스트</string>
+</resources>

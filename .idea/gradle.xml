@@ -22,6 +22,7 @@
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/domain/catalog" />
             <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/notification" />
             <option value="$PROJECT_DIR$/feature/search-media" />
             <option value="$PROJECT_DIR$/feature/vibration" />
             <option value="$PROJECT_DIR$/network" />
