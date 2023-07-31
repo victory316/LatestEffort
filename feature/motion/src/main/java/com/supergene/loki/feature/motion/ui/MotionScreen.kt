@@ -110,7 +110,7 @@ fun AccelerometerUi(
         Slider(
             value = shakeThreshold,
             onValueChange = { viewModel.shakeThreshold.value = it },
-            valueRange = 0f..100f,
+            valueRange = 0f..20f,
             steps = 10,
             modifier = Modifier.fillMaxWidth()
         )
