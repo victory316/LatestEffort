@@ -122,19 +122,12 @@ fun NotificationTestScreen(
         }
 
         OnNewNotificationDialog.MESSAGING -> {
-            NotificationDialog(
-                onDismiss = { newNotification = null },
-                onConfirmed = {
-                    viewModel.createNotification(
-                        NotificationAction.MessageNotification(
-                            title = it.title,
-                            message = it.content,
-                            importance = it.importance
-                        )
-                    )
-                    newNotification = null
-                }
+            presenter.onClick(
+                SystemAction.ShowToast(
+                    stringResource(id = R.string.toast_showing_media_notification)
+                )
             )
+            viewModel.createNotification(NotificationAction.MessageNotification)
             requestPermissionIfNeeded(context, permission, launcher)
         }
 

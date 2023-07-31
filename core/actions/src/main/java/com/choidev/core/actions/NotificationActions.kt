@@ -10,11 +10,7 @@ sealed interface NotificationAction : Action {
 
     object MediaNotification : NotificationAction
 
-    data class MessageNotification(
-        val title: String,
-        val message: String,
-        val importance: NotificationImportance = NotificationImportance.DEFAULT
-    ) : NotificationAction
+    object MessageNotification : NotificationAction
 }
 
 enum class NotificationImportance {

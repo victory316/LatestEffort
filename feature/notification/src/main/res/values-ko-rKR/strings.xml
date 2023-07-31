@@ -11,4 +11,5 @@
     <string name="dialog_notification_contents">내용</string>
     <string name="dialog_notification_done">완료</string>
     <string name="dialog_title_create_notification">알림 만들기</string>
+    <string name="toast_showing_message_notification">메시지 알림을 띄웁니다.</string>
 </resources>

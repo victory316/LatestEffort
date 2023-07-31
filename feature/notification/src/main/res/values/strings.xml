@@ -13,4 +13,5 @@
     <string name="dialog_notification_contents">Contents</string>
     <string name="dialog_notification_done">Done</string>
     <string name="dialog_title_create_notification">Create notification</string>
+    <string name="toast_showing_message_notification">Showing message notification.</string>
 </resources>
