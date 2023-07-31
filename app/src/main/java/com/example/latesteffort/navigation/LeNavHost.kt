@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.latesteffort.feature.notification_test.navigation.notificationScreen
 import com.choidev.vibration.navigation.vibrationScreen
+import com.supergene.loki.feature.motion.navigation.motionScreen
 
 @Composable
 fun LeNavHost(
@@ -22,5 +23,6 @@ fun LeNavHost(
         catalogScreen(presenter)
         vibrationScreen(presenter)
         notificationScreen(presenter)
+        motionScreen(presenter)
     }
 }

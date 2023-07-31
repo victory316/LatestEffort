@@ -98,4 +98,5 @@ dependencies {
     implementation(project(":feature:search-media"))
     implementation(project(":feature:vibration"))
     implementation(project(":feature:notification"))
+    implementation(project(":feature:motion"))
 }

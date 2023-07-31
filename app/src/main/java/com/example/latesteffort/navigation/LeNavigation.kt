@@ -8,7 +8,7 @@ import com.example.latesteffort.ui.CatalogScreen
 const val catalogRoute = "app_catalog"
 
 fun NavGraphBuilder.catalogScreen(
-    presenter: com.choidev.core.actions.presenter.ActionPresenter,
+    presenter: ActionPresenter,
 ) {
     composable(
         route = catalogRoute

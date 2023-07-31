@@ -1,7 +1,6 @@
 package com.example.latesteffort.di
 
 import android.content.Context
-import android.os.VibratorManager
 import com.choidev.latesteffort.core.util.vibration.VibrationManager
 import dagger.Module
 import dagger.Provides
