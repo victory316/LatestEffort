@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Card
@@ -36,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -106,7 +106,7 @@ fun CatalogScreen(
                             CatalogType.VIBRATION -> {
                                 CatalogItemState(
                                     title = stringResource(id = R.string.catalog_menu_vibration_test),
-                                    icon = Icons.Rounded.MoreVert,
+                                    painter = painterResource(id = R.drawable.ic_vibration),
                                     backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
                                     action = NavigateAction.NavGraphDestination(vibrationRoute)
                                 )
@@ -167,6 +167,7 @@ fun CatalogByListsUi(
             with(state) {
                 CatalogListItem(
                     icon = icon,
+                    painter = painter,
                     title = title,
                     backgroundColor = backgroundColor,
                     modifier = Modifier
@@ -185,7 +186,7 @@ fun CatalogsByGridUi(
     presenter: ActionPresenter
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(50.dp),
+        columns = GridCells.Adaptive(100.dp),
         modifier = modifier.padding(top = 12.dp),
         verticalArrangement = Arrangement.spacedBy(3.dp),
         horizontalArrangement = Arrangement.spacedBy(3.dp)
@@ -194,6 +195,7 @@ fun CatalogsByGridUi(
             with(state) {
                 CatalogGridItem(
                     icon = icon,
+                    painter = painter,
                     title = title,
                     backgroundColor = backgroundColor,
                     modifier = Modifier
@@ -206,7 +208,8 @@ fun CatalogsByGridUi(
 
 @Composable
 fun CatalogListItem(
-    icon: ImageVector,
+    icon: ImageVector? = null,
+    painter: Painter? = null,
     title: String,
     backgroundColor: Color = Color.LightGray,
     modifier: Modifier = Modifier
@@ -220,12 +223,13 @@ fun CatalogListItem(
         Row(
             modifier = Modifier.padding(16.dp)
         ) {
-            Icon(icon, contentDescription = null)
+            icon?.let { Icon(it, contentDescription = null) }
+            painter?.let { Icon(it, contentDescription = null) }
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
-                    .padding(start = 6.dp)
+                    .padding(start = 12.dp)
                     .align(CenterVertically)
             )
         }
@@ -234,7 +238,8 @@ fun CatalogListItem(
 
 @Composable
 fun CatalogGridItem(
-    icon: ImageVector,
+    icon: ImageVector? = null,
+    painter: Painter? = null,
     title: String,
     backgroundColor: Color = Color.LightGray,
     modifier: Modifier = Modifier
@@ -247,12 +252,24 @@ fun CatalogGridItem(
             .aspectRatio(1f)
             .padding(6.dp)
     ) {
-        Icon(
-            icon, contentDescription = null,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .fillMaxHeight()
-        )
+        icon?.let {
+            Icon(
+                icon,
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxHeight()
+            )
+        }
+        painter?.let {
+            Icon(
+                it,
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxHeight()
+            )
+        }
     }
 }
 
