@@ -9,9 +9,7 @@ import android.hardware.TriggerEvent
 import android.hardware.TriggerEventListener
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class MotionManagerImpl @Inject constructor(
     @ApplicationContext context: Context
 ) : MotionManager {
@@ -22,6 +20,8 @@ class MotionManagerImpl @Inject constructor(
     private val significantMotionSensor: Sensor?
     private val stepCounterSensor: Sensor?
     private val stepDetectorSensor: Sensor?
+
+    private var registeredObserver: MutableList<SensorEventListener> = mutableListOf()
 
     init {
         with(sensorManager) {
@@ -94,9 +94,17 @@ class MotionManagerImpl @Inject constructor(
             accelerationSensor,
             SensorManager.SENSOR_DELAY_NORMAL
         )
+
+        registeredObserver.add(listener)
     }
 
     override fun observeStep() {
         TODO("Not yet implemented")
+    }
+
+    override fun unregisterObservers() {
+        registeredObserver.forEach { listener ->
+            sensorManager.unregisterListener(listener)
+        }
     }
 }

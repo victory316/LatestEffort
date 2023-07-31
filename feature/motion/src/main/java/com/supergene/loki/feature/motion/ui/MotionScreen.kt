@@ -19,7 +19,7 @@ import com.supergene.loki.feature.motion.R
 @Composable
 fun MotionTestScreen(
     presenter: ActionPresenter,
-    viewMode: MotionViewModel = hiltViewModel()
+    viewModel: MotionViewModel = hiltViewModel()
 ) {
     Scaffold(
         topBar = {

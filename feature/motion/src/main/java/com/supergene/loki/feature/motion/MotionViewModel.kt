@@ -8,12 +8,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MotionViewModel @Inject constructor(
-    motionManager: MotionManager
+    private val motionManager: MotionManager
 ) : ViewModel() {
+
 
     init {
         motionManager.observeAccelerometer {
             Log.d("LOGGING", "it works? $it")
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
+        motionManager.unregisterObservers()
     }
 }
