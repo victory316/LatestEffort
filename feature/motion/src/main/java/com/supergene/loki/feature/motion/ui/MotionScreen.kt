@@ -3,12 +3,15 @@ package com.supergene.loki.feature.motion.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -68,6 +71,7 @@ fun AccelerometerUi(
     modifier: Modifier = Modifier
 ) {
     var openRateDialog by remember { mutableStateOf(false) }
+    val shakeThreshold by viewModel.shakeThreshold.collectAsStateWithLifecycle()
 
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -98,7 +102,18 @@ fun AccelerometerUi(
         Text(text = "ACC X : ${accelerometerData.accelerationX}")
         Text(text = "ACC Y : ${accelerometerData.accelerationY}")
         Text(text = "ACC Z : ${accelerometerData.accelerationZ}")
-
+        Spacer(modifier = Modifier.height(6.dp))
+        Text(
+            text = "Shake threshold",
+            style = MaterialTheme.typography.labelMedium
+        )
+        Slider(
+            value = shakeThreshold,
+            onValueChange = { viewModel.shakeThreshold.value = it },
+            valueRange = 0f..100f,
+            steps = 10,
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 
     if (openRateDialog) {

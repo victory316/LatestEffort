@@ -20,6 +20,8 @@ class MotionViewModel @Inject constructor(
 
     val currentRate = MutableStateFlow(SensorRate.NORMAL)
 
+    val shakeThreshold = MutableStateFlow(0f)
+
     private val _accelerometerData = MutableStateFlow(AccelerometerData())
     val accelerometerData = _accelerometerData.stateIn(
         scope = viewModelScope,
