@@ -6,7 +6,7 @@ interface MotionManager {
 
     fun observeGyroscope()
 
-    fun observeAccelerometer()
+    fun observeAccelerometer(accelerometerEvent: (data: AccelerometerData) -> Unit)
 
     fun observeStep()
 }

@@ -9,14 +9,17 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
+import com.supergene.loki.feature.motion.MotionViewModel
 import com.supergene.loki.feature.motion.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MotionTestScreen(
-    presenter: ActionPresenter
+    presenter: ActionPresenter,
+    viewMode: MotionViewModel = hiltViewModel()
 ) {
     Scaffold(
         topBar = {
