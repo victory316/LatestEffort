@@ -15,6 +15,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.net.toUri
 import com.choidev.core.actions.NotificationAction
+import com.choidev.core.actions.NotificationImportance
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlin.random.Random
@@ -31,11 +32,12 @@ class NotifierImpl @Inject constructor(
 ) : Notifier {
 
     private fun Context.createNotification(
-        block: NotificationCompat.Builder.() -> Unit,
+        priority: Int = NotificationCompat.PRIORITY_DEFAULT,
+        block: NotificationCompat.Builder.() -> Unit
     ): Notification {
         ensureNotificationChannelExists()
         return NotificationCompat.Builder(this, LE_CHANNEL_ID)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(priority)
             .apply(block)
             .build()
     }
@@ -72,7 +74,17 @@ class NotifierImpl @Inject constructor(
                 return
             }
 
-            val singleNotification = createNotification {
+            val priority = when (action.importance) {
+                NotificationImportance.DEFAULT -> NotificationCompat.PRIORITY_DEFAULT
+                NotificationImportance.LOW -> NotificationCompat.PRIORITY_LOW
+                NotificationImportance.MIN -> NotificationCompat.PRIORITY_MIN
+                NotificationImportance.HIGH -> NotificationCompat.PRIORITY_HIGH
+                NotificationImportance.MAX -> NotificationCompat.PRIORITY_MAX
+            }
+
+            val singleNotification = createNotification(
+                priority = priority
+            ) {
                 setSmallIcon(R.mipmap.ic_launcher_foreground)
                     .setContentTitle(action.title)
                     .setContentText(action.message)
@@ -81,7 +93,9 @@ class NotifierImpl @Inject constructor(
                     .setAutoCancel(true)
             }
 
-            val summaryNotification = createNotification {
+            val summaryNotification = createNotification(
+                priority = priority
+            ) {
                 val title = getString(R.string.le_notification_channel_name)
                 setContentTitle(title)
                     .setContentText(title)
@@ -152,36 +166,31 @@ class NotifierImpl @Inject constructor(
             }
 
             var message1 = NotificationCompat.MessagingStyle.Message(
-                "message",
+                "Hey man",
                 System.currentTimeMillis(),
-                "sender"
+                "Steve"
             )
 
             var message2 = NotificationCompat.MessagingStyle.Message(
-                "messageeeee",
+                "What's up?",
                 System.currentTimeMillis(),
-                "sender2"
+                "Jeff"
             )
 
-            val remoteInput = androidx.core.app.RemoteInput.Builder(KEY_TEXT_REPLY)
-                .build()
-
-            val replyAction = NotificationCompat.Action.Builder(
-                android.R.drawable.ic_input_add,
-                "Add", normalPendingIntent()
+            var message3 = NotificationCompat.MessagingStyle.Message(
+                "Nevermind.",
+                System.currentTimeMillis(),
+                "Steve"
             )
-                .addRemoteInput(remoteInput)
-                .build()
 
             val singleNotification = createNotification {
                 setSmallIcon(R.mipmap.ic_launcher_foreground)
                     .setContentIntent(normalPendingIntent())
                     .setStyle(
-                        NotificationCompat.MessagingStyle(
-                            "ho"
-                        )
+                        NotificationCompat.MessagingStyle("ho")
                             .addMessage(message1)
                             .addMessage(message2)
+                            .addMessage(message3)
                     )
                     .setAutoCancel(true)
             }
@@ -199,20 +208,6 @@ class NotifierImpl @Inject constructor(
         .setSummaryText(title)
 
     private fun Context.normalPendingIntent(): PendingIntent? = PendingIntent.getActivity(
-        this,
-        NOTIFICATION_REQUEST_CODE,
-        Intent().apply {
-            action = Intent.ACTION_VIEW
-            data = "www.naver.com".toUri()
-            component = ComponentName(
-                packageName,
-                TARGET_ACTIVITY_NAME,
-            )
-        },
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-    )
-
-    private fun Context.replyPendingIntent(): PendingIntent? = PendingIntent.getActivity(
         this,
         NOTIFICATION_REQUEST_CODE,
         Intent().apply {

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_notification_test">알림 테스트</string>
+    <string name="toast_need_notification_permission">알림 테스트를 위해서는 알림 권한이 필요해요.</string>
+    <string name="title_notification_type">알림 타입</string>
+    <string name="btn_basic_notification">기본</string>
+    <string name="btn_message_notification">메시지</string>
+    <string name="btn_media_notification">미디어</string>
+    <string name="toast_showing_media_notification">미디어 알림을 띄웁니다.</string>
+    <string name="dialog_notification_title">제목</string>
+    <string name="dialog_notification_contents">내용</string>
+    <string name="dialog_notification_done">완료</string>
+    <string name="dialog_title_create_notification">알림 만들기</string>
+    <string name="toast_showing_message_notification">메시지 알림을 띄웁니다.</string>
+</resources>

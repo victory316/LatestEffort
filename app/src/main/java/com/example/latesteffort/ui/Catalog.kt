@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Card
@@ -33,10 +32,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -94,7 +96,7 @@ fun CatalogScreen(
                         when (it) {
                             CatalogType.SEARCH_MEDIA -> {
                                 CatalogItemState(
-                                    title = "미디어 검색하기",
+                                    title = stringResource(id = R.string.catalog_menu_media_search),
                                     icon = Icons.Rounded.Search,
                                     backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
                                     action = NavigateAction.StartActivity(SearchMediaActivity::class.java),
@@ -103,8 +105,8 @@ fun CatalogScreen(
 
                             CatalogType.VIBRATION -> {
                                 CatalogItemState(
-                                    title = "진동 테스트",
-                                    icon = Icons.Rounded.MoreVert,
+                                    title = stringResource(id = R.string.catalog_menu_vibration_test),
+                                    painter = painterResource(id = R.drawable.ic_vibration),
                                     backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
                                     action = NavigateAction.NavGraphDestination(vibrationRoute)
                                 )
@@ -112,7 +114,7 @@ fun CatalogScreen(
 
                             CatalogType.NOTIFICATION -> {
                                 CatalogItemState(
-                                    title = "알림 테스트",
+                                    title = stringResource(id = R.string.catalog_menu_notification_test),
                                     icon = Icons.Rounded.Notifications,
                                     backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
                                     action = NavigateAction.NavGraphDestination(notificationRoute)
@@ -165,6 +167,7 @@ fun CatalogByListsUi(
             with(state) {
                 CatalogListItem(
                     icon = icon,
+                    painter = painter,
                     title = title,
                     backgroundColor = backgroundColor,
                     modifier = Modifier
@@ -183,7 +186,7 @@ fun CatalogsByGridUi(
     presenter: ActionPresenter
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
+        columns = GridCells.Adaptive(100.dp),
         modifier = modifier.padding(top = 12.dp),
         verticalArrangement = Arrangement.spacedBy(3.dp),
         horizontalArrangement = Arrangement.spacedBy(3.dp)
@@ -192,6 +195,7 @@ fun CatalogsByGridUi(
             with(state) {
                 CatalogGridItem(
                     icon = icon,
+                    painter = painter,
                     title = title,
                     backgroundColor = backgroundColor,
                     modifier = Modifier
@@ -204,7 +208,8 @@ fun CatalogsByGridUi(
 
 @Composable
 fun CatalogListItem(
-    icon: ImageVector,
+    icon: ImageVector? = null,
+    painter: Painter? = null,
     title: String,
     backgroundColor: Color = Color.LightGray,
     modifier: Modifier = Modifier
@@ -218,11 +223,14 @@ fun CatalogListItem(
         Row(
             modifier = Modifier.padding(16.dp)
         ) {
-            Icon(icon, contentDescription = null)
+            icon?.let { Icon(it, contentDescription = null) }
+            painter?.let { Icon(it, contentDescription = null) }
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(start = 6.dp)
+                modifier = Modifier
+                    .padding(start = 12.dp)
+                    .align(CenterVertically)
             )
         }
     }
@@ -230,7 +238,8 @@ fun CatalogListItem(
 
 @Composable
 fun CatalogGridItem(
-    icon: ImageVector,
+    icon: ImageVector? = null,
+    painter: Painter? = null,
     title: String,
     backgroundColor: Color = Color.LightGray,
     modifier: Modifier = Modifier
@@ -243,12 +252,24 @@ fun CatalogGridItem(
             .aspectRatio(1f)
             .padding(6.dp)
     ) {
-        Icon(
-            icon, contentDescription = null,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .fillMaxHeight()
-        )
+        icon?.let {
+            Icon(
+                icon,
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxHeight()
+            )
+        }
+        painter?.let {
+            Icon(
+                it,
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxHeight()
+            )
+        }
     }
 }
 

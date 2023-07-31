@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -31,6 +32,7 @@ import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.core.actions.presenter.SimpleActionPresenter
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
 import com.choidev.latesteffort.feature.notification_test.NotificationViewModel
+import com.choidev.latesteffort.feature.notification_test.R
 import com.choidev.latesteffort.feature.notification_test.state.OnNewNotificationDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,7 +50,9 @@ fun NotificationTestScreen(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (!isGranted) {
-            presenter.onClick(SystemAction.ShowToast("알림 테스트를 위해서는 알림 권한이 필요해요."))
+            presenter.onClick(
+                SystemAction.ShowToast(context.getString(R.string.toast_need_notification_permission))
+            )
             newNotification = null
         }
     }
@@ -56,7 +60,7 @@ fun NotificationTestScreen(
     Scaffold(
         topBar = {
             TopAppBar(title = {
-                Text(text = "알림 테스트")
+                Text(text = stringResource(id = R.string.title_notification_test))
             })
         },
         modifier = Modifier
@@ -66,24 +70,24 @@ fun NotificationTestScreen(
             modifier = Modifier.padding(paddingValues),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text(text = "알림 타입")
+            Text(text = stringResource(id = R.string.title_notification_type))
             Column(
                 verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 Button(
                     onClick = { newNotification = OnNewNotificationDialog.BASIC }
                 ) {
-                    Text(text = "기본")
+                    Text(text = stringResource(id = R.string.btn_basic_notification))
                 }
                 Button(
                     onClick = { newNotification = OnNewNotificationDialog.MESSAGING }
                 ) {
-                    Text(text = "메시지")
+                    Text(text = stringResource(id = R.string.btn_message_notification))
                 }
                 Button(
                     onClick = { newNotification = OnNewNotificationDialog.MEDIA }
                 ) {
-                    Text(text = "미디어")
+                    Text(text = stringResource(id = R.string.btn_media_notification))
                 }
             }
         }
@@ -97,35 +101,34 @@ fun NotificationTestScreen(
                     newNotification = null
                     viewModel.createNotification(
                         NotificationAction.BasicNotification(
-                            title = it.first,
-                            message = it.second
+                            title = it.title,
+                            message = it.content,
+                            importance = it.importance
                         )
                     )
                 }
             )
-            requestPermissisonIfNeeded(context, permission, launcher)
+            requestPermissionIfNeeded(context, permission, launcher)
         }
 
         OnNewNotificationDialog.MEDIA -> {
-            presenter.onClick(SystemAction.ShowToast("미디어 알림을 띄웁니다."))
+            presenter.onClick(
+                SystemAction.ShowToast(
+                    stringResource(id = R.string.toast_showing_media_notification)
+                )
+            )
             viewModel.createNotification(NotificationAction.MediaNotification)
-            requestPermissisonIfNeeded(context, permission, launcher)
+            requestPermissionIfNeeded(context, permission, launcher)
         }
 
         OnNewNotificationDialog.MESSAGING -> {
-            NotificationDialog(
-                onDismiss = { newNotification = null },
-                onConfirmed = {
-                    viewModel.createNotification(
-                        NotificationAction.MessageNotification(
-                            title = it.first,
-                            message = it.second
-                        )
-                    )
-                    newNotification = null
-                }
+            presenter.onClick(
+                SystemAction.ShowToast(
+                    stringResource(id = R.string.toast_showing_media_notification)
+                )
             )
-            requestPermissisonIfNeeded(context, permission, launcher)
+            viewModel.createNotification(NotificationAction.MessageNotification)
+            requestPermissionIfNeeded(context, permission, launcher)
         }
 
         null -> {
@@ -134,7 +137,7 @@ fun NotificationTestScreen(
     }
 }
 
-fun requestPermissisonIfNeeded(
+fun requestPermissionIfNeeded(
     context: Context,
     permission: String,
     launcher: ManagedActivityResultLauncher<String, Boolean>
