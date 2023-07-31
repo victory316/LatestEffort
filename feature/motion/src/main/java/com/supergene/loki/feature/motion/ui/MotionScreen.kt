@@ -46,6 +46,7 @@ fun MotionTestScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccelerometerUi(
     accelerometerData: AccelerometerData,

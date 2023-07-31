@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
+import kotlin.math.pow
+import kotlin.math.roundToInt
 
 @HiltViewModel
 class MotionViewModel @Inject constructor(
@@ -24,8 +26,20 @@ class MotionViewModel @Inject constructor(
 
     init {
         motionManager.observeAccelerometer {
-            _accelerometerData.value = it
+            _accelerometerData.value = it.copy(
+                gravityX = it.gravityX.roundTo(2),
+                gravityY = it.gravityY.roundTo(2),
+                gravityZ = it.gravityZ.roundTo(2),
+                accelerationX = it.accelerationX.roundTo(2),
+                accelerationY = it.accelerationY.roundTo(2),
+                accelerationZ = it.accelerationZ.roundTo(2)
+            )
         }
+    }
+
+    private fun Float.roundTo(numFractionDigits: Int): Float {
+        val factor = 10.0.pow(numFractionDigits.toDouble())
+        return ((this * factor).roundToInt() / factor).toFloat()
     }
 
     override fun onCleared() {

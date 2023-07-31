@@ -196,7 +196,7 @@ fun CatalogsByGridUi(
     presenter: ActionPresenter
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(100.dp),
+        columns = GridCells.Adaptive(90.dp),
         modifier = modifier.padding(top = 12.dp),
         verticalArrangement = Arrangement.spacedBy(3.dp),
         horizontalArrangement = Arrangement.spacedBy(3.dp)

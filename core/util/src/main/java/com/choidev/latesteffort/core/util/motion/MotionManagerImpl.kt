@@ -21,7 +21,7 @@ class MotionManagerImpl @Inject constructor(
     private val stepCounterSensor: Sensor?
     private val stepDetectorSensor: Sensor?
 
-    private var registeredObserver: MutableList<SensorEventListener> = mutableListOf()
+    private var registeredObserver: MutableMap<Int, SensorEventListener> = mutableMapOf()
 
     init {
         with(sensorManager) {
@@ -48,7 +48,10 @@ class MotionManagerImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun observeAccelerometer(accelerometerEvent: (data: AccelerometerData) -> Unit) {
+    override fun observeAccelerometer(
+        sensorRate: SensorRate,
+        accelerometerEvent: (data: AccelerometerData) -> Unit
+    ) {
         val listener = object : SensorEventListener {
             var gravity = mutableListOf(0f, 0f, 0f)
             var linear_acceleration = mutableListOf(0f, 0f, 0f)
@@ -89,13 +92,20 @@ class MotionManagerImpl @Inject constructor(
             }
         }
 
+        val delay = when (sensorRate) {
+            SensorRate.FASTEST -> SensorManager.SENSOR_DELAY_FASTEST
+            SensorRate.GAME -> SensorManager.SENSOR_DELAY_GAME
+            SensorRate.UI -> SensorManager.SENSOR_DELAY_UI
+            SensorRate.NORMAL -> SensorManager.SENSOR_DELAY_NORMAL
+        }
+
         sensorManager.registerListener(
             listener,
             accelerationSensor,
-            SensorManager.SENSOR_DELAY_NORMAL
+            delay
         )
 
-        registeredObserver.add(listener)
+        registeredObserver[Sensor.TYPE_ACCELEROMETER] = listener
     }
 
     override fun observeStep() {
@@ -103,8 +113,8 @@ class MotionManagerImpl @Inject constructor(
     }
 
     override fun unregisterObservers() {
-        registeredObserver.forEach { listener ->
-            sensorManager.unregisterListener(listener)
+        registeredObserver.forEach { observerMap ->
+            sensorManager.unregisterListener(observerMap.value)
         }
     }
 }

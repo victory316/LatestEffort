@@ -6,7 +6,10 @@ interface MotionManager {
 
     fun observeGyroscope()
 
-    fun observeAccelerometer(accelerometerEvent: (data: AccelerometerData) -> Unit)
+    fun observeAccelerometer(
+        sensorRate: SensorRate = SensorRate.NORMAL,
+        accelerometerEvent: (data: AccelerometerData) -> Unit
+    )
 
     fun observeStep()
 
