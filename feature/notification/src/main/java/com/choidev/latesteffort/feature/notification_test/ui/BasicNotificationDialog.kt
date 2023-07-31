@@ -4,16 +4,13 @@ import LeTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -24,8 +21,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.choidev.latesteffort.feature.notification_test.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,7 +52,8 @@ fun NotificationDialog(
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     Text(
-                        text = "제목", style = MaterialTheme.typography.titleSmall
+                        text = stringResource(id = R.string.dialog_notification_title),
+                        style = MaterialTheme.typography.titleSmall
                     )
                     OutlinedTextField(value = message.first, onValueChange = {
                         message = message.copy(first = it)
@@ -65,7 +65,8 @@ fun NotificationDialog(
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     Text(
-                        text = "내용", style = MaterialTheme.typography.titleSmall
+                        text = stringResource(id = R.string.dialog_notification_contents),
+                        style = MaterialTheme.typography.titleSmall
                     )
                     OutlinedTextField(value = message.second, onValueChange = {
                         message = message.copy(second = it)
@@ -99,7 +100,7 @@ fun NotificationDialog(
                 Button(
                     onClick = { onConfirmed.invoke(message) }
                 ) {
-                    Text(text = "완료")
+                    Text(text = stringResource(id = R.string.dialog_notification_done))
                 }
             }
         }

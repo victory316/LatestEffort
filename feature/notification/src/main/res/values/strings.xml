@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="le_notification_channel_name">LE</string>
-    <string name="le_notification_channel_description">LE notification channel</string>
+    <string name="le_notification_channel_name" translatable="false">LE</string>
+    <string name="le_notification_channel_description" translatable="false">LE notification channel</string>
+    <string name="title_notification_test">Notification test</string>
+    <string name="toast_need_notification_permission">Need notification permission to test.</string>
+    <string name="title_notification_type">Notification Type</string>
+    <string name="btn_basic_notification">Default</string>
+    <string name="btn_message_notification">Message</string>
+    <string name="btn_media_notification">Media</string>
+    <string name="toast_showing_media_notification">Showing media notification.</string>
+    <string name="dialog_notification_title">Title</string>
+    <string name="dialog_notification_contents">Contents</string>
+    <string name="dialog_notification_done">Done</string>
 </resources>
