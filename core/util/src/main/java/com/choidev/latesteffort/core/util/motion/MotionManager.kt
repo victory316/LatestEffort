@@ -1,6 +1,6 @@
 package com.choidev.latesteffort.core.util.motion
 
-interface MotionAdapter {
+interface MotionManager {
 
     fun observeTriggerEvent(event: () -> Unit)
 
