@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.choidev.latesteffort.core.util.motion.AccelerometerData
 import com.choidev.latesteffort.core.util.motion.MotionManager
+import com.choidev.latesteffort.core.util.motion.SensorRate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,7 +18,7 @@ class MotionViewModel @Inject constructor(
     private val motionManager: MotionManager
 ) : ViewModel() {
 
-    private val _accelerometerData = MutableStateFlow<AccelerometerData>(AccelerometerData())
+    private val _accelerometerData = MutableStateFlow(AccelerometerData())
     val accelerometerData = _accelerometerData.stateIn(
         scope = viewModelScope,
         initialValue = AccelerometerData(),
@@ -25,7 +26,11 @@ class MotionViewModel @Inject constructor(
     )
 
     init {
-        motionManager.observeAccelerometer {
+        observeAccelerometer()
+    }
+
+    fun observeAccelerometer(rate: SensorRate = SensorRate.NORMAL) {
+        motionManager.observeAccelerometer(rate) {
             _accelerometerData.value = it.copy(
                 gravityX = it.gravityX.roundTo(2),
                 gravityY = it.gravityY.roundTo(2),
