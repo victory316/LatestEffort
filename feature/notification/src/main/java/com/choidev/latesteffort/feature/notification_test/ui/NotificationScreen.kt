@@ -51,9 +51,7 @@ fun NotificationTestScreen(
     ) { isGranted ->
         if (!isGranted) {
             presenter.onClick(
-                SystemAction.ShowToast(
-                    context.getString(R.string.toast_need_notification_permission)
-                )
+                SystemAction.ShowToast(context.getString(R.string.toast_need_notification_permission))
             )
             newNotification = null
         }
@@ -103,8 +101,9 @@ fun NotificationTestScreen(
                     newNotification = null
                     viewModel.createNotification(
                         NotificationAction.BasicNotification(
-                            title = it.first,
-                            message = it.second
+                            title = it.title,
+                            message = it.content,
+                            importance = it.importance
                         )
                     )
                 }
@@ -128,8 +127,9 @@ fun NotificationTestScreen(
                 onConfirmed = {
                     viewModel.createNotification(
                         NotificationAction.MessageNotification(
-                            title = it.first,
-                            message = it.second
+                            title = it.title,
+                            message = it.content,
+                            importance = it.importance
                         )
                     )
                     newNotification = null

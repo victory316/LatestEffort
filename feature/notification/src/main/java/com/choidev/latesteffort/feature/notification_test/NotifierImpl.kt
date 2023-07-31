@@ -15,6 +15,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.net.toUri
 import com.choidev.core.actions.NotificationAction
+import com.choidev.core.actions.NotificationImportance
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlin.random.Random
@@ -31,11 +32,12 @@ class NotifierImpl @Inject constructor(
 ) : Notifier {
 
     private fun Context.createNotification(
-        block: NotificationCompat.Builder.() -> Unit,
+        priority: Int = NotificationCompat.PRIORITY_DEFAULT,
+        block: NotificationCompat.Builder.() -> Unit
     ): Notification {
         ensureNotificationChannelExists()
         return NotificationCompat.Builder(this, LE_CHANNEL_ID)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(priority)
             .apply(block)
             .build()
     }
@@ -58,7 +60,7 @@ class NotifierImpl @Inject constructor(
         when (action) {
             is NotificationAction.BasicNotification -> showBasicNotification(action)
             NotificationAction.MediaNotification -> showMediaNotification()
-            is NotificationAction.MessageNotification -> showMessageNotification()
+            is NotificationAction.MessageNotification -> showMessageNotification(action)
         }
     }
 
@@ -72,7 +74,17 @@ class NotifierImpl @Inject constructor(
                 return
             }
 
-            val singleNotification = createNotification {
+            val priority = when (action.importance) {
+                NotificationImportance.DEFAULT -> NotificationCompat.PRIORITY_DEFAULT
+                NotificationImportance.LOW -> NotificationCompat.PRIORITY_LOW
+                NotificationImportance.MIN -> NotificationCompat.PRIORITY_MIN
+                NotificationImportance.HIGH -> NotificationCompat.PRIORITY_HIGH
+                NotificationImportance.MAX -> NotificationCompat.PRIORITY_MAX
+            }
+
+            val singleNotification = createNotification(
+                priority = priority
+            ) {
                 setSmallIcon(R.mipmap.ic_launcher_foreground)
                     .setContentTitle(action.title)
                     .setContentText(action.message)
@@ -81,7 +93,9 @@ class NotifierImpl @Inject constructor(
                     .setAutoCancel(true)
             }
 
-            val summaryNotification = createNotification {
+            val summaryNotification = createNotification(
+                priority = priority
+            ) {
                 val title = getString(R.string.le_notification_channel_name)
                 setContentTitle(title)
                     .setContentText(title)
@@ -141,7 +155,7 @@ class NotifierImpl @Inject constructor(
         }
     }
 
-    private fun showMessageNotification() {
+    private fun showMessageNotification(action: NotificationAction.MessageNotification) {
         with(context) {
             if (ActivityCompat.checkSelfPermission(
                     this,
@@ -149,6 +163,14 @@ class NotifierImpl @Inject constructor(
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 return
+            }
+
+            val priority = when (action.importance) {
+                NotificationImportance.DEFAULT -> NotificationCompat.PRIORITY_DEFAULT
+                NotificationImportance.LOW -> NotificationCompat.PRIORITY_LOW
+                NotificationImportance.MIN -> NotificationCompat.PRIORITY_MIN
+                NotificationImportance.HIGH -> NotificationCompat.PRIORITY_HIGH
+                NotificationImportance.MAX -> NotificationCompat.PRIORITY_MAX
             }
 
             var message1 = NotificationCompat.MessagingStyle.Message(
@@ -173,7 +195,9 @@ class NotifierImpl @Inject constructor(
                 .addRemoteInput(remoteInput)
                 .build()
 
-            val singleNotification = createNotification {
+            val singleNotification = createNotification(
+                priority = priority
+            ) {
                 setSmallIcon(R.mipmap.ic_launcher_foreground)
                     .setContentIntent(normalPendingIntent())
                     .setStyle(

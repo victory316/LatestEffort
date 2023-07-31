@@ -12,4 +12,5 @@
     <string name="dialog_notification_title">Title</string>
     <string name="dialog_notification_contents">Contents</string>
     <string name="dialog_notification_done">Done</string>
+    <string name="dialog_title_create_notification">Create notification</string>
 </resources>

@@ -4,6 +4,7 @@ import LeTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.AlertDialog
@@ -12,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,20 +21,31 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.choidev.core.actions.NotificationImportance
 import com.choidev.latesteffort.feature.notification_test.R
+import com.choidev.latesteffort.feature.notification_test.state.NotificationState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotificationDialog(
     onDismiss: () -> Unit,
-    onConfirmed: (pattern: Pair<String, String>) -> Unit
+    onConfirmed: (state: NotificationState) -> Unit
 ) {
-    var message by remember { mutableStateOf(Pair("", "")) }
+    var state by remember {
+        mutableStateOf(
+            NotificationState(
+                title = "",
+                content = "",
+                importance = NotificationImportance.DEFAULT
+            )
+        )
+    }
 
     AlertDialog(
         onDismissRequest = { onDismiss.invoke() },
@@ -47,58 +60,61 @@ fun NotificationDialog(
                 modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
+                Text(
+                    text = stringResource(id = R.string.dialog_title_create_notification),
+                    style = MaterialTheme.typography.titleMedium
+                )
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalAlignment = CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    Text(
-                        text = stringResource(id = R.string.dialog_notification_title),
-                        style = MaterialTheme.typography.titleSmall
+                    OutlinedTextField(
+                        label = {
+                            Text(text = stringResource(id = R.string.dialog_notification_title))
+                        },
+                        value = state.title,
+                        onValueChange = { state = state.copy(title = it) }
                     )
-                    OutlinedTextField(value = message.first, onValueChange = {
-                        message = message.copy(first = it)
-                    })
                 }
 
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalAlignment = CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    Text(
-                        text = stringResource(id = R.string.dialog_notification_contents),
-                        style = MaterialTheme.typography.titleSmall
+                    OutlinedTextField(
+                        label = {
+                            Text(text = stringResource(id = R.string.dialog_notification_contents))
+                        },
+                        value = state.content,
+                        onValueChange = { state = state.copy(content = it) }
                     )
-                    OutlinedTextField(value = message.second, onValueChange = {
-                        message = message.copy(second = it)
-                    })
                 }
 
-//                Row(
-//                    verticalAlignment = Alignment.CenterVertically,
-//                    horizontalArrangement = Arrangement.SpaceBetween,
-//                    modifier = Modifier.fillMaxWidth()
-//                ) {
-//                    Text(
-//                        text = "중요도 설정", style = MaterialTheme.typography.titleSmall
-//                    )
-//                    OutlinedButton(onClick = { /*TODO*/ }) {
-//                        Text(text = "URGENT")
-//                    }
-//                }
-//
-//                Row(
-//                    verticalAlignment = Alignment.CenterVertically,
-//                    horizontalArrangement = Arrangement.SpaceBetween,
-//                    modifier = Modifier.fillMaxWidth()
-//                ) {
-//                    Text(
-//                        text = "잠금 해제 상태 필요", style = MaterialTheme.typography.titleSmall
-//                    )
-//                    Checkbox(checked = false, onCheckedChange = { })
-//                }
+                val importanceSettings = NotificationImportance.values()
+
+                importanceSettings.forEach { importance ->
+                    Row(
+                        verticalAlignment = CenterVertically,
+                        horizontalArrangement = Arrangement.Start,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        RadioButton(
+                            selected = state.importance == importance,
+                            onClick = { state = state.copy(importance = importance) }
+                        )
+                        Text(
+                            text = importance.name,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.align(CenterVertically)
+                        )
+                    }
+                }
 
                 Button(
-                    onClick = { onConfirmed.invoke(message) }
+                    onClick = {
+                        onConfirmed.invoke(state)
+                    },
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(text = stringResource(id = R.string.dialog_notification_done))
                 }

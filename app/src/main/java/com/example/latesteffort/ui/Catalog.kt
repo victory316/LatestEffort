@@ -33,6 +33,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -184,7 +185,7 @@ fun CatalogsByGridUi(
     presenter: ActionPresenter
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
+        columns = GridCells.Adaptive(50.dp),
         modifier = modifier.padding(top = 12.dp),
         verticalArrangement = Arrangement.spacedBy(3.dp),
         horizontalArrangement = Arrangement.spacedBy(3.dp)
@@ -223,7 +224,9 @@ fun CatalogListItem(
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(start = 6.dp)
+                modifier = Modifier
+                    .padding(start = 6.dp)
+                    .align(CenterVertically)
             )
         }
     }
