@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -94,7 +95,7 @@ fun CatalogScreen(
                         when (it) {
                             CatalogType.SEARCH_MEDIA -> {
                                 CatalogItemState(
-                                    title = "미디어 검색하기",
+                                    title = stringResource(id = R.string.catalog_menu_media_search),
                                     icon = Icons.Rounded.Search,
                                     backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
                                     action = NavigateAction.StartActivity(SearchMediaActivity::class.java),
@@ -103,7 +104,7 @@ fun CatalogScreen(
 
                             CatalogType.VIBRATION -> {
                                 CatalogItemState(
-                                    title = "진동 테스트",
+                                    title = stringResource(id = R.string.catalog_menu_vibration_test),
                                     icon = Icons.Rounded.MoreVert,
                                     backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
                                     action = NavigateAction.NavGraphDestination(vibrationRoute)
@@ -112,7 +113,7 @@ fun CatalogScreen(
 
                             CatalogType.NOTIFICATION -> {
                                 CatalogItemState(
-                                    title = "알림 테스트",
+                                    title = stringResource(id = R.string.catalog_menu_notification_test),
                                     icon = Icons.Rounded.Notifications,
                                     backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
                                     action = NavigateAction.NavGraphDestination(notificationRoute)
