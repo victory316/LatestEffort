@@ -72,6 +72,7 @@ fun AccelerometerUi(
 ) {
     var openRateDialog by remember { mutableStateOf(false) }
     val shakeThreshold by viewModel.shakeThreshold.collectAsStateWithLifecycle()
+    val fractionDigit by viewModel.fractionDigit.collectAsStateWithLifecycle()
 
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -86,6 +87,16 @@ fun AccelerometerUi(
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
+
+            OutlinedButton(
+                onClick = { viewModel.incrementFractionDigit() },
+                modifier = Modifier.align(Alignment.CenterVertically)
+            ) {
+                Text(
+                    text = fractionDigit.toString(),
+                    textAlign = TextAlign.Center
+                )
+            }
             OutlinedButton(
                 onClick = { openRateDialog = true },
                 modifier = Modifier.align(Alignment.CenterVertically)

@@ -19,6 +19,7 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 
 private const val DEFAULT_THRESHOLD = 10f
+private const val DEFAULT_DIGIT = 1
 
 @HiltViewModel
 class MotionViewModel @Inject constructor(
@@ -26,9 +27,15 @@ class MotionViewModel @Inject constructor(
     private val vibrationManager: VibrationManager
 ) : ViewModel() {
 
-    val currentRate = MutableStateFlow(SensorRate.NORMAL)
+    private val digitSet = listOf(
+        1, 2, 3, 4, 5, 6, 7, 8
+    )
 
+    private var fractionDigitIndex = DEFAULT_DIGIT
+
+    val currentRate = MutableStateFlow(SensorRate.NORMAL)
     val shakeThreshold = MutableStateFlow(DEFAULT_THRESHOLD)
+    val fractionDigit = MutableStateFlow(digitSet[fractionDigitIndex])
 
     private val _accelerometerData = MutableStateFlow(AccelerometerData())
     val accelerometerData = _accelerometerData.stateIn(
@@ -48,14 +55,24 @@ class MotionViewModel @Inject constructor(
 
         motionManager.observeAccelerometer(rate) {
             _accelerometerData.value = it.copy(
-                gravityX = it.gravityX.roundTo(2),
-                gravityY = it.gravityY.roundTo(2),
-                gravityZ = it.gravityZ.roundTo(2),
-                accelerationX = it.accelerationX.roundTo(2),
-                accelerationY = it.accelerationY.roundTo(2),
-                accelerationZ = it.accelerationZ.roundTo(2)
+                gravityX = it.gravityX.roundTo(fractionDigit.value),
+                gravityY = it.gravityY.roundTo(fractionDigit.value),
+                gravityZ = it.gravityZ.roundTo(fractionDigit.value),
+                accelerationX = it.accelerationX.roundTo(fractionDigit.value),
+                accelerationY = it.accelerationY.roundTo(fractionDigit.value),
+                accelerationZ = it.accelerationZ.roundTo(fractionDigit.value)
             )
         }
+    }
+
+    fun incrementFractionDigit() {
+        if ((fractionDigitIndex + 1) <= digitSet.lastIndex) {
+            fractionDigitIndex++
+        } else {
+            fractionDigitIndex = 0
+        }
+
+        fractionDigit.value = digitSet[fractionDigitIndex]
     }
 
     private fun determineShake() = viewModelScope.launch {
