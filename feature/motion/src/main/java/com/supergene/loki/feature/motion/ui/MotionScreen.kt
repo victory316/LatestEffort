@@ -3,10 +3,9 @@ package com.supergene.loki.feature.motion.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -27,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.choidev.core.actions.presenter.ActionPresenter
+import com.choidev.latesteffort.core.design.compose.DividerPaddingVertical
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
 import com.choidev.latesteffort.core.util.motion.AccelerometerData
 import com.choidev.latesteffort.core.util.motion.SensorRate
@@ -96,17 +96,33 @@ fun AccelerometerUi(
                 )
             }
         }
+
         Text(text = "GVT X : ${accelerometerData.gravityX}")
         Text(text = "GVT Y : ${accelerometerData.gravityY}")
         Text(text = "GVT Z : ${accelerometerData.gravityZ}")
         Text(text = "ACC X : ${accelerometerData.accelerationX}")
         Text(text = "ACC Y : ${accelerometerData.accelerationY}")
         Text(text = "ACC Z : ${accelerometerData.accelerationZ}")
-        Spacer(modifier = Modifier.height(6.dp))
+
+        Divider(modifier = Modifier.padding(vertical = DividerPaddingVertical()))
+
         Text(
             text = "Shake threshold",
-            style = MaterialTheme.typography.labelMedium
+            style = MaterialTheme.typography.titleMedium
         )
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = "Sensitive",
+                style = MaterialTheme.typography.labelMedium
+            )
+            Text(
+                text = "Insensitive",
+                style = MaterialTheme.typography.labelMedium
+            )
+        }
         Slider(
             value = shakeThreshold,
             onValueChange = { viewModel.shakeThreshold.value = it },

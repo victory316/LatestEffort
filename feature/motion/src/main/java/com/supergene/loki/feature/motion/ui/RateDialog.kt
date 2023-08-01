@@ -1,6 +1,7 @@
 package com.supergene.loki.feature.motion.ui
 
 import LeTheme
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -59,7 +60,11 @@ fun RateDialog(
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Start,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                selectedRate = rate
+                            }
                     ) {
                         RadioButton(
                             selected = selectedRate == rate,
