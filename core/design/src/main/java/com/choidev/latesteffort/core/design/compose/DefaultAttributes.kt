@@ -11,3 +11,6 @@ fun LazyColumnPaddingVertical() = 6.dp
 
 @Composable
 fun DividerPaddingVertical() = 12.dp
+
+@Composable
+fun AlertDialogPadding() = 16.dp

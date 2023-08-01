@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.choidev.core.actions.NotificationImportance
+import com.choidev.latesteffort.core.design.compose.AlertDialogPadding
 import com.choidev.latesteffort.feature.notification_test.R
 import com.choidev.latesteffort.feature.notification_test.state.NotificationState
 
@@ -49,6 +50,7 @@ fun NotificationDialog(
 
     AlertDialog(
         onDismissRequest = { onDismiss.invoke() },
+        modifier = Modifier.padding(AlertDialogPadding())
     ) {
         Surface(
             modifier = Modifier

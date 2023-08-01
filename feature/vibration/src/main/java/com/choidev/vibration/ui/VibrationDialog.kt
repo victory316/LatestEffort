@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.choidev.latesteffort.core.design.compose.AlertDialogPadding
 import com.choidev.vibration.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,6 +38,7 @@ fun PatternInputDialog(
 
     AlertDialog(
         onDismissRequest = { onDismiss.invoke() },
+        modifier = Modifier.padding(AlertDialogPadding())
     ) {
         Surface(
             modifier = Modifier

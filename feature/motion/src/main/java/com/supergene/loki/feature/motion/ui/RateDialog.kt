@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.choidev.latesteffort.core.design.compose.AlertDialogPadding
 import com.choidev.latesteffort.core.util.motion.SensorRate
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,6 +41,7 @@ fun RateDialog(
 
     AlertDialog(
         onDismissRequest = { onDismiss.invoke() },
+        modifier = Modifier.padding(AlertDialogPadding())
     ) {
         Surface(
             modifier = Modifier
@@ -53,7 +55,7 @@ fun RateDialog(
             ) {
                 Text(
                     text = "감도 선택",
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleLarge
                 )
 
                 sensorRate.forEach { rate ->
