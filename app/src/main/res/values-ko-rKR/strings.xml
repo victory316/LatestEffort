@@ -10,4 +10,5 @@
     <string name="catalog_menu_media_search">미디어 검색하기</string>
     <string name="catalog_menu_vibration_test">진동 테스트</string>
     <string name="catalog_menu_notification_test">알림 테스트</string>
+    <string name="catalog_menu_motion">모션 테스트</string>
 </resources>

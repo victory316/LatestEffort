@@ -13,7 +13,8 @@ class CatalogUseCaseImpl @Inject constructor() : CatalogUseCase {
                 listOf(
                     CatalogType.SEARCH_MEDIA,
                     CatalogType.VIBRATION,
-                    CatalogType.NOTIFICATION
+                    CatalogType.NOTIFICATION,
+                    CatalogType.MOTION
                 )
             }
         )

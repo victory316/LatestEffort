@@ -14,4 +14,5 @@
     <string name="catalog_menu_media_search">Media search</string>
     <string name="catalog_menu_vibration_test">Vibration test</string>
     <string name="catalog_menu_notification_test">Notification test</string>
+    <string name="catalog_menu_motion">Motion test</string>
 </resources>

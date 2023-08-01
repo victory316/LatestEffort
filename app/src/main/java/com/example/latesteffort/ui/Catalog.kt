@@ -55,6 +55,7 @@ import com.choidev.vibration.navigation.vibrationRoute
 import com.example.latesteffort.MainViewModel
 import com.example.latesteffort.state.CatalogItemState
 import com.example.latesteffort.util.CatalogScreenHelper
+import com.supergene.loki.feature.motion.navigation.motionRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -118,6 +119,15 @@ fun CatalogScreen(
                                     icon = Icons.Rounded.Notifications,
                                     backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
                                     action = NavigateAction.NavGraphDestination(notificationRoute)
+                                )
+                            }
+
+                            CatalogType.MOTION -> {
+                                CatalogItemState(
+                                    title = stringResource(id = R.string.catalog_menu_motion),
+                                    painter = painterResource(id = R.drawable.ic_motion),
+                                    backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
+                                    action = NavigateAction.NavGraphDestination(motionRoute)
                                 )
                             }
                         }
@@ -186,7 +196,7 @@ fun CatalogsByGridUi(
     presenter: ActionPresenter
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(100.dp),
+        columns = GridCells.Adaptive(90.dp),
         modifier = modifier.padding(top = 12.dp),
         verticalArrangement = Arrangement.spacedBy(3.dp),
         horizontalArrangement = Arrangement.spacedBy(3.dp)
