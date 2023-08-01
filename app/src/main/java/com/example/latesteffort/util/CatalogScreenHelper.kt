@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.Color
 
 object CatalogScreenHelper {
 
-    private val backgroundAlphaList = listOf(0.1f, 0.2f, 0.3f, 0.4f)
+    private val backgroundAlphaList = listOf(0.1f, 0.2f, 0.3f, 0.4f, 0.5f)
     private var currentIndex = 0
 
     @Composable

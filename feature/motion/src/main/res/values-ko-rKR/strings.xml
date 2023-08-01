@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_motion_test">모션 테스트</string>
+    <string name="title_shake_threshold">흔들기 감지 민감도</string>
+    <string name="label_sensitive">예민하게</string>
+    <string name="label_insensitive">둔감하게</string>
+</resources>
