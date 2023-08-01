@@ -118,6 +118,7 @@ fun AccelerometerUi(
 
     if (openRateDialog) {
         RateDialog(
+            currentRate = currentRate,
             onDismiss = { openRateDialog = false },
             onConfirmed = {
                 viewModel.observeAccelerometer(rate = it)

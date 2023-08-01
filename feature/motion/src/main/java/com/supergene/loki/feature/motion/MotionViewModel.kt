@@ -18,6 +18,8 @@ import kotlin.math.absoluteValue
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
+private const val DEFAULT_THRESHOLD = 10f
+
 @HiltViewModel
 class MotionViewModel @Inject constructor(
     private val motionManager: MotionManager,
@@ -26,7 +28,7 @@ class MotionViewModel @Inject constructor(
 
     val currentRate = MutableStateFlow(SensorRate.NORMAL)
 
-    val shakeThreshold = MutableStateFlow(0f)
+    val shakeThreshold = MutableStateFlow(DEFAULT_THRESHOLD)
 
     private val _accelerometerData = MutableStateFlow(AccelerometerData())
     val accelerometerData = _accelerometerData.stateIn(
@@ -59,30 +61,19 @@ class MotionViewModel @Inject constructor(
     private fun determineShake() = viewModelScope.launch {
         var shakeFlag = false
         var accSum: Float
-        var cachedSum = 0f
 
         accelerometerData.collect { data ->
             accSum = data.accelerationX + data.accelerationY + data.accelerationZ
 
-            if (shakeFlag) {
-                when {
-                    cachedSum.isPositive() && !accSum.isPositive() && accSum.absoluteValue > shakeThreshold.value -> {
-                        vibrationManager.vibrate()
-                        shakeFlag = false
-                    }
-
-                    !cachedSum.isPositive() && accSum.isPositive() && accSum > shakeThreshold.value -> {
-                        vibrationManager.vibrate()
-                        shakeFlag = false
-                    }
-                }
-            } else {
+            if (shakeFlag && !accSum.isNegative()) {
+                vibrationManager.vibrate()
                 shakeFlag = false
 
-                if (accSum >= shakeThreshold.value) {
-                    shakeFlag = true
-                    cachedSum = accSum
-                }
+                return@collect
+            }
+
+            if (accSum.isNegative() && accSum.absoluteValue > shakeThreshold.value) {
+                shakeFlag = true
             }
         }
     }
@@ -98,8 +89,8 @@ class MotionViewModel @Inject constructor(
         return ((this * factor).roundToInt() / factor).toFloat()
     }
 
-    private fun Float.isPositive(): Boolean {
-        return this >= 0.0
+    private fun Float.isNegative(): Boolean {
+        return this < 0.0
     }
 
     override fun onCleared() {

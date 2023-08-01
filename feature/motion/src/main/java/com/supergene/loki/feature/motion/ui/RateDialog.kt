@@ -30,10 +30,11 @@ import com.choidev.latesteffort.core.util.motion.SensorRate
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RateDialog(
+    currentRate: SensorRate = SensorRate.NORMAL,
     onDismiss: () -> Unit,
     onConfirmed: (rate: SensorRate) -> Unit
 ) {
-    var selectedRate by remember { mutableStateOf(SensorRate.NORMAL) }
+    var selectedRate by remember { mutableStateOf(currentRate) }
     val sensorRate = SensorRate.values()
 
     AlertDialog(
