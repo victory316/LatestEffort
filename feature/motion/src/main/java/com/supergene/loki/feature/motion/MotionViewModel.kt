@@ -27,10 +27,7 @@ class MotionViewModel @Inject constructor(
     private val vibrationManager: VibrationManager
 ) : ViewModel() {
 
-    private val digitSet = listOf(
-        1, 2, 3, 4, 5, 6, 7, 8
-    )
-
+    private val digitSet = listOf(1, 2, 3, 4, 5, 6, 7, 8)
     private var fractionDigitIndex = DEFAULT_DIGIT
 
     val currentRate = MutableStateFlow(SensorRate.NORMAL)
@@ -101,6 +98,12 @@ class MotionViewModel @Inject constructor(
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+
+        motionManager.unregisterObservers()
+    }
+
     private fun Float.roundTo(numFractionDigits: Int): Float {
         val factor = 10.0.pow(numFractionDigits.toDouble())
         return ((this * factor).roundToInt() / factor).toFloat()
@@ -108,11 +111,5 @@ class MotionViewModel @Inject constructor(
 
     private fun Float.isNegative(): Boolean {
         return this < 0.0
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-
-        motionManager.unregisterObservers()
     }
 }

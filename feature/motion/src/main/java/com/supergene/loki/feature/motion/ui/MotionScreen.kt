@@ -84,7 +84,7 @@ fun AccelerometerUi(
         ) {
             Text(
                 text = "Accelerometer",
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
 
@@ -118,7 +118,7 @@ fun AccelerometerUi(
         Divider(modifier = Modifier.padding(vertical = DividerPaddingVertical()))
 
         Text(
-            text = "Shake threshold",
+            text = stringResource(id = R.string.title_shake_threshold),
             style = MaterialTheme.typography.titleMedium
         )
         Row(
@@ -126,11 +126,11 @@ fun AccelerometerUi(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = "Sensitive",
+                text = stringResource(id = R.string.label_sensitive),
                 style = MaterialTheme.typography.labelMedium
             )
             Text(
-                text = "Insensitive",
+                text = stringResource(id = R.string.label_insensitive),
                 style = MaterialTheme.typography.labelMedium
             )
         }
