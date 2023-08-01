@@ -33,6 +33,7 @@ class MotionManagerImpl @Inject constructor(
         }
     }
 
+    // TODO 동작 판단해 notify하는 WorkManager로 차후 연동
     override fun observeTriggerEvent(event: () -> Unit) {
         val triggerEventListener = object : TriggerEventListener() {
             override fun onTrigger(event: TriggerEvent?) {
@@ -116,14 +117,14 @@ class MotionManagerImpl @Inject constructor(
         }
     }
 
-    override fun observeStep(sensorRate: SensorRate, stepEvent: (step: Int) -> Unit) {
+    override fun observeStep(sensorRate: SensorRate, stepEvent: (step: Float) -> Unit) {
         unregisterIfNeeded(SensorType.STEP_COUNTER)
 
         val listener = object : SensorEventListener {
 
             override fun onSensorChanged(event: SensorEvent?) {
-                event?.run {
-                    stepEvent.invoke(this.values.first().toInt())
+                event?.values?.firstOrNull()?.let {
+                    stepEvent.invoke(it)
                 }
             }
 

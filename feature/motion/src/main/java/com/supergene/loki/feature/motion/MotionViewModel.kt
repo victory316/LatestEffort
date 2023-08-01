@@ -37,17 +37,9 @@ class MotionViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
     )
 
-    private val _stepData = MutableStateFlow(0)
-    val stepData = _stepData.stateIn(
-        scope = viewModelScope,
-        initialValue = 0,
-        started = SharingStarted.WhileSubscribed(5_000),
-    )
-
     init {
         observeAccelerometer()
         observeThreshold()
-        observeStep()
         determineShake()
     }
 
@@ -89,12 +81,6 @@ class MotionViewModel @Inject constructor(
     private fun observeThreshold() = viewModelScope.launch {
         shakeThreshold.collect {
             vibrationManager.vibrateEffect(VibrateAction.VibrationEffect.EFFECT_TICK.mapToId())
-        }
-    }
-
-    private fun observeStep() = viewModelScope.launch {
-        motionManager.observeStep {
-            _stepData.value = it
         }
     }
 

@@ -13,7 +13,7 @@ interface MotionManager {
 
     fun observeStep(
         sensorRate: SensorRate = SensorRate.NORMAL,
-        stepEvent: (step: Int) -> Unit
+        stepEvent: (step: Float) -> Unit
     )
 
     fun unregisterObservers()
