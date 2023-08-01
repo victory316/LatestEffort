@@ -116,8 +116,36 @@ class MotionManagerImpl @Inject constructor(
         }
     }
 
-    override fun observeStep() {
-        TODO("Not yet implemented")
+    override fun observeStep(sensorRate: SensorRate, stepEvent: (step: Int) -> Unit) {
+        unregisterIfNeeded(SensorType.STEP_COUNTER)
+
+        val listener = object : SensorEventListener {
+
+            override fun onSensorChanged(event: SensorEvent?) {
+                event?.run {
+                    stepEvent.invoke(this.values.first().toInt())
+                }
+            }
+
+            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+                /* no-op */
+            }
+        }
+
+        val delay = when (sensorRate) {
+            SensorRate.FASTEST -> SensorManager.SENSOR_DELAY_FASTEST
+            SensorRate.GAME -> SensorManager.SENSOR_DELAY_GAME
+            SensorRate.UI -> SensorManager.SENSOR_DELAY_UI
+            SensorRate.NORMAL -> SensorManager.SENSOR_DELAY_NORMAL
+        }
+
+        sensorManager.registerListener(
+            listener,
+            stepCounterSensor,
+            delay
+        )
+
+        registeredObserver[SensorType.STEP_COUNTER] = listener
     }
 
     override fun unregisterObservers() {

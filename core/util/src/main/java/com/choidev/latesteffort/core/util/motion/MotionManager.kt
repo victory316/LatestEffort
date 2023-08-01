@@ -11,7 +11,10 @@ interface MotionManager {
         accelerometerEvent: (data: AccelerometerData) -> Unit
     )
 
-    fun observeStep()
+    fun observeStep(
+        sensorRate: SensorRate = SensorRate.NORMAL,
+        stepEvent: (step: Int) -> Unit
+    )
 
     fun unregisterObservers()
 }

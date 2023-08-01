@@ -59,6 +59,10 @@ fun MotionTestScreen(
                 currentRate = currentRate,
                 viewModel = viewModel
             )
+
+            Divider(modifier = Modifier.padding(vertical = DividerPaddingVertical()))
+
+            StepUi(viewModel = viewModel)
         }
     }
 }
@@ -141,5 +145,26 @@ fun AccelerometerUi(
                 openRateDialog = false
             }
         )
+    }
+}
+
+@Composable
+fun StepUi(
+    viewModel: MotionViewModel,
+    modifier: Modifier = Modifier
+) {
+    val step by viewModel.stepData.collectAsStateWithLifecycle()
+
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "Step counter",
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.align(Alignment.CenterVertically)
+        )
+
+        Text(text = "STEP : $step")
     }
 }
