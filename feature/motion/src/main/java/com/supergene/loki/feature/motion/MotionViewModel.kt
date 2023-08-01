@@ -1,20 +1,16 @@
 package com.supergene.loki.feature.motion
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.choidev.core.actions.VibrateAction
+import com.choidev.core.actions.mapToId
 import com.choidev.latesteffort.core.util.motion.AccelerometerData
 import com.choidev.latesteffort.core.util.motion.MotionManager
 import com.choidev.latesteffort.core.util.motion.SensorRate
 import com.choidev.latesteffort.core.util.vibration.VibrationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,7 +18,6 @@ import kotlin.math.absoluteValue
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
-@OptIn(FlowPreview::class)
 @HiltViewModel
 class MotionViewModel @Inject constructor(
     private val motionManager: MotionManager,
@@ -42,20 +37,8 @@ class MotionViewModel @Inject constructor(
 
     init {
         observeAccelerometer()
-
-        viewModelScope.launch {
-            accelerometerData.map {
-                (it.accelerationX.absoluteValue
-                        + it.accelerationY.absoluteValue
-                        + it.accelerationZ.absoluteValue
-                        ) / 3
-            }.filter {
-                it >= shakeThreshold.value
-            }.collect {
-                Log.d("TEST", "float : $it")
-                vibrationManager.vibrate()
-            }
-        }
+        observeThreshold()
+        determineShake()
     }
 
     fun observeAccelerometer(rate: SensorRate = SensorRate.NORMAL) {
@@ -73,9 +56,50 @@ class MotionViewModel @Inject constructor(
         }
     }
 
+    private fun determineShake() = viewModelScope.launch {
+        var shakeFlag = false
+        var accSum: Float
+        var cachedSum = 0f
+
+        accelerometerData.collect { data ->
+            accSum = data.accelerationX + data.accelerationY + data.accelerationZ
+
+            if (shakeFlag) {
+                when {
+                    cachedSum.isPositive() && !accSum.isPositive() && accSum.absoluteValue > shakeThreshold.value -> {
+                        vibrationManager.vibrate()
+                        shakeFlag = false
+                    }
+
+                    !cachedSum.isPositive() && accSum.isPositive() && accSum > shakeThreshold.value -> {
+                        vibrationManager.vibrate()
+                        shakeFlag = false
+                    }
+                }
+            } else {
+                shakeFlag = false
+
+                if (accSum >= shakeThreshold.value) {
+                    shakeFlag = true
+                    cachedSum = accSum
+                }
+            }
+        }
+    }
+
+    private fun observeThreshold() = viewModelScope.launch {
+        shakeThreshold.collect {
+            vibrationManager.vibrateEffect(VibrateAction.VibrationEffect.EFFECT_TICK.mapToId())
+        }
+    }
+
     private fun Float.roundTo(numFractionDigits: Int): Float {
         val factor = 10.0.pow(numFractionDigits.toDouble())
         return ((this * factor).roundToInt() / factor).toFloat()
+    }
+
+    private fun Float.isPositive(): Boolean {
+        return this >= 0.0
     }
 
     override fun onCleared() {
