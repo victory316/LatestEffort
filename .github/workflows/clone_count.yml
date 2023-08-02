@@ -87,6 +87,6 @@ jobs:
       - name: Push
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.SECRET_TOKEN }}
           branch: ${{ github.head_ref }}
           force_with_lease: true
