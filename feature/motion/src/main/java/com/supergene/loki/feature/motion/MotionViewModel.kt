@@ -5,13 +5,16 @@ import androidx.lifecycle.viewModelScope
 import com.choidev.core.actions.VibrateAction
 import com.choidev.core.actions.mapToId
 import com.choidev.latesteffort.core.util.motion.AccelerometerData
+import com.choidev.latesteffort.core.util.motion.CachedAccelerometerData
 import com.choidev.latesteffort.core.util.motion.MotionManager
 import com.choidev.latesteffort.core.util.motion.SensorRate
 import com.choidev.latesteffort.core.util.vibration.VibrationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.absoluteValue
@@ -41,6 +44,9 @@ class MotionViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
     )
 
+    private val _cachedAccelerometerData = MutableStateFlow(CachedAccelerometerData())
+    val cachedAccelerometerData = _cachedAccelerometerData.asStateFlow()
+
     init {
         observeAccelerometer()
         observeThreshold()
@@ -50,15 +56,29 @@ class MotionViewModel @Inject constructor(
     fun observeAccelerometer(rate: SensorRate = SensorRate.NORMAL) {
         currentRate.value = rate
 
-        motionManager.observeAccelerometer(rate) {
-            _accelerometerData.value = it.copy(
-                gravityX = it.gravityX.roundTo(fractionDigit.value),
-                gravityY = it.gravityY.roundTo(fractionDigit.value),
-                gravityZ = it.gravityZ.roundTo(fractionDigit.value),
-                accelerationX = it.accelerationX.roundTo(fractionDigit.value),
-                accelerationY = it.accelerationY.roundTo(fractionDigit.value),
-                accelerationZ = it.accelerationZ.roundTo(fractionDigit.value)
+        motionManager.observeAccelerometer(rate) { data ->
+            _accelerometerData.value = data.copy(
+                gravityX = data.gravityX.roundTo(fractionDigit.value),
+                gravityY = data.gravityY.roundTo(fractionDigit.value),
+                gravityZ = data.gravityZ.roundTo(fractionDigit.value),
+                accelerationX = data.accelerationX.roundTo(fractionDigit.value),
+                accelerationY = data.accelerationY.roundTo(fractionDigit.value),
+                accelerationZ = data.accelerationZ.roundTo(fractionDigit.value)
             )
+
+            _cachedAccelerometerData.update {
+                it.copy(
+                    accelerationX = it.accelerationX.toMutableList().apply {
+                        add(data.accelerationX)
+                    },
+                    accelerationY = it.accelerationY.toMutableList().apply {
+                        add(data.accelerationY)
+                    },
+                    accelerationZ = it.accelerationZ.toMutableList().apply {
+                        add(data.accelerationZ)
+                    }
+                )
+            }
         }
     }
 

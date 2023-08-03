@@ -29,16 +29,16 @@ import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.latesteffort.core.design.compose.DividerPaddingVertical
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
 import com.choidev.latesteffort.core.util.motion.AccelerometerData
+import com.choidev.latesteffort.core.util.motion.CachedAccelerometerData
 import com.choidev.latesteffort.core.util.motion.SensorRate
 import com.patrykandpatrick.vico.compose.axis.horizontal.bottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.startAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
-import com.patrykandpatrick.vico.compose.chart.column.columnChart
-import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
-import com.patrykandpatrick.vico.core.entry.FloatEntry
+import com.patrykandpatrick.vico.compose.chart.line.lineChart
+import com.patrykandpatrick.vico.core.entry.entriesOf
+import com.patrykandpatrick.vico.core.entry.entryModelOf
 import com.supergene.loki.feature.motion.MotionViewModel
 import com.supergene.loki.feature.motion.R
-import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,6 +80,7 @@ fun AccelerometerUi(
     var openRateDialog by remember { mutableStateOf(false) }
     val shakeThreshold by viewModel.shakeThreshold.collectAsStateWithLifecycle()
     val fractionDigit by viewModel.fractionDigit.collectAsStateWithLifecycle()
+    val cachedAccelerometerData by viewModel.cachedAccelerometerData.collectAsStateWithLifecycle()
 
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -149,7 +150,7 @@ fun AccelerometerUi(
             modifier = Modifier.fillMaxWidth()
         )
 
-        DynamicAccelerometerChart()
+        DynamicAccelerometerChart(cachedAccelerometerData)
     }
 
     if (openRateDialog) {
@@ -166,15 +167,21 @@ fun AccelerometerUi(
 }
 
 @Composable
-fun DynamicAccelerometerChart() {
-    fun getRandomEntries() = List(4) { FloatEntry(0f, Random.nextFloat()) }
-
-    val chartEntryModelProducer = ChartEntryModelProducer(getRandomEntries())
+fun DynamicAccelerometerChart(data: CachedAccelerometerData) {
+    val chartEntryModel = entryModelOf(
+        entriesOf(*data.accelerationX.toNumberPairs()),
+        entriesOf(*data.accelerationY.toNumberPairs()),
+        entriesOf(*data.accelerationZ.toNumberPairs()),
+    )
 
     Chart(
-        chart = columnChart(),
-        chartModelProducer = chartEntryModelProducer,
+        chart = lineChart(),
+        model = chartEntryModel,
         startAxis = startAxis(),
         bottomAxis = bottomAxis(),
     )
+}
+
+fun List<Float>.toNumberPairs(): Array<Pair<Number, Number>> {
+    return this.mapIndexed { index, value -> index to value }.toTypedArray()
 }
