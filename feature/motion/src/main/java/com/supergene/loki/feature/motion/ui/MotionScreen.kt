@@ -30,8 +30,15 @@ import com.choidev.latesteffort.core.design.compose.DividerPaddingVertical
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
 import com.choidev.latesteffort.core.util.motion.AccelerometerData
 import com.choidev.latesteffort.core.util.motion.SensorRate
+import com.patrykandpatrick.vico.compose.axis.horizontal.bottomAxis
+import com.patrykandpatrick.vico.compose.axis.vertical.startAxis
+import com.patrykandpatrick.vico.compose.chart.Chart
+import com.patrykandpatrick.vico.compose.chart.column.columnChart
+import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
+import com.patrykandpatrick.vico.core.entry.FloatEntry
 import com.supergene.loki.feature.motion.MotionViewModel
 import com.supergene.loki.feature.motion.R
+import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -141,6 +148,8 @@ fun AccelerometerUi(
             steps = 10,
             modifier = Modifier.fillMaxWidth()
         )
+
+        DynamicAccelerometerChart()
     }
 
     if (openRateDialog) {
@@ -154,4 +163,18 @@ fun AccelerometerUi(
             }
         )
     }
+}
+
+@Composable
+fun DynamicAccelerometerChart() {
+    fun getRandomEntries() = List(4) { FloatEntry(0f, Random.nextFloat()) }
+
+    val chartEntryModelProducer = ChartEntryModelProducer(getRandomEntries())
+
+    Chart(
+        chart = columnChart(),
+        chartModelProducer = chartEntryModelProducer,
+        startAxis = startAxis(),
+        bottomAxis = bottomAxis(),
+    )
 }
