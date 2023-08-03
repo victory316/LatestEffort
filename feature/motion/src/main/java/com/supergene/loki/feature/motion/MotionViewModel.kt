@@ -70,12 +70,18 @@ class MotionViewModel @Inject constructor(
                 it.copy(
                     accelerationX = it.accelerationX.toMutableList().apply {
                         add(data.accelerationX)
+
+                        if (this.size > 6) removeFirst()
                     },
                     accelerationY = it.accelerationY.toMutableList().apply {
                         add(data.accelerationY)
+
+                        if (this.size > 6) removeFirst()
                     },
                     accelerationZ = it.accelerationZ.toMutableList().apply {
                         add(data.accelerationZ)
+
+                        if (this.size > 6) removeFirst()
                     }
                 )
             }

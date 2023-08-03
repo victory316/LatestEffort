@@ -1,5 +1,6 @@
 package com.supergene.loki.feature.motion.ui
 
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,8 +36,11 @@ import com.patrykandpatrick.vico.compose.axis.horizontal.bottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.startAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
 import com.patrykandpatrick.vico.compose.chart.line.lineChart
+import com.patrykandpatrick.vico.compose.chart.scroll.ChartScrollSpec
 import com.patrykandpatrick.vico.core.entry.entriesOf
 import com.patrykandpatrick.vico.core.entry.entryModelOf
+import com.patrykandpatrick.vico.core.scroll.AutoScrollCondition
+import com.patrykandpatrick.vico.core.scroll.InitialScroll
 import com.supergene.loki.feature.motion.MotionViewModel
 import com.supergene.loki.feature.motion.R
 
@@ -174,11 +178,23 @@ fun DynamicAccelerometerChart(data: CachedAccelerometerData) {
         entriesOf(*data.accelerationZ.toNumberPairs()),
     )
 
+    val mySpec by remember {
+        mutableStateOf(
+            ChartScrollSpec(
+                isScrollEnabled = true,
+                initialScroll = InitialScroll.End,
+                autoScrollCondition = AutoScrollCondition.OnModelSizeIncreased,
+                autoScrollAnimationSpec = spring(),
+            )
+        )
+    }
+
     Chart(
         chart = lineChart(),
         model = chartEntryModel,
         startAxis = startAxis(),
         bottomAxis = bottomAxis(),
+        chartScrollSpec = mySpec
     )
 }
 
