@@ -37,6 +37,7 @@ import com.patrykandpatrick.vico.compose.axis.vertical.startAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
 import com.patrykandpatrick.vico.compose.chart.line.lineChart
 import com.patrykandpatrick.vico.compose.chart.scroll.ChartScrollSpec
+import com.patrykandpatrick.vico.core.chart.values.AxisValuesOverrider
 import com.patrykandpatrick.vico.core.entry.entriesOf
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 import com.patrykandpatrick.vico.core.scroll.AutoScrollCondition
@@ -172,6 +173,8 @@ fun AccelerometerUi(
 
 @Composable
 fun DynamicAccelerometerChart(data: CachedAccelerometerData) {
+    val axisValueOverrider = AxisValuesOverrider.fixed(minY = -20f, maxY = 20f)
+
     val chartEntryModel = entryModelOf(
         entriesOf(*data.accelerationX.toNumberPairs()),
         entriesOf(*data.accelerationY.toNumberPairs()),
@@ -190,7 +193,7 @@ fun DynamicAccelerometerChart(data: CachedAccelerometerData) {
     }
 
     Chart(
-        chart = lineChart(),
+        chart = lineChart(axisValuesOverrider = axisValueOverrider),
         model = chartEntryModel,
         startAxis = startAxis(),
         bottomAxis = bottomAxis(),
