@@ -28,6 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.latesteffort.core.design.compose.DividerPaddingVertical
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
+import com.choidev.latesteffort.core.util.chart.DynamicAccelerometerChart
 import com.choidev.latesteffort.core.util.motion.AccelerometerData
 import com.choidev.latesteffort.core.util.motion.SensorRate
 import com.supergene.loki.feature.motion.MotionViewModel
@@ -73,6 +74,7 @@ fun AccelerometerUi(
     var openRateDialog by remember { mutableStateOf(false) }
     val shakeThreshold by viewModel.shakeThreshold.collectAsStateWithLifecycle()
     val fractionDigit by viewModel.fractionDigit.collectAsStateWithLifecycle()
+    val cachedAccelerometerData by viewModel.cachedAccelerometerData.collectAsStateWithLifecycle()
 
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -141,6 +143,8 @@ fun AccelerometerUi(
             steps = 10,
             modifier = Modifier.fillMaxWidth()
         )
+
+        DynamicAccelerometerChart(cachedAccelerometerData)
     }
 
     if (openRateDialog) {
