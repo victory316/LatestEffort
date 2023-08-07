@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/core/testing" />
             <option value="$PROJECT_DIR$/core/util" />
             <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/data/catalog" />
             <option value="$PROJECT_DIR$/data/core" />
             <option value="$PROJECT_DIR$/data/search" />
             <option value="$PROJECT_DIR$/domain" />

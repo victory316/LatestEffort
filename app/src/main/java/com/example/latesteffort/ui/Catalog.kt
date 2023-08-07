@@ -19,6 +19,7 @@ import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconToggleButton
@@ -28,9 +29,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -44,7 +42,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.choidev.core.actions.NavigateAction
+import com.choidev.core.actions.SystemAction
 import com.choidev.core.actions.presenter.ActionPresenter
+import com.choidev.domain.catalog.model.CatalogMenuType
 import com.choidev.domain.catalog.model.CatalogType
 import com.choidev.latesteffort.R
 import com.choidev.latesteffort.core.design.compose.LazyColumnPaddingVertical
@@ -54,6 +54,7 @@ import com.choidev.latesteffort.feature.search_media.SearchMediaActivity
 import com.choidev.vibration.navigation.vibrationRoute
 import com.example.latesteffort.MainViewModel
 import com.example.latesteffort.state.CatalogItemState
+import com.example.latesteffort.state.UiState
 import com.example.latesteffort.util.CatalogScreenHelper
 import com.supergene.loki.feature.motion.navigation.motionRoute
 
@@ -61,28 +62,31 @@ import com.supergene.loki.feature.motion.navigation.motionRoute
 @Composable
 fun CatalogScreen(
     presenter: ActionPresenter,
-    mainViewModel: MainViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    mainViewModel: MainViewModel = hiltViewModel()
 ) {
-    val menus by mainViewModel.catalogs.collectAsStateWithLifecycle()
-
-    var gridMode by remember { mutableStateOf(false) }
+    val screenState by mainViewModel.catalogScreenState.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
             TopAppBar(title = { Text(text = "Welcome to my latest effort.") },
                 actions = {
-                    IconToggleButton(checked = gridMode, onCheckedChange = { gridMode = it }) {
-                        if (gridMode) {
-                            Icon(
-                                imageVector = Icons.Default.List,
-                                contentDescription = null
-                            )
-                        } else {
-                            Icon(
-                                painter = painterResource(id = R.drawable.baseline_apps_24),
-                                contentDescription = null
-                            )
+                    screenState.menuType?.let { type ->
+                        IconToggleButton(
+                            checked = type == CatalogMenuType.TYPE_GRID,
+                            onCheckedChange = { mainViewModel.updateMenuType(it) }
+                        ) {
+                            if (type == CatalogMenuType.TYPE_GRID) {
+                                Icon(
+                                    imageVector = Icons.Default.List,
+                                    contentDescription = null
+                                )
+                            } else {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.baseline_apps_24),
+                                    contentDescription = null
+                                )
+                            }
                         }
                     }
                 })
@@ -90,61 +94,58 @@ fun CatalogScreen(
         modifier = modifier
             .padding(horizontal = ScreenPaddingHorizontal(), vertical = 12.dp)
     ) { paddingValues ->
-        when {
-            menus.isSuccess -> {
-                menus.mapCatching { data ->
-                    data.map {
-                        when (it) {
-                            CatalogType.SEARCH_MEDIA -> {
-                                CatalogItemState(
-                                    title = stringResource(id = R.string.catalog_menu_media_search),
-                                    icon = Icons.Rounded.Search,
-                                    backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
-                                    action = NavigateAction.StartActivity(SearchMediaActivity::class.java),
-                                )
-                            }
+        when (screenState.uiState) {
+            UiState.SUCCESS -> {
+                screenState.catalogs?.map {
+                    when (it) {
+                        CatalogType.SEARCH_MEDIA -> {
+                            CatalogItemState(
+                                title = stringResource(id = R.string.catalog_menu_media_search),
+                                icon = Icons.Rounded.Search,
+                                backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
+                                action = NavigateAction.StartActivity(SearchMediaActivity::class.java),
+                            )
+                        }
 
-                            CatalogType.VIBRATION -> {
-                                CatalogItemState(
-                                    title = stringResource(id = R.string.catalog_menu_vibration_test),
-                                    painter = painterResource(id = R.drawable.ic_vibration),
-                                    backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
-                                    action = NavigateAction.NavGraphDestination(vibrationRoute)
-                                )
-                            }
+                        CatalogType.VIBRATION -> {
+                            CatalogItemState(
+                                title = stringResource(id = R.string.catalog_menu_vibration_test),
+                                painter = painterResource(id = R.drawable.ic_vibration),
+                                backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
+                                action = NavigateAction.NavGraphDestination(vibrationRoute)
+                            )
+                        }
 
-                            CatalogType.NOTIFICATION -> {
-                                CatalogItemState(
-                                    title = stringResource(id = R.string.catalog_menu_notification_test),
-                                    icon = Icons.Rounded.Notifications,
-                                    backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
-                                    action = NavigateAction.NavGraphDestination(notificationRoute)
-                                )
-                            }
+                        CatalogType.NOTIFICATION -> {
+                            CatalogItemState(
+                                title = stringResource(id = R.string.catalog_menu_notification_test),
+                                icon = Icons.Rounded.Notifications,
+                                backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
+                                action = NavigateAction.NavGraphDestination(notificationRoute)
+                            )
+                        }
 
-                            CatalogType.MOTION -> {
-                                CatalogItemState(
-                                    title = stringResource(id = R.string.catalog_menu_motion),
-                                    painter = painterResource(id = R.drawable.ic_motion),
-                                    backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
-                                    action = NavigateAction.NavGraphDestination(motionRoute)
-                                )
-                            }
+                        CatalogType.MOTION -> {
+                            CatalogItemState(
+                                title = stringResource(id = R.string.catalog_menu_motion),
+                                painter = painterResource(id = R.drawable.ic_motion),
+                                backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
+                                action = NavigateAction.NavGraphDestination(motionRoute)
+                            )
                         }
                     }
                 }.also { result ->
                     Catalogs(
-                        itemState = result.getOrDefault(emptyList()),
-                        isGridMode = gridMode,
+                        itemState = result ?: emptyList(),
+                        isGridMode = screenState.menuType == CatalogMenuType.TYPE_GRID,
                         modifier = Modifier.padding(paddingValues),
                         presenter = presenter
                     )
                 }
             }
 
-            menus.isFailure -> {
-                // TODO show failure screen
-            }
+            UiState.LOADING -> CircularProgressIndicator()
+            UiState.FAILURE -> presenter.onClick(SystemAction.ShowToast("오류가 발생 했어요."))
         }
     }
 }
@@ -152,14 +153,16 @@ fun CatalogScreen(
 @Composable
 fun Catalogs(
     itemState: List<CatalogItemState>,
-    isGridMode: Boolean,
+    isGridMode: Boolean?,
     presenter: ActionPresenter,
     modifier: Modifier = Modifier
 ) {
-    if (!isGridMode) {
-        CatalogByListsUi(catalogs = itemState, presenter = presenter, modifier = modifier)
-    } else {
-        CatalogsByGridUi(catalogs = itemState, presenter = presenter, modifier = modifier)
+    isGridMode?.let { enabled ->
+        if (!enabled) {
+            CatalogByListsUi(catalogs = itemState, presenter = presenter, modifier = modifier)
+        } else {
+            CatalogsByGridUi(catalogs = itemState, presenter = presenter, modifier = modifier)
+        }
     }
 }
 
@@ -221,8 +224,8 @@ fun CatalogListItem(
     icon: ImageVector? = null,
     painter: Painter? = null,
     title: String,
-    backgroundColor: Color = Color.LightGray,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    backgroundColor: Color = Color.LightGray
 ) {
     Card(
         colors = CardDefaults.cardColors(
@@ -248,11 +251,11 @@ fun CatalogListItem(
 
 @Composable
 fun CatalogGridItem(
+    modifier: Modifier = Modifier,
+    title: String,
     icon: ImageVector? = null,
     painter: Painter? = null,
-    title: String,
-    backgroundColor: Color = Color.LightGray,
-    modifier: Modifier = Modifier
+    backgroundColor: Color = Color.LightGray
 ) {
     Card(
         colors = CardDefaults.cardColors(

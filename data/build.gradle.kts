@@ -39,10 +39,10 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation(libs.hilt.android)
     implementation(libs.retrofit.core)
     implementation(libs.room)
     implementation(libs.room.ktx)
+    implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)

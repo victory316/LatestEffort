@@ -95,6 +95,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":domain:catalog"))
     implementation(project(":data"))
+    implementation(project(":data:catalog"))
     implementation(project(":feature:search-media"))
     implementation(project(":feature:vibration"))
     implementation(project(":feature:notification"))

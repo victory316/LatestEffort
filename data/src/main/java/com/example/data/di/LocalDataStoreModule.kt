@@ -1,4 +1,4 @@
-package com.example.data.repository.di
+package com.example.data.di
 
 import android.content.Context
 import android.content.SharedPreferences
