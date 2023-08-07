@@ -62,8 +62,8 @@ import com.supergene.loki.feature.motion.navigation.motionRoute
 @Composable
 fun CatalogScreen(
     presenter: ActionPresenter,
-    mainViewModel: MainViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    mainViewModel: MainViewModel = hiltViewModel()
 ) {
     val screenState by mainViewModel.catalogScreenState.collectAsStateWithLifecycle()
 
@@ -145,7 +145,7 @@ fun CatalogScreen(
             }
 
             UiState.LOADING -> CircularProgressIndicator()
-            UiState.FAILURE -> presenter.onClick(SystemAction.ShowToast("오류가 발생했어요."))
+            UiState.FAILURE -> presenter.onClick(SystemAction.ShowToast("오류가 발생 했어요."))
         }
     }
 }
@@ -224,8 +224,8 @@ fun CatalogListItem(
     icon: ImageVector? = null,
     painter: Painter? = null,
     title: String,
-    backgroundColor: Color = Color.LightGray,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    backgroundColor: Color = Color.LightGray
 ) {
     Card(
         colors = CardDefaults.cardColors(
@@ -251,11 +251,11 @@ fun CatalogListItem(
 
 @Composable
 fun CatalogGridItem(
+    modifier: Modifier = Modifier,
+    title: String,
     icon: ImageVector? = null,
     painter: Painter? = null,
-    title: String,
-    backgroundColor: Color = Color.LightGray,
-    modifier: Modifier = Modifier
+    backgroundColor: Color = Color.LightGray
 ) {
     Card(
         colors = CardDefaults.cardColors(
