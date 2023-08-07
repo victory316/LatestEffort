@@ -28,9 +28,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -65,14 +62,16 @@ fun CatalogScreen(
     modifier: Modifier = Modifier
 ) {
     val menus by mainViewModel.catalogs.collectAsStateWithLifecycle()
-
-    var gridMode by remember { mutableStateOf(false) }
+    val gridMode by mainViewModel.menuIsListType.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
             TopAppBar(title = { Text(text = "Welcome to my latest effort.") },
                 actions = {
-                    IconToggleButton(checked = gridMode, onCheckedChange = { gridMode = it }) {
+                    IconToggleButton(
+                        checked = gridMode,
+                        onCheckedChange = { mainViewModel.updateMenuType(it) }
+                    ) {
                         if (gridMode) {
                             Icon(
                                 imageVector = Icons.Default.List,
