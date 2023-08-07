@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -43,7 +42,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.choidev.core.actions.NavigateAction
+import com.choidev.core.actions.SystemAction
 import com.choidev.core.actions.presenter.ActionPresenter
+import com.choidev.domain.catalog.model.CatalogMenuType
 import com.choidev.domain.catalog.model.CatalogType
 import com.choidev.latesteffort.R
 import com.choidev.latesteffort.core.design.compose.LazyColumnPaddingVertical
@@ -53,6 +54,7 @@ import com.choidev.latesteffort.feature.search_media.SearchMediaActivity
 import com.choidev.vibration.navigation.vibrationRoute
 import com.example.latesteffort.MainViewModel
 import com.example.latesteffort.state.CatalogItemState
+import com.example.latesteffort.state.UiState
 import com.example.latesteffort.util.CatalogScreenHelper
 import com.supergene.loki.feature.motion.navigation.motionRoute
 
@@ -63,19 +65,18 @@ fun CatalogScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
-    val menus by mainViewModel.catalogs.collectAsStateWithLifecycle()
-    val gridMode by mainViewModel.menuIsListType.collectAsStateWithLifecycle()
+    val screenState by mainViewModel.catalogScreenState.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
             TopAppBar(title = { Text(text = "Welcome to my latest effort.") },
                 actions = {
-                    gridMode?.let { mode ->
+                    screenState.menuType?.let { type ->
                         IconToggleButton(
-                            checked = mode,
+                            checked = type == CatalogMenuType.TYPE_GRID,
                             onCheckedChange = { mainViewModel.updateMenuType(it) }
                         ) {
-                            if (mode) {
+                            if (type == CatalogMenuType.TYPE_GRID) {
                                 Icon(
                                     imageVector = Icons.Default.List,
                                     contentDescription = null
@@ -93,61 +94,58 @@ fun CatalogScreen(
         modifier = modifier
             .padding(horizontal = ScreenPaddingHorizontal(), vertical = 12.dp)
     ) { paddingValues ->
-        when {
-            menus.isSuccess -> {
-                menus.mapCatching { data ->
-                    data.map {
-                        when (it) {
-                            CatalogType.SEARCH_MEDIA -> {
-                                CatalogItemState(
-                                    title = stringResource(id = R.string.catalog_menu_media_search),
-                                    icon = Icons.Rounded.Search,
-                                    backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
-                                    action = NavigateAction.StartActivity(SearchMediaActivity::class.java),
-                                )
-                            }
+        when (screenState.uiState) {
+            UiState.SUCCESS -> {
+                screenState.catalogs?.map {
+                    when (it) {
+                        CatalogType.SEARCH_MEDIA -> {
+                            CatalogItemState(
+                                title = stringResource(id = R.string.catalog_menu_media_search),
+                                icon = Icons.Rounded.Search,
+                                backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
+                                action = NavigateAction.StartActivity(SearchMediaActivity::class.java),
+                            )
+                        }
 
-                            CatalogType.VIBRATION -> {
-                                CatalogItemState(
-                                    title = stringResource(id = R.string.catalog_menu_vibration_test),
-                                    painter = painterResource(id = R.drawable.ic_vibration),
-                                    backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
-                                    action = NavigateAction.NavGraphDestination(vibrationRoute)
-                                )
-                            }
+                        CatalogType.VIBRATION -> {
+                            CatalogItemState(
+                                title = stringResource(id = R.string.catalog_menu_vibration_test),
+                                painter = painterResource(id = R.drawable.ic_vibration),
+                                backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
+                                action = NavigateAction.NavGraphDestination(vibrationRoute)
+                            )
+                        }
 
-                            CatalogType.NOTIFICATION -> {
-                                CatalogItemState(
-                                    title = stringResource(id = R.string.catalog_menu_notification_test),
-                                    icon = Icons.Rounded.Notifications,
-                                    backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
-                                    action = NavigateAction.NavGraphDestination(notificationRoute)
-                                )
-                            }
+                        CatalogType.NOTIFICATION -> {
+                            CatalogItemState(
+                                title = stringResource(id = R.string.catalog_menu_notification_test),
+                                icon = Icons.Rounded.Notifications,
+                                backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
+                                action = NavigateAction.NavGraphDestination(notificationRoute)
+                            )
+                        }
 
-                            CatalogType.MOTION -> {
-                                CatalogItemState(
-                                    title = stringResource(id = R.string.catalog_menu_motion),
-                                    painter = painterResource(id = R.drawable.ic_motion),
-                                    backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
-                                    action = NavigateAction.NavGraphDestination(motionRoute)
-                                )
-                            }
+                        CatalogType.MOTION -> {
+                            CatalogItemState(
+                                title = stringResource(id = R.string.catalog_menu_motion),
+                                painter = painterResource(id = R.drawable.ic_motion),
+                                backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
+                                action = NavigateAction.NavGraphDestination(motionRoute)
+                            )
                         }
                     }
                 }.also { result ->
                     Catalogs(
-                        itemState = result.getOrDefault(emptyList()),
-                        isGridMode = gridMode,
+                        itemState = result ?: emptyList(),
+                        isGridMode = screenState.menuType == CatalogMenuType.TYPE_GRID,
                         modifier = Modifier.padding(paddingValues),
                         presenter = presenter
                     )
                 }
             }
 
-            menus.isFailure -> {
-                // TODO show failure screen
-            }
+            UiState.LOADING -> CircularProgressIndicator()
+            UiState.FAILURE -> presenter.onClick(SystemAction.ShowToast("오류가 발생했어요."))
         }
     }
 }
@@ -166,11 +164,6 @@ fun Catalogs(
             CatalogsByGridUi(catalogs = itemState, presenter = presenter, modifier = modifier)
         }
     }
-}
-
-@Composable
-fun FullSizeProgressBar() {
-    CircularProgressIndicator(modifier = Modifier.fillMaxSize())
 }
 
 @Composable

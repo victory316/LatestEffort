@@ -10,7 +10,7 @@ class CatalogUseCaseImpl @Inject constructor(
     private val catalogRepository: CatalogRepository
 ) : CatalogUseCase {
 
-    override suspend fun getCurrentMenuMode(): Flow<CatalogMenuType> =
+    override suspend fun getCatalogMenuType(): Flow<CatalogMenuType> =
         catalogRepository.getCurrentMenuMode()
 
     override suspend fun getCatalogList(): Flow<Result<List<CatalogType>>> = flow {
