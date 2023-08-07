@@ -1,11 +1,17 @@
 package com.choidev.domain.catalog
 
+import com.choidev.domain.catalog.model.CatalogMenuType
 import com.choidev.domain.catalog.model.CatalogType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class CatalogUseCaseImpl @Inject constructor() : CatalogUseCase {
+class CatalogUseCaseImpl @Inject constructor(
+    private val catalogRepository: CatalogRepository
+) : CatalogUseCase {
+
+    override suspend fun getCurrentMenuMode(): Flow<CatalogMenuType> =
+        catalogRepository.getCurrentMenuMode()
 
     override suspend fun getCatalogList(): Flow<Result<List<CatalogType>>> = flow {
         emit(
@@ -18,5 +24,9 @@ class CatalogUseCaseImpl @Inject constructor() : CatalogUseCase {
                 )
             }
         )
+    }
+
+    override suspend fun updateMenuMode(type: CatalogMenuType) {
+        catalogRepository.updateMenuMode(type)
     }
 }

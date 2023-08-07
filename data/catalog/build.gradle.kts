@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.data"
+    namespace = "com.choidev.latesteffort.data.catalog"
     compileSdk = 33
 
     defaultConfig {
-        minSdk = 28
+        minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -37,19 +37,15 @@ android {
 dependencies {
 
     implementation(libs.core.ktx)
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.retrofit.core)
-    implementation(libs.room)
-    implementation(libs.room.ktx)
+    implementation(libs.androidx.dataStore)
+    implementation(libs.androidx.dataStore.core)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
-    testImplementation(libs.room.testing)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation(project(mapOf("path" to ":network")))
-    implementation(project(mapOf("path" to ":domain")))
+    implementation(project(":domain:catalog"))
+    implementation(project(":data:core"))
 }
