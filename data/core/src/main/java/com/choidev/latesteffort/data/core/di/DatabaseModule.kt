@@ -1,7 +1,8 @@
-package com.choidev.latesteffort.data.core
+package com.choidev.latesteffort.data.core.di
 
 import android.content.Context
 import androidx.room.Room
+import com.choidev.latesteffort.data.core.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,7 +1,7 @@
 package com.example.data.repository
 
 import android.content.SharedPreferences
-import com.example.data.repository.di.bookmarkIds
+import com.example.data.di.bookmarkIds
 import com.example.data.ext.mapResult
 import com.example.domain.model.Image
 import com.example.domain.model.SearchResultImage

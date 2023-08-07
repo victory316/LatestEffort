@@ -41,6 +41,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.room)
     implementation(libs.room.ktx)
+    implementation(libs.androidx.dataStore)
+    implementation(libs.androidx.dataStore.core)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     kapt(libs.room.compiler)
@@ -49,4 +51,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    implementation(project(mapOf("path" to ":network")))
 }

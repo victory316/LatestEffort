@@ -1,7 +1,7 @@
 package com.example.data.repository
 
 import android.content.SharedPreferences
-import com.example.data.repository.di.bookmarkIds
+import com.example.data.di.bookmarkIds
 import com.example.domain.repository.BookmarkRepository
 import javax.inject.Inject
 
