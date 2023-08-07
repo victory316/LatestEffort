@@ -2,8 +2,8 @@
   {
     "path": "/victory316/LatestEffort",
     "title": "victory316/LatestEffort: My full package of latest efforts on Android",
-    "count": 107,
-    "uniques": 7
+    "count": 90,
+    "uniques": 6
   },
   {
     "path": "/victory316/LatestEffort/actions",
@@ -30,18 +30,6 @@
     "uniques": 1
   },
   {
-    "path": "/victory316/LatestEffort/pulls",
-    "title": "Pull requests · victory316/LatestEffort",
-    "count": 15,
-    "uniques": 1
-  },
-  {
-    "path": "/victory316/LatestEffort/releases",
-    "title": "Releases · victory316/LatestEffort",
-    "count": 15,
-    "uniques": 1
-  },
-  {
     "path": "/victory316/LatestEffort/blob/master/.github/workflows/token_test.yml",
     "title": "LatestEffort/.github/workflows/token_test.yml at master · victory316/LatestEf...",
     "count": 14,
@@ -54,8 +42,20 @@
     "uniques": 1
   },
   {
+    "path": "/victory316/LatestEffort/pulls",
+    "title": "Pull requests · victory316/LatestEffort",
+    "count": 11,
+    "uniques": 1
+  },
+  {
     "path": "/victory316/LatestEffort/blob/bd77a42f93218395972542b3aea648bfbe4f0e4c/.github/workflows/token_test.yml",
     "title": "LatestEffort/.github/workflows/token_test.yml at bd77a42f93218395972542b3aea6...",
+    "count": 10,
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/blob/master/.github/workflows/clone_count.yml",
+    "title": "LatestEffort/.github/workflows/clone_count.yml at master · victory316/LatestE...",
     "count": 10,
     "uniques": 1
   }
