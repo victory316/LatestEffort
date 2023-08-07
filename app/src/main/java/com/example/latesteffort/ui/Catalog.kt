@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -19,6 +20,7 @@ import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconToggleButton
@@ -68,20 +70,22 @@ fun CatalogScreen(
         topBar = {
             TopAppBar(title = { Text(text = "Welcome to my latest effort.") },
                 actions = {
-                    IconToggleButton(
-                        checked = gridMode,
-                        onCheckedChange = { mainViewModel.updateMenuType(it) }
-                    ) {
-                        if (gridMode) {
-                            Icon(
-                                imageVector = Icons.Default.List,
-                                contentDescription = null
-                            )
-                        } else {
-                            Icon(
-                                painter = painterResource(id = R.drawable.baseline_apps_24),
-                                contentDescription = null
-                            )
+                    gridMode?.let { mode ->
+                        IconToggleButton(
+                            checked = mode,
+                            onCheckedChange = { mainViewModel.updateMenuType(it) }
+                        ) {
+                            if (mode) {
+                                Icon(
+                                    imageVector = Icons.Default.List,
+                                    contentDescription = null
+                                )
+                            } else {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.baseline_apps_24),
+                                    contentDescription = null
+                                )
+                            }
                         }
                     }
                 })
@@ -151,15 +155,22 @@ fun CatalogScreen(
 @Composable
 fun Catalogs(
     itemState: List<CatalogItemState>,
-    isGridMode: Boolean,
+    isGridMode: Boolean?,
     presenter: ActionPresenter,
     modifier: Modifier = Modifier
 ) {
-    if (!isGridMode) {
-        CatalogByListsUi(catalogs = itemState, presenter = presenter, modifier = modifier)
-    } else {
-        CatalogsByGridUi(catalogs = itemState, presenter = presenter, modifier = modifier)
+    isGridMode?.let { enabled ->
+        if (!enabled) {
+            CatalogByListsUi(catalogs = itemState, presenter = presenter, modifier = modifier)
+        } else {
+            CatalogsByGridUi(catalogs = itemState, presenter = presenter, modifier = modifier)
+        }
     }
+}
+
+@Composable
+fun FullSizeProgressBar() {
+    CircularProgressIndicator(modifier = Modifier.fillMaxSize())
 }
 
 @Composable
