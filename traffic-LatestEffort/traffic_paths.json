@@ -2,8 +2,8 @@
   {
     "path": "/victory316/LatestEffort",
     "title": "victory316/LatestEffort: My full package of latest efforts on Android",
-    "count": 90,
-    "uniques": 6
+    "count": 85,
+    "uniques": 5
   },
   {
     "path": "/victory316/LatestEffort/actions",
@@ -24,15 +24,15 @@
     "uniques": 1
   },
   {
-    "path": "/victory316/LatestEffort/projects",
-    "title": "Projects · LatestEffort",
-    "count": 16,
-    "uniques": 1
-  },
-  {
     "path": "/victory316/LatestEffort/blob/master/.github/workflows/token_test.yml",
     "title": "LatestEffort/.github/workflows/token_test.yml at master · victory316/LatestEf...",
     "count": 14,
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/projects",
+    "title": "Projects · LatestEffort",
+    "count": 13,
     "uniques": 1
   },
   {
