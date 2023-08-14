@@ -2,25 +2,13 @@
   {
     "path": "/victory316/LatestEffort",
     "title": "victory316/LatestEffort: My full package of latest efforts on Android",
-    "count": 91,
-    "uniques": 6
+    "count": 70,
+    "uniques": 5
   },
   {
     "path": "/victory316/LatestEffort/actions",
     "title": "Actions · victory316/LatestEffort",
-    "count": 43,
-    "uniques": 1
-  },
-  {
-    "path": "/victory316/LatestEffort/actions/workflows/clone_count.yml",
-    "title": "Actions · victory316/LatestEffort",
-    "count": 31,
-    "uniques": 1
-  },
-  {
-    "path": "/victory316/LatestEffort/community/license/new",
-    "title": "Add a license to victory316/LatestEffort",
-    "count": 22,
+    "count": 33,
     "uniques": 1
   },
   {
@@ -30,33 +18,45 @@
     "uniques": 1
   },
   {
+    "path": "/victory316/LatestEffort/actions/workflows/clone_count.yml",
+    "title": "Actions · victory316/LatestEffort",
+    "count": 15,
+    "uniques": 1
+  },
+  {
     "path": "/victory316/LatestEffort/blob/master/.github/workflows/token_test.yml",
     "title": "LatestEffort/.github/workflows/token_test.yml at master · victory316/LatestEf...",
     "count": 14,
     "uniques": 1
   },
   {
-    "path": "/victory316/LatestEffort/projects",
-    "title": "Projects · LatestEffort",
-    "count": 13,
+    "path": "/victory316/LatestEffort/blob/bd77a42f93218395972542b3aea648bfbe4f0e4c/.github/workflows/token_test.yml",
+    "title": "LatestEffort/.github/workflows/token_test.yml at bd77a42f93218395972542b3aea6...",
+    "count": 10,
     "uniques": 1
   },
   {
-    "path": "/victory316/LatestEffort/new/master",
-    "title": "New File at / · victory316/LatestEffort",
-    "count": 11,
+    "path": "/victory316/LatestEffort/tree/master/.github",
+    "title": "LatestEffort/.github at master · victory316/LatestEffort",
+    "count": 10,
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/projects",
+    "title": "Projects · LatestEffort",
+    "count": 9,
     "uniques": 1
   },
   {
     "path": "/victory316/LatestEffort/pulls",
     "title": "Pull requests · victory316/LatestEffort",
-    "count": 11,
+    "count": 9,
     "uniques": 1
   },
   {
-    "path": "/victory316/LatestEffort/blob/bd77a42f93218395972542b3aea648bfbe4f0e4c/.github/workflows/token_test.yml",
-    "title": "LatestEffort/.github/workflows/token_test.yml at bd77a42f93218395972542b3aea6...",
-    "count": 10,
+    "path": "/victory316/LatestEffort/blob/master/README.md",
+    "title": "LatestEffort/README.md at master · victory316/LatestEffort",
+    "count": 8,
     "uniques": 1
   }
 ]
