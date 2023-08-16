@@ -2,61 +2,61 @@
   {
     "path": "/victory316/LatestEffort",
     "title": "victory316/LatestEffort: My full package of latest efforts on Android",
-    "count": 52,
-    "uniques": 5
-  },
-  {
-    "path": "/victory316/LatestEffort/actions",
-    "title": "Actions · victory316/LatestEffort",
-    "count": 21,
-    "uniques": 1
+    "count": 24,
+    "uniques": 2
   },
   {
     "path": "/victory316/LatestEffort/edit/master/README.md",
     "title": "Editing LatestEffort/README.md at master · victory316/LatestEffort",
-    "count": 17,
-    "uniques": 1
-  },
-  {
-    "path": "/victory316/LatestEffort/actions/workflows/clone_count.yml",
-    "title": "Actions · victory316/LatestEffort",
-    "count": 12,
-    "uniques": 1
-  },
-  {
-    "path": "/victory316/LatestEffort/blob/bd77a42f93218395972542b3aea648bfbe4f0e4c/.github/workflows/token_test.yml",
-    "title": "LatestEffort/.github/workflows/token_test.yml at bd77a42f93218395972542b3aea6...",
-    "count": 10,
-    "uniques": 1
-  },
-  {
-    "path": "/victory316/LatestEffort/blob/master/README.md",
-    "title": "LatestEffort/README.md at master · victory316/LatestEffort",
-    "count": 8,
-    "uniques": 1
-  },
-  {
-    "path": "/victory316/LatestEffort/edit/master/.github/workflows/clone_count.yml",
-    "title": "Editing LatestEffort/.github/workflows/clone_count.yml at master · victory316...",
     "count": 7,
-    "uniques": 1
-  },
-  {
-    "path": "/victory316/LatestEffort/blob/master/.github/workflows/clone_count.yml",
-    "title": "LatestEffort/.github/workflows/clone_count.yml at master · victory316/LatestE...",
-    "count": 6,
     "uniques": 1
   },
   {
     "path": "/victory316/LatestEffort/projects",
     "title": "Projects · LatestEffort",
-    "count": 6,
+    "count": 3,
     "uniques": 1
   },
   {
-    "path": "/victory316/LatestEffort/blob/bd77a42f93218395972542b3aea648bfbe4f0e4c/.github/workflows/clone_count.yml",
-    "title": "LatestEffort/.github/workflows/clone_count.yml at bd77a42f93218395972542b3aea...",
-    "count": 4,
+    "path": "/victory316/LatestEffort/tree/master/app/src/main/java/com/example/latesteffort/navigation",
+    "title": "LatestEffort/app/src/main/java/com/example/latesteffort/navigation at master ...",
+    "count": 3,
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/actions",
+    "title": "Actions · victory316/LatestEffort",
+    "count": 2,
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/blob/master/app/src/main/java/com/example/latesteffort/navigation/LeNavHost.kt",
+    "title": "LatestEffort/app/src/main/java/com/example/latesteffort/navigation/LeNavHost....",
+    "count": 2,
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/blob/master/README.md",
+    "title": "LatestEffort/README.md at master · victory316/LatestEffort",
+    "count": 2,
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/branches",
+    "title": "Branches · victory316/LatestEffort",
+    "count": 2,
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/issues",
+    "title": "Issues · victory316/LatestEffort",
+    "count": 2,
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/pull/36",
+    "title": "Feature/issue 35 by victory316 · Pull Request #36 · victory316/LatestEffort",
+    "count": 2,
     "uniques": 1
   }
 ]
