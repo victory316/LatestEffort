@@ -2,7 +2,7 @@
   {
     "path": "/victory316/LatestEffort",
     "title": "victory316/LatestEffort: My full package of latest efforts on Android",
-    "count": 22,
+    "count": 12,
     "uniques": 2
   },
   {
@@ -12,21 +12,9 @@
     "uniques": 1
   },
   {
-    "path": "/victory316/LatestEffort/projects",
-    "title": "Projects · LatestEffort",
-    "count": 3,
-    "uniques": 1
-  },
-  {
     "path": "/victory316/LatestEffort/tree/master/app/src/main/java/com/example/latesteffort/navigation",
     "title": "LatestEffort/app/src/main/java/com/example/latesteffort/navigation at master ...",
     "count": 3,
-    "uniques": 1
-  },
-  {
-    "path": "/victory316/LatestEffort/actions",
-    "title": "Actions · victory316/LatestEffort",
-    "count": 2,
     "uniques": 1
   },
   {
@@ -42,8 +30,8 @@
     "uniques": 1
   },
   {
-    "path": "/victory316/LatestEffort/issues",
-    "title": "Issues · victory316/LatestEffort",
+    "path": "/victory316/LatestEffort/projects",
+    "title": "Projects · LatestEffort",
     "count": 2,
     "uniques": 1
   },
@@ -54,8 +42,20 @@
     "uniques": 1
   },
   {
-    "path": "/victory316/LatestEffort/releases",
-    "title": "Releases · victory316/LatestEffort",
+    "path": "/victory316/LatestEffort/tree/master/app",
+    "title": "LatestEffort/app at master · victory316/LatestEffort",
+    "count": 2,
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/tree/master/app/src",
+    "title": "LatestEffort/app/src at master · victory316/LatestEffort",
+    "count": 2,
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/tree/master/app/src/main",
+    "title": "LatestEffort/app/src/main at master · victory316/LatestEffort",
     "count": 2,
     "uniques": 1
   }
