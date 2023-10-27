@@ -2,7 +2,7 @@
   {
     "path": "/victory316/LatestEffort/tree/master",
     "title": "victory316/LatestEffort: My full package of latest efforts on Android",
-    "count": 11,
+    "count": 13,
     "uniques": 1
   },
   {
@@ -12,10 +12,40 @@
     "uniques": 1
   },
   {
-    "path": "/victory316/LatestEffort",
-    "title": "victory316/LatestEffort: My full package of latest efforts on Android",
+    "path": "/victory316/LatestEffort/tree/master/core",
+    "title": "LatestEffort/core at master · victory316/LatestEffort",
     "count": 2,
-    "uniques": 2
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/tree/master/core/actions",
+    "title": "LatestEffort/core/actions at master · victory316/LatestEffort",
+    "count": 2,
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/tree/master/core/actions/src",
+    "title": "LatestEffort/core/actions/src at master · victory316/LatestEffort",
+    "count": 2,
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/tree/master/core/actions/src/main",
+    "title": "LatestEffort/core/actions/src/main at master · victory316/LatestEffort",
+    "count": 2,
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/tree/master/core/actions/src/main/java/com/choidev/core/actions",
+    "title": "LatestEffort/core/actions/src/main/java/com/choidev/core/actions at master · ...",
+    "count": 2,
+    "uniques": 1
+  },
+  {
+    "path": "/victory316/LatestEffort/tree/master/core/actions/src/main/java/com/choidev/core/actions/presenter",
+    "title": "LatestEffort/core/actions/src/main/java/com/choidev/core/actions/presenter at...",
+    "count": 2,
+    "uniques": 1
   },
   {
     "path": "/victory316/LatestEffort/tree/master/feature/motion",
@@ -27,30 +57,6 @@
     "path": "/victory316/LatestEffort/tree/master/feature/motion/src",
     "title": "LatestEffort/feature/motion/src at master · victory316/LatestEffort",
     "count": 2,
-    "uniques": 1
-  },
-  {
-    "path": "/victory316/LatestEffort/tree/master/feature/motion/src/main",
-    "title": "LatestEffort/feature/motion/src/main at master · victory316/LatestEffort",
-    "count": 2,
-    "uniques": 1
-  },
-  {
-    "path": "/victory316/LatestEffort/tree/master/feature/motion/src/main/java/com/supergene/loki/feature/motion",
-    "title": "LatestEffort/feature/motion/src/main/java/com/supergene/loki/feature/motion a...",
-    "count": 2,
-    "uniques": 1
-  },
-  {
-    "path": "/victory316/LatestEffort/commit/f2d2cb0e12620cd53c51c6d6817dfd0302fa91b9",
-    "title": "Merge pull request #34 from victory316/develop · victory316/LatestEffort@f2d2...",
-    "count": 1,
-    "uniques": 1
-  },
-  {
-    "path": "/victory316/LatestEffort/commits/master",
-    "title": "Commits · victory316/LatestEffort",
-    "count": 1,
     "uniques": 1
   }
 ]
