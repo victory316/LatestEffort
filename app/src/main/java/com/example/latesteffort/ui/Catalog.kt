@@ -133,6 +133,15 @@ fun CatalogScreen(
                                 action = NavigateAction.NavGraphDestination(motionRoute)
                             )
                         }
+
+                        CatalogType.COMPOSE -> {
+                            CatalogItemState(
+                                title = stringResource(id = R.string.catalot_menu_compose),
+                                painter = painterResource(id = R.drawable.ic_compose),
+                                backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
+                                action = NavigateAction.NavGraphDestination(motionRoute)
+                            )
+                        }
                     }
                 }.also { result ->
                     Catalogs(
