@@ -1,10 +1,12 @@
 package com.choidev.latesteffort.feature.compose.ui.nestedscroll
 
 import LeTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -27,6 +29,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.choidev.latesteffort.feature.compose.NestedScrollViewModel
 
+/**
+ *  ref: https://www.youtube.com/watch?v=JfYBCKRjFA0
+ */
 @Composable
 internal fun NestedScrollScreen(
     viewModel: NestedScrollViewModel = hiltViewModel()
@@ -52,21 +57,30 @@ internal fun NestedScrollScreen(
 
     Column(modifier = Modifier.nestedScroll(nestedScrollConnection)) {
         Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxWidth()
                 .size(currentImgSize.dp)
         ) {
             Text(text = "SUPERDUPERBIGONE")
         }
-        LazyColumn {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+            modifier = Modifier.padding(horizontal = 10.dp)
+        ) {
             items(dummyItems) {
-                Card(modifier = Modifier.fillParentMaxWidth()) {
-                    Text(
-                        text = it,
+                Card(modifier = Modifier.height(100.dp)) {
+                    Box(
+                        contentAlignment = Alignment.Center,
                         modifier = Modifier
-                            .height(100.dp)
-                            .align(Alignment.CenterHorizontally)
-                    )
+                            .fillParentMaxSize()
+                    ) {
+                        Text(
+                            text = it,
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                        )
+                    }
                 }
             }
         }

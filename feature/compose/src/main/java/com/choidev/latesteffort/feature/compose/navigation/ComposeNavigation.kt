@@ -6,16 +6,16 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.choidev.core.actions.presenter.ActionPresenter
 
-const val composeRoute = "feature_compose"
+const val composeMenuRoute = "feature_compose_menu"
 
 fun NavController.navigateToCompose(navOptions: NavOptions? = null) {
-    navigate(composeRoute, navOptions)
+    navigate(composeHomeRoute, navOptions)
 }
 
-fun NavGraphBuilder.composeScreen(presenter: ActionPresenter) {
+fun NavGraphBuilder.composeHomeScreen(presenter: ActionPresenter) {
     composable(
-        route = composeRoute
+        route = composeHomeRoute
     ) {
-        ComposeScreen(presenter)
+        ComposeHomeRoute(presenter)
     }
 }

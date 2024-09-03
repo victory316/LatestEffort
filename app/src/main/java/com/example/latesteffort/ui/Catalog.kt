@@ -49,7 +49,7 @@ import com.choidev.domain.catalog.model.CatalogType
 import com.choidev.latesteffort.R
 import com.choidev.latesteffort.core.design.compose.LazyColumnPaddingVertical
 import com.choidev.latesteffort.core.design.compose.ScreenPaddingHorizontal
-import com.choidev.latesteffort.feature.compose.navigation.composeRoute
+import com.choidev.latesteffort.feature.compose.navigation.composeHomeRoute
 import com.choidev.latesteffort.feature.notification_test.navigation.notificationRoute
 import com.choidev.latesteffort.feature.search_media.SearchMediaActivity
 import com.choidev.vibration.navigation.vibrationRoute
@@ -140,7 +140,7 @@ fun CatalogScreen(
                                 title = stringResource(id = R.string.catalot_menu_compose),
                                 painter = painterResource(id = R.drawable.ic_compose),
                                 backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
-                                action = NavigateAction.NavGraphDestination(composeRoute)
+                                action = NavigateAction.NavGraphDestination(composeHomeRoute)
                             )
                         }
                     }
