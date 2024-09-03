@@ -100,4 +100,5 @@ dependencies {
     implementation(project(":feature:vibration"))
     implementation(project(":feature:notification"))
     implementation(project(":feature:motion"))
+    implementation(project(":feature:compose"))
 }
