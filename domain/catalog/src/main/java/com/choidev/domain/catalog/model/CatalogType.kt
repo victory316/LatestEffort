@@ -4,5 +4,6 @@ enum class CatalogType {
     SEARCH_MEDIA,
     VIBRATION,
     NOTIFICATION,
-    MOTION
+    MOTION,
+    COMPOSE
 }
