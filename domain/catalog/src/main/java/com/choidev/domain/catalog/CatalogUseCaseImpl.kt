@@ -20,7 +20,8 @@ class CatalogUseCaseImpl @Inject constructor(
                     CatalogType.SEARCH_MEDIA,
                     CatalogType.VIBRATION,
                     CatalogType.NOTIFICATION,
-                    CatalogType.MOTION
+                    CatalogType.MOTION,
+                    CatalogType.COMPOSE
                 )
             }
         )
