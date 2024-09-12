@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.choidev.latesteffort"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.choidev.latesteffort"
         minSdk = 28
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 6
         versionName = "1.0.6"
 
@@ -95,8 +95,10 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":domain:catalog"))
     implementation(project(":data"))
+    implementation(project(":data:catalog"))
     implementation(project(":feature:search-media"))
     implementation(project(":feature:vibration"))
     implementation(project(":feature:notification"))
     implementation(project(":feature:motion"))
+    implementation(project(":feature:compose"))
 }
