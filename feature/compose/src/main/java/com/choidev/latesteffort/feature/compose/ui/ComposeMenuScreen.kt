@@ -1,5 +1,6 @@
 package com.choidev.latesteffort.feature.compose.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.choidev.core.actions.NavigateAction
 import com.choidev.core.actions.presenter.ActionPresenter
+import com.choidev.latesteffort.feature.compose.ui.flow.flowNavigationRoute
 import com.choidev.latesteffort.feature.compose.ui.nestedscroll.nestedScrollRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,7 +34,10 @@ fun ComposeMenuScreen(
         },
         modifier = Modifier.padding(horizontal = 16.dp)
     ) { padding ->
-        Column(modifier = modifier.padding(padding)) {
+        Column(
+            modifier = modifier.padding(padding),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             Card(
                 onClick = {
                     presenter.onClick(NavigateAction.NavGraphDestination(nestedScrollRoute))
@@ -43,6 +48,20 @@ fun ComposeMenuScreen(
             ) {
                 Text(
                     text = "Nested Scroll",
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+
+            Card(
+                onClick = {
+                    presenter.onClick(NavigateAction.NavGraphDestination(flowNavigationRoute))
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+            ) {
+                Text(
+                    text = "Flow Test",
                     modifier = Modifier.padding(10.dp)
                 )
             }
