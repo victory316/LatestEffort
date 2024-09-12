@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun FlowScreen(modifier: Modifier = Modifier) {
+fun FlowScreen() {
     Scaffold(
         topBar = {
             Text(text = "Flow Test bed")

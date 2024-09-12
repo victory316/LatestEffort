@@ -11,9 +11,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.choidev.core.actions.NavigateAction
 import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.core.actions.presenter.SimpleActionPresenter
+import com.choidev.latesteffort.feature.compose.ui.flow.flowNavigationRoute
 import com.choidev.latesteffort.feature.compose.ui.nestedscroll.nestedScrollRoute
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ComposeHomeScreen(
     presenter: ActionPresenter,
@@ -26,6 +26,14 @@ fun ComposeHomeScreen(
             }
         ) {
             Text(text = "Nested Scroll")
+        }
+
+        Card(
+            onClick = {
+                presenter.onClick(NavigateAction.NavGraphDestination(flowNavigationRoute))
+            }
+        ) {
+            Text(text = "Flow Test")
         }
     }
 }

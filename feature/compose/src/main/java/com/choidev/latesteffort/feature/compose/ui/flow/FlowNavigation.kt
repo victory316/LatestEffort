@@ -6,7 +6,7 @@ import com.choidev.core.actions.presenter.ActionPresenter
 
 const val flowNavigationRoute = "feature_compose_flow_navigation"
 
-fun NavGraphBuilder.nestedScrollScreen(presenter: ActionPresenter) {
+fun NavGraphBuilder.flowScreen(presenter: ActionPresenter) {
     composable(
         route = flowNavigationRoute
     ) {
