@@ -54,7 +54,7 @@ val PERLIN_NOISE = """
         vec2 uv = fragCoord.xy / resolution.xy;
 
         // Replace snoise with Perlin noise
-        float noiseValue = noise(uv * 6.0 + time * 0.5);
+        float noiseValue = noise(uv * 6.0 + time * 1.5);
 
         noiseValue *= exp(-length(abs(uv * 1.5)));
         vec2 offset1 = vec2(noiseValue * 0.02);
