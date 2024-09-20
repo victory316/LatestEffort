@@ -17,14 +17,14 @@ class CustomizableViewModel @Inject constructor() : ViewModel() {
     private val _screenState = MutableStateFlow(CustomizableScreenState())
     val screenState =
         _screenState.stateIn(
-            scope = viewModelScope,
+            scope = viewModelScope, m""
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = CustomizableScreenState()
         )
 
     init {
         _screenState.update {
-            it.copy(boxes = listOf(BoxInfoState(2, 3)))
+            it.copy(boxes = listOf(BoxInfoState(2, 3, 0, 0)))
         }
     }
 }
