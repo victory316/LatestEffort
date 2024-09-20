@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
@@ -55,8 +56,12 @@ fun ResizableBox(state: BoxInfoState) {
     val rowSize = 50.dp * state.sizeRow
     val columnSize = 50.dp * state.sizeColumn
 
+    val rowPosSize = 20.dp * state.posRow
+    val columnPosSize = 20.dp * state.posColumn
+
     Box(
         modifier = Modifier
+            .offset(x = rowPosSize, y = columnPosSize)
             .width(rowSize)
             .height(columnSize)
             .drawBehind {
