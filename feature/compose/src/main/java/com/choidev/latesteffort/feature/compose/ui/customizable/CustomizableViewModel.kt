@@ -27,4 +27,16 @@ class CustomizableViewModel @Inject constructor() : ViewModel() {
             it.copy(boxes = listOf(BoxInfoState(2, 3, 2, 2)))
         }
     }
+
+    fun addBox() {
+        val newBox = BoxInfoState(2, 3, 10, 2)
+        _screenState.update {
+            it.copy(
+                boxes = it.boxes.toMutableList()
+                    .apply {
+                        add(newBox)
+                    }.toList()
+            )
+        }
+    }
 }
