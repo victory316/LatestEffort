@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.choidev.core.actions.NavigateAction
 import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.latesteffort.feature.compose.ui.custombrush.customBrushNavigation
+import com.choidev.latesteffort.feature.compose.ui.customizable.customizableNavigation
 import com.choidev.latesteffort.feature.compose.ui.flow.flowNavigationRoute
 import com.choidev.latesteffort.feature.compose.ui.nestedscroll.nestedScrollRoute
 
@@ -77,6 +78,20 @@ fun ComposeMenuScreen(
             ) {
                 Text(
                     text = "Custom Brush",
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+
+            Card(
+                onClick = {
+                    presenter.onClick(NavigateAction.NavGraphDestination(customizableNavigation))
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+            ) {
+                Text(
+                    text = "Customizable",
                     modifier = Modifier.padding(10.dp)
                 )
             }

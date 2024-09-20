@@ -70,7 +70,7 @@ fun CatalogScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = "Welcome to my latest effort.") },
+            TopAppBar(title = { Text(text = "Welcome to my Latest Effort.") },
                 actions = {
                     screenState.menuType?.let { type ->
                         IconToggleButton(
