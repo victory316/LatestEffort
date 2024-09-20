@@ -3,6 +3,7 @@ package com.choidev.latesteffort.feature.compose.ui.customizable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,15 +22,21 @@ fun CustomizableNavigationScreen(
 ) {
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
-    Box(modifier = modifier.fillMaxSize()) {
-        ResizableBox(state = screenState.boxes.first())
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(20.dp)
+    ) {
+        screenState.boxes.forEach { box ->
+            ResizableBox(state = box)
+        }
     }
 }
 
 @Composable
 fun ResizableBox(state: BoxInfoState) {
-    val rowSize = 20.dp * state.sizeRow
-    val columnSize = 20.dp * state.sizeColumn
+    val rowSize = 50.dp * state.sizeRow
+    val columnSize = 50.dp * state.sizeColumn
 
     Box(
         modifier = Modifier
