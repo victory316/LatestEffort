@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CustomizableViewModel @Inject constructor() : ViewModel() {
-
     private val _screenState = MutableStateFlow(CustomizableScreenState())
     val screenState =
         _screenState.stateIn(
