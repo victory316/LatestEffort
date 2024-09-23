@@ -28,6 +28,6 @@ fun ComposeHomeNavHost(
         nestedScrollScreen(presenter)
         flowScreen(presenter)
         customBrushScreen()
-        customizableScreen()
+        customizableScreen(presenter)
     }
 }

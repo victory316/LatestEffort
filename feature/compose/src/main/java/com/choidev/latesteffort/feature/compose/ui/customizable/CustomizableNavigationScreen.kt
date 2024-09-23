@@ -1,6 +1,8 @@
 package com.choidev.latesteffort.feature.compose.ui.customizable
 
+import android.app.Activity
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,16 +25,22 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.choidev.core.actions.VibrateAction
+import com.choidev.core.actions.VibrateAction.*
+import com.choidev.core.actions.presenter.ActionPresenter
+import com.choidev.latesteffort.core.util.vibration.VibrationManager
 import com.choidev.latesteffort.feature.compose.ui.customizable.state.BoxInfoState
 import kotlin.math.absoluteValue
 
 @Composable
 fun CustomizableNavigationScreen(
+    presenter: ActionPresenter,
     modifier: Modifier = Modifier,
     viewModel: CustomizableViewModel = hiltViewModel()
 ) {
@@ -51,14 +59,23 @@ fun CustomizableNavigationScreen(
                 .padding(20.dp)
         ) {
             screenState.boxes.forEach { box ->
-                PositionStickyBox(state = box)
+                PositionStickyBox(state = box,
+                    onVibrate = {
+                        presenter.onClick(
+                            VibrateEffect(VibrationEffect.EFFECT_DOUBLE_CLICK)
+                        )
+                    }
+                )
             }
         }
     }
 }
 
 @Composable
-fun PositionStickyBox(state: BoxInfoState) {
+fun PositionStickyBox(
+    state: BoxInfoState,
+    onVibrate: () -> Unit
+) {
     val pxValue = with(LocalDensity.current) { 20.dp.toPx() }
     val rowSize = 50.dp * state.sizeRow
     var columnSize = 50.dp * state.sizeColumn
@@ -71,7 +88,11 @@ fun PositionStickyBox(state: BoxInfoState) {
             .width(rowSize)
             .height(columnSize)
             .pointerInput(Unit) {
-                detectDragGestures { change, dragAmount ->
+                detectDragGesturesAfterLongPress(
+                    onDragStart = {
+                        onVibrate()
+                    }
+                ) { change, dragAmount ->
                     change.position.x.run {
                         if ((this - offsetX).absoluteValue.toDp() >= 50.dp) {
                             offsetX = this
