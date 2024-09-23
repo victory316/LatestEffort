@@ -91,7 +91,7 @@ fun ComposeMenuScreen(
                     .height(50.dp)
             ) {
                 Text(
-                    text = "Customizable",
+                    text = "Sticky Movable Box",
                     modifier = Modifier.padding(10.dp)
                 )
             }
