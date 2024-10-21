@@ -70,7 +70,7 @@ fun CatalogScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = "Welcome to my latest effort.") },
+            TopAppBar(title = { Text(text = "Welcome to my Latest Effort.") },
                 actions = {
                     screenState.menuType?.let { type ->
                         IconToggleButton(
@@ -97,13 +97,13 @@ fun CatalogScreen(
     ) { paddingValues ->
         when (screenState.uiState) {
             UiState.SUCCESS -> {
-                screenState.catalogs?.map {
-                    when (it) {
+                screenState.catalogs?.mapIndexed { index, catalogType ->
+                    when (catalogType) {
                         CatalogType.SEARCH_MEDIA -> {
                             CatalogItemState(
                                 title = stringResource(id = R.string.catalog_menu_media_search),
                                 icon = Icons.Rounded.Search,
-                                backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
+                                backgroundColor = CatalogScreenHelper.getBackgroundColor(index),
                                 action = NavigateAction.StartActivity(SearchMediaActivity::class.java),
                             )
                         }
@@ -112,7 +112,7 @@ fun CatalogScreen(
                             CatalogItemState(
                                 title = stringResource(id = R.string.catalog_menu_vibration_test),
                                 painter = painterResource(id = R.drawable.ic_vibration),
-                                backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
+                                backgroundColor = CatalogScreenHelper.getBackgroundColor(index),
                                 action = NavigateAction.NavGraphDestination(vibrationRoute)
                             )
                         }
@@ -121,7 +121,7 @@ fun CatalogScreen(
                             CatalogItemState(
                                 title = stringResource(id = R.string.catalog_menu_notification_test),
                                 icon = Icons.Rounded.Notifications,
-                                backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
+                                backgroundColor = CatalogScreenHelper.getBackgroundColor(index),
                                 action = NavigateAction.NavGraphDestination(notificationRoute)
                             )
                         }
@@ -130,7 +130,7 @@ fun CatalogScreen(
                             CatalogItemState(
                                 title = stringResource(id = R.string.catalog_menu_motion),
                                 painter = painterResource(id = R.drawable.ic_motion),
-                                backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
+                                backgroundColor = CatalogScreenHelper.getBackgroundColor(index),
                                 action = NavigateAction.NavGraphDestination(motionRoute)
                             )
                         }
@@ -139,7 +139,7 @@ fun CatalogScreen(
                             CatalogItemState(
                                 title = stringResource(id = R.string.catalot_menu_compose),
                                 painter = painterResource(id = R.drawable.ic_compose),
-                                backgroundColor = CatalogScreenHelper.getNextBackgroundColor(),
+                                backgroundColor = CatalogScreenHelper.getBackgroundColor(index),
                                 action = NavigateAction.NavGraphDestination(composeHomeRoute)
                             )
                         }

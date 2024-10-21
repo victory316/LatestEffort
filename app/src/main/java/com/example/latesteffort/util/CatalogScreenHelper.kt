@@ -7,12 +7,19 @@ import androidx.compose.ui.graphics.Color
 object CatalogScreenHelper {
 
     private val backgroundAlphaList = listOf(0.1f, 0.2f, 0.3f, 0.4f, 0.5f)
-    private var currentIndex = 0
 
     @Composable
-    fun getNextBackgroundColor(): Color {
-        if (currentIndex == backgroundAlphaList.lastIndex) currentIndex = 0
+    fun getBackgroundColor(index: Int): Color {
+        val alphaIndex = when {
+            index >= backgroundAlphaList.lastIndex -> {
+                index - (index % backgroundAlphaList.size)
+            }
 
-        return MaterialTheme.colorScheme.primary.copy(alpha = backgroundAlphaList[++currentIndex])
+            else -> {
+                index
+            }
+        }
+
+        return MaterialTheme.colorScheme.primary.copy(alpha = backgroundAlphaList[alphaIndex])
     }
 }
