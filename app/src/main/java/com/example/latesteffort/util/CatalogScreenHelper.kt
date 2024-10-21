@@ -11,7 +11,7 @@ object CatalogScreenHelper {
     @Composable
     fun getBackgroundColor(index: Int): Color {
         val alphaIndex = when {
-            index >= backgroundAlphaList.lastIndex -> {
+            index > backgroundAlphaList.lastIndex -> {
                 index - (index % backgroundAlphaList.size)
             }
 
