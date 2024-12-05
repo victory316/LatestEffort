@@ -33,5 +33,4 @@ google-services.json
 *.hprof
 
 # Jetpack compose
-*/feature/compose/ui/
-*/feature/compose/build/
+feature/compose/
