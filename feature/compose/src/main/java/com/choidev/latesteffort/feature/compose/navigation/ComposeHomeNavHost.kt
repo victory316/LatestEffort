@@ -9,6 +9,7 @@ import com.choidev.latesteffort.feature.compose.menu.composeMenuScreen
 import com.choidev.latesteffort.feature.compose.ui.custombrush.customBrushScreen
 import com.choidev.latesteffort.feature.compose.ui.customizable.customizableScreen
 import com.choidev.latesteffort.feature.compose.ui.flow.flowScreen
+import com.choidev.latesteffort.feature.compose.ui.image.imageViewerScreen
 import com.choidev.latesteffort.feature.compose.ui.nestedscroll.nestedScrollScreen
 
 const val composeHomeRoute = "feature_compose"
@@ -29,5 +30,6 @@ fun ComposeHomeNavHost(
         flowScreen(presenter)
         customBrushScreen()
         customizableScreen(presenter)
+        imageViewerScreen(presenter)
     }
 }
