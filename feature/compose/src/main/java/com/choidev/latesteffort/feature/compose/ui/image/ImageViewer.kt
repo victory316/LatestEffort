@@ -28,6 +28,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import com.supergene.loki.feature.motion.R
 
+/**
+ *  ref : https://gist.github.com/JolandaVerhoef/41bbacadead2ba3ce8014d67014efbdd
+ */
 @Composable
 fun DownloadableImageViewer(
     pageItems: List<Int>,

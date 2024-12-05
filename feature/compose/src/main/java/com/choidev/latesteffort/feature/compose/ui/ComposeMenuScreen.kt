@@ -18,6 +18,7 @@ import com.choidev.core.actions.presenter.ActionPresenter
 import com.choidev.latesteffort.feature.compose.ui.custombrush.customBrushNavigation
 import com.choidev.latesteffort.feature.compose.ui.customizable.customizableNavigation
 import com.choidev.latesteffort.feature.compose.ui.flow.flowNavigationRoute
+import com.choidev.latesteffort.feature.compose.ui.image.imageViewerRoute
 import com.choidev.latesteffort.feature.compose.ui.nestedscroll.nestedScrollRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,6 +79,20 @@ fun ComposeMenuScreen(
             ) {
                 Text(
                     text = "Custom Brush",
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+
+            Card(
+                onClick = {
+                    presenter.onClick(NavigateAction.NavGraphDestination(imageViewerRoute))
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+            ) {
+                Text(
+                    text = "Image Viewer",
                     modifier = Modifier.padding(10.dp)
                 )
             }
